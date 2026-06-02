@@ -106,6 +106,19 @@ input,select,textarea,button{font-family:var(--font-body)}
 .section-hdr::after{background:linear-gradient(90deg,transparent,var(--gray3))}
 .section-hdr h2{font-family:var(--font-display);font-size:18px;color:var(--navy);font-weight:600;white-space:nowrap}
 
+/* Tipo de contratação: Plano Novo ou Portabilidade */
+.contratacao-card{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.contratacao-opts{display:flex;gap:12px;justify-content:center}
+.contratacao-opt{flex:1;position:relative}
+.contratacao-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.contratacao-opt label{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--gray2);cursor:pointer;transition:.2s;background:var(--gray1)}
+.contratacao-opt label:hover{border-color:var(--navy3);background:rgba(36,63,122,.04)}
+.contratacao-opt input:checked+label{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.contratacao-opt label i{font-size:28px;color:var(--navy3)}
+.contratacao-opt input:checked+label i{color:var(--gold)}
+.contratacao-opt label span{font-size:14px;font-weight:700;color:var(--gray5)}
+.contratacao-opt label small{font-size:11px;color:var(--gray4);font-weight:normal}
+
 .plans-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px}
 .plan-card{background:var(--white);border-radius:var(--radius);padding:20px 14px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.25s;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
 .plan-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
@@ -356,6 +369,29 @@ select.field-inp{cursor:pointer}
       <div class="ornament-line"></div>
       <div class="ornament-diamond"></div>
       <div class="ornament-line right"></div>
+    </div>
+  </div>
+
+  <!-- NOVA SEÇÃO: Tipo de Contratação (Plano Novo ou Portabilidade) -->
+  <div class="section-hdr"><h2>Tipo de Contratação</h2></div>
+  <div class="contratacao-card">
+    <div class="contratacao-opts">
+      <div class="contratacao-opt">
+        <input type="radio" name="contratacao" id="ct-novo" value="Plano Novo" onchange="setContratacao(this.value)">
+        <label for="ct-novo">
+          <i class="fas fa-file-contract"></i>
+          <span>Plano Novo</span>
+          <small>Primeira contratação</small>
+        </label>
+      </div>
+      <div class="contratacao-opt">
+        <input type="radio" name="contratacao" id="ct-port" value="Portabilidade" onchange="setContratacao(this.value)">
+        <label for="ct-port">
+          <i class="fas fa-exchange-alt"></i>
+          <span>Portabilidade</span>
+          <small>Transferência de plano</small>
+        </label>
+      </div>
     </div>
   </div>
 
@@ -665,7 +701,7 @@ document.addEventListener('webkitfullscreenchange', ()=>{
 // =========================================================
 // STATE
 // =========================================================
-let ST = { plano:'', dependentes:[], fotos:[], localizacao:null };
+let ST = { plano:'', contratacao:'', dependentes:[], fotos:[], localizacao:null };
 let adesoes = [];
 let config = { empresa:'PAX PREVENIR', vendedor:'', cidade:'' };
 
@@ -690,6 +726,12 @@ function goPage(p){
   if(p==='adesoes'){ document.getElementById('topbar-pdf-btn').style.display='none'; renderAdesoes(); updateStats(); }
   else if(p==='cadastro'){ document.getElementById('topbar-pdf-btn').style.display='flex'; }
   else{ document.getElementById('topbar-pdf-btn').style.display='none'; }
+}
+
+function setContratacao(val){
+  ST.contratacao = val;
+  autoSave();
+  showToast('Tipo: '+val+' selecionado','success');
 }
 
 function selectPlan(el){
@@ -776,19 +818,20 @@ function g(id){ return document.getElementById(id)?.value||''; }
 function s(id,val){ const el=document.getElementById(id);if(el)el.value=val||''; }
 
 function autoSave(){
-  const data={plano:ST.plano,nome:g('f-nome'),nasc:g('f-nasc'),cpf:g('f-cpf'),rg:g('f-rg'),tel:g('f-tel'),end:g('f-end'),num:g('f-num'),bairro:g('f-bairro'),cep:g('f-cep'),cidade:g('f-cidade'),ref:g('f-ref'),civil:g('f-civil'),rel:g('f-rel'),dadesao:g('f-dadesao'),dvenc:g('f-dvenc'),valor:g('f-valor'),vendedor:g('f-vendedor'),pagamento:document.querySelector('input[name="pg"]:checked')?.value||'',dependentes:ST.dependentes,fotos:ST.fotos,localizacao:ST.localizacao};
+  const data={plano:ST.plano,contratacao:ST.contratacao,nome:g('f-nome'),nasc:g('f-nasc'),cpf:g('f-cpf'),rg:g('f-rg'),tel:g('f-tel'),end:g('f-end'),num:g('f-num'),bairro:g('f-bairro'),cep:g('f-cep'),cidade:g('f-cidade'),ref:g('f-ref'),civil:g('f-civil'),rel:g('f-rel'),dadesao:g('f-dadesao'),dvenc:g('f-dvenc'),valor:g('f-valor'),vendedor:g('f-vendedor'),pagamento:document.querySelector('input[name="pg"]:checked')?.value||'',dependentes:ST.dependentes,fotos:ST.fotos,localizacao:ST.localizacao};
   localStorage.setItem('pax_cadastro',JSON.stringify(data));
 }
 function loadData(){
   const raw=localStorage.getItem('pax_cadastro');if(!raw)return;
   try{
     const d=JSON.parse(raw);
-    ST.plano=d.plano||'';ST.dependentes=d.dependentes||[];ST.fotos=d.fotos||[];ST.localizacao=d.localizacao||null;
+    ST.plano=d.plano||'';ST.contratacao=d.contratacao||'';ST.dependentes=d.dependentes||[];ST.fotos=d.fotos||[];ST.localizacao=d.localizacao||null;
     s('f-nome',d.nome);s('f-nasc',d.nasc);s('f-cpf',d.cpf);s('f-rg',d.rg);s('f-tel',d.tel);
     s('f-end',d.end);s('f-num',d.num);s('f-bairro',d.bairro);s('f-cep',d.cep);s('f-cidade',d.cidade);
     s('f-ref',d.ref);s('f-civil',d.civil);s('f-rel',d.rel);
     s('f-dadesao',d.dadesao);s('f-dvenc',d.dvenc);s('f-valor',d.valor);s('f-vendedor',d.vendedor);
     if(d.pagamento){const el=document.querySelector(`input[value="${d.pagamento}"]`);if(el)el.checked=true;}
+    if(d.contratacao){const el=document.querySelector(`input[value="${d.contratacao}"]`);if(el)el.checked=true;}
     if(ST.plano){const el=document.querySelector(`.plan-card[data-plan="${ST.plano}"]`);if(el)el.classList.add('selected');}
     if(ST.localizacao){
       document.getElementById('locLat').textContent=ST.localizacao.lat;
@@ -886,7 +929,7 @@ function gerarPDF(){
       doc.setFont('helvetica','bold');doc.setFontSize(22);doc.setTextColor(201,168,76);doc.text('PAX PREVENIR',W/2,20,{align:'center'});
       doc.setFontSize(10);doc.setTextColor(180,190,210);doc.text('Sistema de Planos Funerários',W/2,28,{align:'center'});
       doc.setDrawColor(201,168,76);doc.setLineWidth(0.5);doc.line(M,34,W-M,34);
-      doc.setFontSize(11);doc.setTextColor(255,255,255);doc.text('Plano: '+ST.plano,M,41);doc.text('Data: '+new Date().toLocaleDateString('pt-BR'),W-M,41,{align:'right'});
+      doc.setFontSize(11);doc.setTextColor(255,255,255);doc.text('Tipo: '+(ST.contratacao||'Plano Novo'),M,41);doc.text('Plano: '+ST.plano,M+60,41);doc.text('Data: '+new Date().toLocaleDateString('pt-BR'),W-M,41,{align:'right'});
       let y=55;
       doc.setFillColor(240,243,250);doc.roundedRect(M,y-6,W-2*M,8,2,2,'F');doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(15,32,68);doc.text('DADOS DO TITULAR',M+4,y);y+=10;
       const campos=[['Nome Completo',g('f-nome')],['CPF',g('f-cpf')],['RG',g('f-rg')],['Data de Nascimento',fmtDate(g('f-nasc'))],['Telefone',g('f-tel')],['Estado Civil',g('f-civil')],['Religião',g('f-rel')],['Endereço',g('f-end')+' '+g('f-num')],['Bairro',g('f-bairro')],['CEP',g('f-cep')],['Cidade',g('f-cidade')],['Ponto de Referência',g('f-ref')]].filter(c=>c[1].trim());
@@ -898,7 +941,7 @@ function gerarPDF(){
       y+=4;
       if(y>255){doc.addPage();addHeader(doc,W,M);y=55;}
       doc.setFillColor(240,243,250);doc.roundedRect(M,y-6,W-2*M,8,2,2,'F');doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(15,32,68);doc.text('INFORMAÇÕES DO PLANO',M+4,y);y+=10;
-      const planoCampos=[['Plano',ST.plano],['Valor',g('f-valor')],['Data de Adesão',fmtDate(g('f-dadesao'))],['Data de Vencimento',fmtDate(g('f-dvenc'))],['Forma de Pagamento',document.querySelector('input[name="pg"]:checked')?.value||''],['Vendedor',g('f-vendedor')]].filter(c=>c[1].trim());
+      const planoCampos=[['Tipo de Contratação',ST.contratacao||'Plano Novo'],['Plano',ST.plano],['Valor',g('f-valor')],['Data de Adesão',fmtDate(g('f-dadesao'))],['Data de Vencimento',fmtDate(g('f-dvenc'))],['Forma de Pagamento',document.querySelector('input[name="pg"]:checked')?.value||''],['Vendedor',g('f-vendedor')]].filter(c=>c[1].trim());
       doc.setFont('helvetica','normal');doc.setFontSize(9.5);
       planoCampos.forEach(([lbl,val])=>{doc.setTextColor(100,110,130);doc.text(lbl+':',M,y);doc.setTextColor(30,40,60);doc.setFont('helvetica','bold');doc.text(val,M+52,y);doc.setFont('helvetica','normal');doc.setDrawColor(220,225,235);doc.setLineWidth(0.2);doc.line(M,y+2,W-M,y+2);y+=9;});
       if(ST.dependentes.length){
@@ -964,8 +1007,9 @@ function confirmClear(){
   openModal('Limpar Formulário','Todos os dados preenchidos serão apagados. Continuar?','warn',()=>{
     document.querySelectorAll('.field-inp').forEach(el=>{if(el.closest('#page-cadastro'))el.value='';});
     document.querySelectorAll('input[name="pg"]').forEach(r=>r.checked=false);
+    document.querySelectorAll('input[name="contratacao"]').forEach(r=>r.checked=false);
     document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
-    ST.plano='';ST.dependentes=[];ST.fotos=[];ST.localizacao=null;
+    ST.plano='';ST.contratacao='';ST.dependentes=[];ST.fotos=[];ST.localizacao=null;
     renderDeps();renderFotos();
     document.getElementById('locResult').style.display='none';
     document.getElementById('locStatus').className='loc-status';
@@ -976,7 +1020,7 @@ function confirmClear(){
 }
 function confirmDeleteAll(){
   openModal('Apagar Todos os Dados','ATENÇÃO: Esta ação apagará clientes, adesões e configurações. Não pode ser desfeita!','del',()=>{
-    localStorage.clear();adesoes=[];ST.dependentes=[];ST.fotos=[];ST.localizacao=null;ST.plano='';
+    localStorage.clear();adesoes=[];ST.dependentes=[];ST.fotos=[];ST.localizacao=null;ST.plano='';ST.contratacao='';
     renderDeps();renderFotos();renderAdesoes();updateStats();showToast('Todos os dados foram apagados');
   });
 }
