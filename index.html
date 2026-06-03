@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <title>PAX PREVENIR – Sistema de Planos Funerários</title>
 
-<!-- FAVICON SVG inline (pomba dourada) -->
+<!-- FAVICON SVG inline -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Ctext x='32' y='46' font-size='36' text-anchor='middle' font-family='serif'%3E%F0%9F%95%8A%EF%B8%8F%3C/text%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" id="apple-touch-icon" href=""/>
 
@@ -71,7 +71,6 @@ input,select,textarea,button{font-family:var(--font-body)}
 .nav-item span{font-size:14px;font-weight:500}
 .nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;min-width:20px;text-align:center}
 
-/* TELA CHEIA — item especial no menu */
 .nav-item-fullscreen{display:flex;align-items:center;gap:14px;padding:13px 20px;color:rgba(255,255,255,.6);cursor:pointer;transition:.2s;border-left:3px solid transparent;border-top:1px solid rgba(255,255,255,.08);margin-top:4px}
 .nav-item-fullscreen:hover{color:#fff;background:rgba(255,255,255,.06)}
 .nav-item-fullscreen i{font-size:18px;width:22px;text-align:center;color:var(--gold2)}
@@ -105,7 +104,6 @@ input,select,textarea,button{font-family:var(--font-body)}
 .section-hdr::after{background:linear-gradient(90deg,transparent,var(--gray3))}
 .section-hdr h2{font-family:var(--font-display);font-size:18px;color:var(--navy);font-weight:600;white-space:nowrap}
 
-/* Tipo de contratação: Plano Novo ou Portabilidade */
 .contratacao-card{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
 .contratacao-opts{display:flex;gap:12px;justify-content:center}
 .contratacao-opt{flex:1;position:relative}
@@ -196,7 +194,6 @@ select.field-inp{cursor:pointer}
 .btn-loc:active{transform:translateY(0)}
 .btn-loc.loading{opacity:.7;pointer-events:none}
 
-/* Localização manual para Kodular */
 .loc-manual{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray2)}
 .loc-manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 .loc-manual-hint{font-size:11px;color:var(--orange);text-align:center;padding:8px;background:rgba(230,126,34,.08);border-radius:6px;margin-bottom:8px}
@@ -256,7 +253,6 @@ select.field-inp{cursor:pointer}
 .empty-state{text-align:center;padding:24px;color:var(--gray4);font-size:13px;background:var(--white);border-radius:0 0 var(--radius-sm) var(--radius-sm)}
 .empty-state i{font-size:28px;display:block;margin-bottom:6px;opacity:.35}
 
-/* Planos Feitos Cards */
 .planos-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .planos-search-wrap{position:relative;margin-bottom:16px}
 .planos-search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray4);font-size:15px}
@@ -286,19 +282,18 @@ select.field-inp{cursor:pointer}
 .btn-sm-green{background:rgba(45,125,90,.1);color:var(--green);border:1.5px solid rgba(45,125,90,.2)}
 .btn-sm-red{background:rgba(192,57,43,.08);color:var(--red);border:1.5px solid rgba(192,57,43,.2)}
 
-/* Modal PDF para Kodular */
+/* Modal PDF simplificado para Kodular */
 .pdf-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;flex-direction:column}
 .pdf-modal.open{display:flex}
 .pdf-modal-header{background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:12px}
 .pdf-modal-header h3{flex:1;color:var(--gold2);font-size:14px;font-family:var(--font-display)}
 .pdf-modal-header button{background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px}
-.pdf-modal-content{flex:1;overflow:auto;padding:20px;text-align:center}
+.pdf-modal-content{flex:1;overflow:auto;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:center}
 .pdf-actions{display:flex;gap:12px;margin-top:20px;justify-content:center;flex-wrap:wrap}
 .pdf-actions button{padding:14px 24px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:8px}
 .btn-download{background:var(--green);color:#fff}
 .btn-share{background:var(--gold);color:var(--navy)}
-.btn-qrcode{background:var(--navy);color:#fff}
-.qr-code-area{margin:20px auto;padding:20px;background:#fff;border-radius:12px;display:inline-block}
+.pdf-message{color:#fff;margin-bottom:20px;font-size:16px}
 
 .config-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:16px}
 .config-icon{font-size:28px;color:var(--navy3);margin-bottom:12px}
@@ -385,7 +380,6 @@ select.field-inp{cursor:pointer}
       <i class="fas fa-cog"></i><span>Configurações</span>
     </div>
 
-    <!-- BOTÃO TELA CHEIA -->
     <div class="nav-item-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()">
       <i class="fas fa-expand" id="fsIcon"></i>
       <span id="fsLabel">Tela Cheia</span>
@@ -424,7 +418,6 @@ select.field-inp{cursor:pointer}
     </div>
   </div>
 
-  <!-- NOVA SEÇÃO: Tipo de Contratação (Plano Novo ou Portabilidade) -->
   <div class="section-hdr"><h2>Tipo de Contratação</h2></div>
   <div class="contratacao-card">
     <div class="contratacao-opts">
@@ -501,10 +494,10 @@ select.field-inp{cursor:pointer}
   <div class="section-hdr"><h2>Fotos da Residência</h2></div>
   <div class="fotos-card">
     <div class="fotos-actions">
-      <button class="btn-foto btn-cam" onclick="document.getElementById('inp-cam').click()"><i class="fas fa-camera"></i> Câmera</button>
-      <button class="btn-foto btn-gal" onclick="document.getElementById('inp-gal').click()"><i class="fas fa-images"></i> Galeria</button>
+      <button class="btn-foto btn-cam" onclick="abrirCameraKodular()"><i class="fas fa-camera"></i> Abrir Câmera</button>
+      <button class="btn-foto btn-gal" onclick="abrirGaleriaKodular()"><i class="fas fa-images"></i> Galeria</button>
     </div>
-    <input type="file" id="inp-cam" accept="image/*" capture="camera" multiple style="display:none" onchange="addFotos(this)">
+    <input type="file" id="inp-cam" accept="image/*" style="display:none" onchange="addFotos(this)">
     <input type="file" id="inp-gal" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
     <div class="fotos-grid" id="fotosGrid">
       <div class="fotos-empty" id="fotosEmpty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>
@@ -605,7 +598,6 @@ select.field-inp{cursor:pointer}
     <div class="config-info">
       <p>Para instalar como app no celular, use a opção <strong>"Adicionar à tela inicial"</strong> do navegador.</p>
       <p>O sistema funciona <strong>100% offline</strong> após a primeira abertura.</p>
-      <p>Compatível com <strong>PWABuilder</strong> para gerar APK Android.</p>
     </div>
   </div>
   <div class="config-card danger-card">
@@ -618,16 +610,17 @@ select.field-inp{cursor:pointer}
 
 </main>
 
-<!-- MODAL PDF PARA KODULAR -->
+<!-- MODAL PDF -->
 <div class="pdf-modal" id="pdfModal">
   <div class="pdf-modal-header">
     <h3 id="pdfModalTitle">PAX PREVENIR</h3>
     <button onclick="closePdfModal()"><i class="fas fa-times"></i></button>
   </div>
   <div class="pdf-modal-content">
-    <div id="pdfContentArea">
-      <i class="fas fa-file-pdf" style="font-size:60px;color:var(--red);margin:20px 0"></i>
-      <p style="margin:20px">PDF gerado com sucesso!</p>
+    <div class="pdf-message">
+      <i class="fas fa-file-pdf" style="font-size:48px;color:var(--red);margin-bottom:15px;display:block"></i>
+      <p>PDF gerado com sucesso!</p>
+      <p style="font-size:12px;margin-top:10px">Clique no botão abaixo para salvar ou compartilhar</p>
     </div>
     <div class="pdf-actions">
       <button class="btn-download" onclick="downloadPDF()"><i class="fas fa-download"></i> Salvar PDF</button>
@@ -655,124 +648,52 @@ select.field-inp{cursor:pointer}
 
 <script>
 // =========================================================
-// FAVICON DINÂMICO
-// =========================================================
-(function(){
-  try {
-    const c = document.createElement('canvas');
-    c.width = 64; c.height = 64;
-    const ctx = c.getContext('2d');
-    ctx.fillStyle = '#000000';
-    roundRect(ctx, 0, 0, 64, 64, 14);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(201,168,76,0.6)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(32, 32, 26, 0, Math.PI*2);
-    ctx.stroke();
-    ctx.fillStyle = '#E8C97A';
-    ctx.font = '32px serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('🕊', 32, 33);
-    const link = document.createElement('link');
-    link.rel = 'icon'; link.type = 'image/png';
-    link.href = c.toDataURL('image/png');
-    document.head.appendChild(link);
-    document.getElementById('apple-touch-icon').href = c.toDataURL('image/png');
-  } catch(e){}
-
-  function roundRect(ctx, x, y, w, h, r){
-    ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.lineTo(x+w-r, y);
-    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-    ctx.lineTo(x+w, y+h-r);
-    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-    ctx.lineTo(x+r, y+h);
-    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-    ctx.lineTo(x, y+r);
-    ctx.quadraticCurveTo(x, y, x+r, y);
-    ctx.closePath();
-  }
-})();
-
-// =========================================================
 // TELA CHEIA
 // =========================================================
 let isFullscreen = false;
 
 function toggleFullscreen(){
   if(!isFullscreen){
-    enterFullscreen();
-  } else {
-    exitFullscreen();
-  }
-}
-
-function enterFullscreen(){
-  const el = document.documentElement;
-  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-  if(req){
-    req.call(el).then(()=>{
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if(req){
+      req.call(el).then(()=>{
+        isFullscreen = true;
+        updateFsUI();
+        closeMenu();
+      }).catch(()=>{
+        window.scrollTo({top: 1});
+        isFullscreen = true;
+        updateFsUI();
+      });
+    } else {
+      window.scrollTo({top: 1});
       isFullscreen = true;
       updateFsUI();
-      closeMenu();
-      showToast('Modo tela cheia ativado','success');
-    }).catch(()=>{
-      window.scrollTo({top: 1, behavior: 'instant'});
-      isFullscreen = true;
-      updateFsUI();
-      closeMenu();
-      showToast('Deslize para cima para ocultar a barra','success');
-    });
+    }
   } else {
-    window.scrollTo({top: 1, behavior: 'instant'});
-    isFullscreen = true;
-    updateFsUI();
-    closeMenu();
-    showToast('Role para cima para ocultar a barra','success');
-  }
-}
-
-function exitFullscreen(){
-  const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-  if(exit && document.fullscreenElement){
-    exit.call(document).catch(()=>{});
-  }
-  window.scrollTo({top: 0, behavior: 'instant'});
-  isFullscreen = false;
-  updateFsUI();
-  showToast('Tela cheia desativada');
-}
-
-function updateFsUI(){
-  const icon  = document.getElementById('fsIcon');
-  const label = document.getElementById('fsLabel');
-  const badge = document.getElementById('fsBadge');
-  if(isFullscreen){
-    icon.className  = 'fas fa-compress';
-    label.textContent = 'Sair da Tela Cheia';
-    badge.textContent = 'ON';
-    badge.style.background = 'rgba(45,125,90,.25)';
-    badge.style.color = '#3ca873';
-    badge.style.borderColor = 'rgba(45,125,90,.4)';
-  } else {
-    icon.className  = 'fas fa-expand';
-    label.textContent = 'Tela Cheia';
-    badge.textContent = 'OFF';
-    badge.style.background = 'rgba(201,168,76,.2)';
-    badge.style.color = '#E8C97A';
-    badge.style.borderColor = 'rgba(201,168,76,.3)';
-  }
-}
-
-document.addEventListener('fullscreenchange', ()=>{
-  if(!document.fullscreenElement && isFullscreen){
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if(exit && document.fullscreenElement) exit.call(document);
+    window.scrollTo({top: 0});
     isFullscreen = false;
     updateFsUI();
   }
-});
+}
+
+function updateFsUI(){
+  const icon = document.getElementById('fsIcon');
+  const label = document.getElementById('fsLabel');
+  const badge = document.getElementById('fsBadge');
+  if(isFullscreen){
+    icon.className = 'fas fa-compress';
+    label.textContent = 'Sair da Tela Cheia';
+    badge.textContent = 'ON';
+  } else {
+    icon.className = 'fas fa-expand';
+    label.textContent = 'Tela Cheia';
+    badge.textContent = 'OFF';
+  }
+}
 
 // =========================================================
 // STATE
@@ -781,7 +702,7 @@ let ST = { plano:'', contratacao:'', dependentes:[], fotos:[], localizacao:null 
 let adesoes = [];
 let planosFeitos = [];
 let config = { empresa:'PAX PREVENIR', vendedor:'', cidade:'' };
-let pdfGeradoB64 = '';
+let pdfGeradoBlob = null;
 let pdfGeradoNome = '';
 
 function init(){
@@ -840,6 +761,21 @@ function renderDeps(){
     </div>`).join('');
 }
 
+// =========================================================
+// FOTOS - CORRIGIDO PARA KODULAR
+// =========================================================
+function abrirCameraKodular(){
+  const input = document.getElementById('inp-cam');
+  input.setAttribute('capture', 'environment');
+  input.click();
+}
+
+function abrirGaleriaKodular(){
+  const input = document.getElementById('inp-gal');
+  input.removeAttribute('capture');
+  input.click();
+}
+
 function addFotos(input){
   const files=Array.from(input.files); let count=0;
   files.forEach(file=>{
@@ -853,7 +789,7 @@ function addFotos(input){
         canvas.width=w;canvas.height=h;
         canvas.getContext('2d').drawImage(img,0,0,w,h);
         ST.fotos.push(canvas.toDataURL('image/jpeg',0.75));
-        count++; if(count===files.length){renderFotos();autoSave();}
+        count++; if(count===files.length){renderFotos();autoSave();showToast(count+' foto(s) adicionada(s)','success');}
       };
       img.src=e.target.result;
     };
@@ -868,7 +804,9 @@ function renderFotos(){
   grid.innerHTML=ST.fotos.map((src,i)=>`<div class="foto-item"><img src="${src}" alt="Foto ${i+1}"><button class="foto-del" onclick="removeFoto(${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
-// GPS adaptado para Kodular
+// =========================================================
+// GPS
+// =========================================================
 function captureGPS(){
   const btn=document.getElementById('btnLoc');
   btn.classList.add('loading');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Capturando...';
@@ -886,14 +824,10 @@ function captureGPS(){
     let msg='GPS indisponível';
     if(err.code===1) msg='Permissão negada - use entrada manual';
     else if(err.code===2) msg='Posição indisponível - use manual';
-    else if(err.code===3) msg='Tempo esgotado - use manual';
     showToast(msg,'error');
     document.getElementById('locManual').style.display='block';
     resetBtn();
   },{enableHighAccuracy:true,timeout:10000});
-}
-function showGPSFallback(){
-  document.getElementById('locManual').style.display='block';
 }
 function resetBtn(){ const b=document.getElementById('btnLoc');b.classList.remove('loading');b.innerHTML='<i class="fas fa-crosshairs"></i> Capturar Localização Atual'; }
 function applyManualGPS(){
@@ -939,7 +873,7 @@ function loadData(){
 }
 
 // =========================================================
-// PDF e PLANOS FEITOS
+// PDF - CORRIGIDO PARA KODULAR (USANDO BLOB)
 // =========================================================
 function gerarCodigo(nome){
   const ini=nome.trim().split(/\s+/).map(p=>p[0]||'').join('').toUpperCase().slice(0,3).padEnd(3,'X');
@@ -954,122 +888,33 @@ function gerarESalvar(){
   showLoading('Gerando PDF...');
   setTimeout(()=>{
     try{
-      const pdfB64=buildPDF();
-      const codigo=gerarCodigo(nome);
-      const plano={
-        id:Date.now(),codigo,nome,plano:ST.plano,
-        contratacao:ST.contratacao||'Plano Novo',
-        valor:g('f-valor'),vendedor:g('f-vendedor'),
-        dadesao:g('f-dadesao'),dvenc:g('f-dvenc'),
-        cidade:g('f-cidade'),ref:g('f-ref'),
-        pdfB64,dataCriacao:new Date().toISOString()
+      const pdfBlob = buildPDFBlob();
+      const codigo = gerarCodigo(nome);
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        const pdfB64 = reader.result;
+        const plano = {
+          id:Date.now(), codigo, nome, plano:ST.plano,
+          contratacao:ST.contratacao||'Plano Novo',
+          valor:g('f-valor'), vendedor:g('f-vendedor'),
+          dadesao:g('f-dadesao'), dvenc:g('f-dvenc'),
+          cidade:g('f-cidade'), ref:g('f-ref'),
+          pdfB64, dataCriacao:new Date().toISOString()
+        };
+        planosFeitos.unshift(plano);
+        savePlanosFeitos(); updatePlanosBadge();
+        pdfGeradoBlob = pdfBlob;
+        pdfGeradoNome = nome.replace(/\s+/g,'_')+'_'+codigo;
+        hideLoading();
+        showToast('Plano salvo! Código: '+codigo,'success');
+        abrirModalPDF();
       };
-      planosFeitos.unshift(plano);
-      savePlanosFeitos(); updatePlanosBadge();
-      pdfGeradoB64 = pdfB64;
-      pdfGeradoNome = nome.replace(/\s+/g,'_')+'_'+codigo;
-      hideLoading();
-      showToast('Plano salvo! Código: '+codigo,'success');
-      abrirModalPDF();
-    }catch(err){hideLoading();showToast('Erro ao gerar PDF','error');console.error(err);}
+      reader.readAsDataURL(pdfBlob);
+    }catch(err){hideLoading();showToast('Erro ao gerar PDF: '+err.message,'error');console.error(err);}
   },300);
 }
 
-function abrirModalPDF(){
-  document.getElementById('pdfModalTitle').textContent = 'PDF - '+g('f-nome');
-  document.getElementById('pdfModal').classList.add('open');
-}
-function closePdfModal(){ document.getElementById('pdfModal').classList.remove('open'); pdfGeradoB64=''; }
-function downloadPDF(){
-  if(!pdfGeradoB64){showToast('PDF não disponível','error');return;}
-  const a=document.createElement('a'); a.href=pdfGeradoB64; a.download=pdfGeradoNome+'.pdf'; a.click();
-  showToast('Download iniciado','success');
-}
-function sharePDF(){
-  if(!pdfGeradoB64){showToast('PDF não disponível','error');return;}
-  if(navigator.share){
-    navigator.share({title:'PAX PREVENIR', text:'Plano funerário', url:pdfGeradoB64}).catch(()=>downloadPDF());
-  } else { downloadPDF(); }
-}
-function abrirDlPlano(id){
-  const p=planosFeitos.find(x=>x.id===id);
-  if(p){ pdfGeradoB64=p.pdfB64; pdfGeradoNome=p.nome+'_'+p.codigo; abrirModalPDF(); }
-  else showToast('Plano não encontrado','error');
-}
-function copiarCodigo(codigo){
-  try{
-    navigator.clipboard.writeText(codigo).then(()=>showToast('Código copiado: '+codigo,'success')).catch(()=>fallbackCopy(codigo));
-  }catch(e){fallbackCopy(codigo);}
-}
-function fallbackCopy(txt){
-  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0';
-  document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-  showToast('Código copiado: '+txt,'success');
-}
-function planTagClass(plano){
-  const m={Rubi:'tag-rubi',Esmeralda:'tag-esmeralda',Ouro:'tag-ouro',Nacional:'tag-nacional'};
-  return m[plano]||'tag-nacional';
-}
-function loadPlanosFeitos(){ try{planosFeitos=JSON.parse(localStorage.getItem('pax_planos')||'[]');}catch(e){planosFeitos=[];} }
-function savePlanosFeitos(){ try{localStorage.setItem('pax_planos',JSON.stringify(planosFeitos));} catch(e){showToast('Armazenamento cheio!','error');} }
-function updatePlanosBadge(){
-  const n=planosFeitos.length;
-  const b=document.getElementById('navBadgePlanos');
-  if(n>0){b.style.display='flex';b.textContent=n;}else b.style.display='none';
-  document.getElementById('pl-total').textContent=n;
-  const hoje=new Date().toISOString().split('T')[0];
-  document.getElementById('pl-hoje').textContent=planosFeitos.filter(p=>p.dataCriacao&&p.dataCriacao.startsWith(hoje)).length;
-}
-function confirmDeletePlan(id){
-  openModal('Excluir Plano','Remove o plano e o PDF. Não pode ser desfeita!','del',()=>{
-    planosFeitos=planosFeitos.filter(p=>p.id!==id);
-    savePlanosFeitos();renderPlanos();showToast('Plano excluído');
-  });
-}
-function renderPlanos(){
-  loadPlanosFeitos(); updatePlanosBadge();
-  const q=(document.getElementById('searchPlanos')?.value||'').toLowerCase();
-  const lista=planosFeitos.filter(p=>!q||p.nome.toLowerCase().includes(q)||p.codigo.toLowerCase().includes(q));
-  const container=document.getElementById('planosList');
-  if(!lista.length){
-    container.innerHTML='<div class="empty-state" style="border-radius:var(--radius)"><i class="fas fa-folder-open"></i>Nenhum plano encontrado</div>';
-    return;
-  }
-  container.innerHTML=lista.map(p=>`
-    <div class="pf-card">
-      <div class="pf-top">
-        <div class="pf-codigo-faixa">${p.codigo}</div>
-        <div class="pf-body">
-          <div class="pf-nome">${p.nome}</div>
-          <span class="pf-plano-tag ${planTagClass(p.plano)}"><i class="fas fa-tag"></i>${p.plano} · ${p.contratacao}</span>
-          <div class="pf-codigo-destaque">
-            <div>
-              <div class="pf-codigo-label">Código do Plano</div>
-              <div class="pf-codigo-val">${p.codigo}</div>
-            </div>
-            <button class="pf-codigo-copy" onclick="copiarCodigo('${p.codigo}')" title="Copiar código"><i class="fas fa-copy"></i></button>
-          </div>
-          <div class="pf-meta">
-            ${p.valor?`<span class="pf-meta-item"><i class="fas fa-dollar-sign"></i><strong>${p.valor}</strong></span>`:''}
-            ${p.vendedor?`<span class="pf-meta-item"><i class="fas fa-user-tie"></i><strong>${p.vendedor}</strong></span>`:''}
-            ${p.dadesao?`<span class="pf-meta-item"><i class="fas fa-calendar-check"></i>${fmtDate(p.dadesao)}</span>`:''}
-            ${p.dvenc?`<span class="pf-meta-item"><i class="fas fa-calendar-times"></i>Venc: ${fmtDate(p.dvenc)}</span>`:''}
-            ${p.cidade?`<span class="pf-meta-item"><i class="fas fa-city"></i>${p.cidade}</span>`:''}
-          </div>
-          <div class="pf-btns">
-            <button class="btn-sm btn-sm-navy" onclick="abrirDlPlano(${p.id})"><i class="fas fa-eye"></i> Ver / Baixar PDF</button>
-            <button class="btn-sm btn-sm-red" onclick="confirmDeletePlan(${p.id})"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// =========================================================
-// BUILD PDF
-// =========================================================
-function buildPDF(){
+function buildPDFBlob(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
   const W=210,M=20;
@@ -1125,7 +970,7 @@ function buildPDF(){
     doc.setFontSize(10); doc.setTextColor(160,170,190); doc.text('Nenhuma foto foi adicionada a este cadastro.',M,y+10);
   }
   rodape(doc,W,3);
-  return doc.output('datauristring');
+  return doc.output('blob');
 }
 
 function hdr0(doc,W,M){
@@ -1154,6 +999,110 @@ function rodape(doc,W,pg){
 }
 
 function fmtDate(d){ if(!d)return''; const[y,m,day]=d.split('-'); return`${day}/${m}/${y}`; }
+
+function abrirModalPDF(){
+  document.getElementById('pdfModalTitle').textContent = 'PDF - '+g('f-nome');
+  document.getElementById('pdfModal').classList.add('open');
+}
+function closePdfModal(){ document.getElementById('pdfModal').classList.remove('open'); pdfGeradoBlob=null; }
+function downloadPDF(){
+  if(!pdfGeradoBlob){showToast('PDF não disponível','error');return;}
+  const url = URL.createObjectURL(pdfGeradoBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = pdfGeradoNome+'.pdf';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Download iniciado','success');
+}
+function sharePDF(){
+  if(!pdfGeradoBlob){showToast('PDF não disponível','error');return;}
+  if(navigator.share && navigator.canShare && navigator.canShare({files: [new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'})]})){
+    const file = new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'});
+    navigator.share({files: [file], title: 'PAX PREVENIR', text: 'Plano funerário'}).catch(()=>downloadPDF());
+  } else { downloadPDF(); }
+}
+function abrirDlPlano(id){
+  const p=planosFeitos.find(x=>x.id===id);
+  if(p){ 
+    const byteChars = atob(p.pdfB64.split(',')[1]);
+    const byteNumbers = new Array(byteChars.length);
+    for(let i=0; i<byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+    const byteArray = new Uint8Array(byteNumbers);
+    pdfGeradoBlob = new Blob([byteArray], {type: 'application/pdf'});
+    pdfGeradoNome = p.nome+'_'+p.codigo;
+    abrirModalPDF();
+  } else showToast('Plano não encontrado','error');
+}
+function copiarCodigo(codigo){
+  try{
+    navigator.clipboard.writeText(codigo).then(()=>showToast('Código copiado: '+codigo,'success')).catch(()=>fallbackCopy(codigo));
+  }catch(e){fallbackCopy(codigo);}
+}
+function fallbackCopy(txt){
+  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+  showToast('Código copiado: '+txt,'success');
+}
+function planTagClass(plano){
+  const m={Rubi:'tag-rubi',Esmeralda:'tag-esmeralda',Ouro:'tag-ouro',Nacional:'tag-nacional'};
+  return m[plano]||'tag-nacional';
+}
+function loadPlanosFeitos(){ try{planosFeitos=JSON.parse(localStorage.getItem('pax_planos')||'[]');}catch(e){planosFeitos=[];} }
+function savePlanosFeitos(){ try{localStorage.setItem('pax_planos',JSON.stringify(planosFeitos));} catch(e){showToast('Armazenamento cheio! Exclua planos antigos.','error');} }
+function updatePlanosBadge(){
+  const n=planosFeitos.length;
+  const b=document.getElementById('navBadgePlanos');
+  if(n>0){b.style.display='flex';b.textContent=n;}else b.style.display='none';
+  document.getElementById('pl-total').textContent=n;
+  const hoje=new Date().toISOString().split('T')[0];
+  document.getElementById('pl-hoje').textContent=planosFeitos.filter(p=>p.dataCriacao&&p.dataCriacao.startsWith(hoje)).length;
+}
+function confirmDeletePlan(id){
+  openModal('Excluir Plano','Remove o plano e o PDF. Não pode ser desfeita!','del',()=>{
+    planosFeitos=planosFeitos.filter(p=>p.id!==id);
+    savePlanosFeitos();renderPlanos();showToast('Plano excluído');
+  });
+}
+function renderPlanos(){
+  loadPlanosFeitos(); updatePlanosBadge();
+  const q=(document.getElementById('searchPlanos')?.value||'').toLowerCase();
+  const lista=planosFeitos.filter(p=>!q||p.nome.toLowerCase().includes(q)||p.codigo.toLowerCase().includes(q));
+  const container=document.getElementById('planosList');
+  if(!lista.length){
+    container.innerHTML='<div class="empty-state" style="border-radius:var(--radius)"><i class="fas fa-folder-open"></i>Nenhum plano encontrado</div>';
+    return;
+  }
+  container.innerHTML=lista.map(p=>`
+    <div class="pf-card">
+      <div class="pf-top">
+        <div class="pf-codigo-faixa">${p.codigo}</div>
+        <div class="pf-body">
+          <div class="pf-nome">${p.nome}</div>
+          <span class="pf-plano-tag ${planTagClass(p.plano)}"><i class="fas fa-tag"></i>${p.plano} · ${p.contratacao}</span>
+          <div class="pf-codigo-destaque">
+            <div>
+              <div class="pf-codigo-label">Código do Plano</div>
+              <div class="pf-codigo-val">${p.codigo}</div>
+            </div>
+            <button class="pf-codigo-copy" onclick="copiarCodigo('${p.codigo}')" title="Copiar código"><i class="fas fa-copy"></i></button>
+          </div>
+          <div class="pf-meta">
+            ${p.valor?`<span class="pf-meta-item"><i class="fas fa-dollar-sign"></i><strong>${p.valor}</strong></span>`:''}
+            ${p.vendedor?`<span class="pf-meta-item"><i class="fas fa-user-tie"></i><strong>${p.vendedor}</strong></span>`:''}
+            ${p.dadesao?`<span class="pf-meta-item"><i class="fas fa-calendar-check"></i>${fmtDate(p.dadesao)}</span>`:''}
+            ${p.dvenc?`<span class="pf-meta-item"><i class="fas fa-calendar-times"></i>Venc: ${fmtDate(p.dvenc)}</span>`:''}
+            ${p.cidade?`<span class="pf-meta-item"><i class="fas fa-city"></i>${p.cidade}</span>`:''}
+          </div>
+          <div class="pf-btns">
+            <button class="btn-sm btn-sm-navy" onclick="abrirDlPlano(${p.id})"><i class="fas fa-eye"></i> Ver / Baixar PDF</button>
+            <button class="btn-sm btn-sm-red" onclick="confirmDeletePlan(${p.id})"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 
 // =========================================================
 // ADESÕES
@@ -1232,7 +1181,7 @@ function saveConfig(){ config.empresa=g('cfg-emp');config.vendedor=g('cfg-vend')
 function loadConfig(){ try{const c=JSON.parse(localStorage.getItem('pax_config')||'{}');Object.assign(config,c);}catch(e){} s('cfg-emp',config.empresa||'PAX PREVENIR');s('cfg-vend',config.vendedor);s('cfg-cidade',config.cidade); }
 
 // =========================================================
-// MODAIS E TOASTS
+// MODAIS
 // =========================================================
 let modalCB=null;
 function openModal(title,text,type,cb){
