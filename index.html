@@ -7,10 +7,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <title>PAX PREVENIR – Sistema de Planos Funerários</title>
 
-<!-- FAVICON SVG inline -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Ctext x='32' y='46' font-size='36' text-anchor='middle' font-family='serif'%3E%F0%9F%95%8A%EF%B8%8F%3C/text%3E%3C/svg%3E"/>
-<link rel="apple-touch-icon" id="apple-touch-icon" href=""/>
-
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -282,7 +278,6 @@ select.field-inp{cursor:pointer}
 .btn-sm-green{background:rgba(45,125,90,.1);color:var(--green);border:1.5px solid rgba(45,125,90,.2)}
 .btn-sm-red{background:rgba(192,57,43,.08);color:var(--red);border:1.5px solid rgba(192,57,43,.2)}
 
-/* Modal PDF simplificado para Kodular */
 .pdf-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;flex-direction:column}
 .pdf-modal.open{display:flex}
 .pdf-modal-header{background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:12px}
@@ -778,6 +773,7 @@ function abrirGaleriaKodular(){
 
 function addFotos(input){
   const files=Array.from(input.files); let count=0;
+  if(files.length === 0) return;
   files.forEach(file=>{
     const reader=new FileReader();
     reader.onload=e=>{
@@ -791,8 +787,10 @@ function addFotos(input){
         ST.fotos.push(canvas.toDataURL('image/jpeg',0.75));
         count++; if(count===files.length){renderFotos();autoSave();showToast(count+' foto(s) adicionada(s)','success');}
       };
+      img.onerror = function(){ count++; if(count===files.length){renderFotos();autoSave();} };
       img.src=e.target.result;
     };
+    reader.onerror = function(){ count++; if(count===files.length){renderFotos();autoSave();} };
     reader.readAsDataURL(file);
   });
   input.value='';
@@ -873,7 +871,7 @@ function loadData(){
 }
 
 // =========================================================
-// PDF - CORRIGIDO PARA KODULAR (USANDO BLOB)
+// PDF - CORRIGIDO (variáveis W e M definidas dentro da função)
 // =========================================================
 function gerarCodigo(nome){
   const ini=nome.trim().split(/\s+/).map(p=>p[0]||'').join('').toUpperCase().slice(0,3).padEnd(3,'X');
@@ -889,6 +887,7 @@ function gerarESalvar(){
   setTimeout(()=>{
     try{
       const pdfBlob = buildPDFBlob();
+      if(!pdfBlob){ throw new Error('Falha ao gerar PDF'); }
       const codigo = gerarCodigo(nome);
       const reader = new FileReader();
       reader.onloadend = function() {
@@ -909,6 +908,7 @@ function gerarESalvar(){
         showToast('Plano salvo! Código: '+codigo,'success');
         abrirModalPDF();
       };
+      reader.onerror = function(){ hideLoading(); showToast('Erro ao salvar plano','error'); };
       reader.readAsDataURL(pdfBlob);
     }catch(err){hideLoading();showToast('Erro ao gerar PDF: '+err.message,'error');console.error(err);}
   },300);
@@ -917,35 +917,53 @@ function gerarESalvar(){
 function buildPDFBlob(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=210,M=20;
-  hdr0(doc,W,M);
+  const W=210;
+  const M=20;
+  
+  // Header principal
+  doc.setFillColor(15,32,68); doc.rect(0,0,W,45,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',W/2,20,{align:'center'});
+  doc.setFontSize(10); doc.setTextColor(180,190,210); doc.text('Sistema de Planos Funerários',W/2,28,{align:'center'});
+  doc.setDrawColor(201,168,76); doc.setLineWidth(0.5); doc.line(M,34,W-M,34);
+  doc.setFontSize(11); doc.setTextColor(255,255,255); doc.text('Tipo: '+(ST.contratacao||'Plano Novo'),M,41); doc.text('Plano: '+ST.plano,M+60,41); doc.text('Data: '+new Date().toLocaleDateString('pt-BR'),W-M,41,{align:'right'});
+  
   let y=55;
-  secHdr(doc,M,y,'DADOS DO TITULAR'); y+=10;
+  
+  // DADOS DO TITULAR
+  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('DADOS DO TITULAR',M+4,y); y+=10;
   const campos=[['Nome Completo',g('f-nome')],['CPF',g('f-cpf')],['RG',g('f-rg')],['Data de Nascimento',fmtDate(g('f-nasc'))],['Telefone',g('f-tel')],['Estado Civil',g('f-civil')],['Religião',g('f-rel')],['Endereço',(g('f-end')+' '+g('f-num')).trim()],['Bairro',g('f-bairro')],['CEP',g('f-cep')],['Cidade',g('f-cidade')],['Ponto de Referência',g('f-ref')]].filter(c=>c[1].trim());
   doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
   campos.forEach(([lbl,val])=>{
-    if(y>275){doc.addPage();miniHeader(doc,W,M);y=30;}
+    if(y>275){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
     doc.setTextColor(100,110,130); doc.text(lbl+':',M,y);
     doc.setTextColor(30,40,60); doc.setFont('helvetica','bold'); doc.text(val,M+52,y);
     doc.setFont('helvetica','normal'); doc.setDrawColor(220,225,235); doc.setLineWidth(0.2); doc.line(M,y+2,W-M,y+2); y+=9;
   });
-  y+=4; if(y>255){doc.addPage();miniHeader(doc,W,M);y=30;}
-  secHdr(doc,M,y,'INFORMAÇÕES DO PLANO'); y+=10;
+  
+  y+=4; if(y>255){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
+  
+  // INFORMAÇÕES DO PLANO
+  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('INFORMAÇÕES DO PLANO',M+4,y); y+=10;
   const planCampos=[['Tipo de Contratação',ST.contratacao||'Plano Novo'],['Plano',ST.plano],['Valor',g('f-valor')],['Data de Adesão',fmtDate(g('f-dadesao'))],['Data de Vencimento',fmtDate(g('f-dvenc'))],['Forma de Pagamento',document.querySelector('input[name="pg"]:checked')?.value||''],['Vendedor',g('f-vendedor')]].filter(c=>c[1].trim());
   planCampos.forEach(([lbl,val])=>{
     doc.setTextColor(100,110,130); doc.text(lbl+':',M,y);
     doc.setTextColor(30,40,60); doc.setFont('helvetica','bold'); doc.text(val,M+52,y);
     doc.setFont('helvetica','normal'); doc.setDrawColor(220,225,235); doc.setLineWidth(0.2); doc.line(M,y+2,W-M,y+2); y+=9;
   });
+  
+  // DEPENDENTES
   if(ST.dependentes.length){
-    y+=4; if(y>240){doc.addPage();miniHeader(doc,W,M);y=30;}
-    secHdr(doc,M,y,'DEPENDENTES'); y+=8;
+    y+=4; if(y>240){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
+    doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('DEPENDENTES',M+4,y); y+=8;
     doc.autoTable({startY:y,margin:{left:M,right:M},head:[['#','Nome','Parentesco','Nascimento']],body:ST.dependentes.map((d,i)=>[i+1,d.nome,d.parentesco,fmtDate(d.nasc)]),headStyles:{fillColor:[15,32,68],textColor:255,fontSize:9,fontStyle:'bold'},bodyStyles:{fontSize:9,textColor:[40,50,70]},alternateRowStyles:{fillColor:[248,249,252]},theme:'grid'});
     y=doc.lastAutoTable.finalY+6;
   }
-  rodape(doc,W,1);
-  doc.addPage(); miniHeader(doc,W,M); y=30;
-  secHdr(doc,M,y,'LOCALIZAÇÃO DA RESIDÊNCIA'); y+=14;
+  
+  rodapePDF(doc,W,1);
+  
+  // LOCALIZAÇÃO
+  doc.addPage(); miniHeaderPDF(doc,W,M); y=30;
+  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('LOCALIZAÇÃO DA RESIDÊNCIA',M+4,y); y+=14;
   if(ST.localizacao){
     doc.setFillColor(232,246,240); doc.roundedRect(M,y,W-2*M,40,3,3,'F'); doc.setDrawColor(45,125,90); doc.setLineWidth(0.5); doc.roundedRect(M,y,W-2*M,40,3,3,'S');
     doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(45,125,90); doc.text('Coordenadas GPS',M+6,y+10);
@@ -954,13 +972,15 @@ function buildPDFBlob(){
   } else {
     doc.setFillColor(250,245,230); doc.roundedRect(M,y,W-2*M,24,3,3,'F'); doc.setFont('helvetica','italic'); doc.setFontSize(10); doc.setTextColor(150,120,40); doc.text('Localização não capturada para este cadastro.',M+6,y+14);
   }
-  rodape(doc,W,2);
-  doc.addPage(); miniHeader(doc,W,M); y=30;
-  secHdr(doc,M,y,'FOTOS DA RESIDÊNCIA'); y+=10;
+  rodapePDF(doc,W,2);
+  
+  // FOTOS
+  doc.addPage(); miniHeaderPDF(doc,W,M); y=30;
+  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('FOTOS DA RESIDÊNCIA',M+4,y); y+=10;
   if(ST.fotos.length){
     const cols=2,fw=(W-2*M-8)/cols,fh=fw*0.7;
     ST.fotos.forEach((foto,i)=>{
-      if(y+fh>285){doc.addPage();miniHeader(doc,W,M);y=30;}
+      if(y+fh>285){doc.addPage();miniHeaderPDF(doc,W,M);y=30;}
       const col=i%cols,x=M+(col*(fw+8));
       if(col===0&&i>0)y+=fh+8;
       try{doc.addImage(foto,'JPEG',x,y,fw,fh,undefined,'MEDIUM');}catch(e){}
@@ -969,29 +989,20 @@ function buildPDFBlob(){
   } else {
     doc.setFontSize(10); doc.setTextColor(160,170,190); doc.text('Nenhuma foto foi adicionada a este cadastro.',M,y+10);
   }
-  rodape(doc,W,3);
+  rodapePDF(doc,W,3);
+  
   return doc.output('blob');
 }
 
-function hdr0(doc,W,M){
-  doc.setFillColor(15,32,68); doc.rect(0,0,W,45,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',W/2,20,{align:'center'});
-  doc.setFontSize(10); doc.setTextColor(180,190,210); doc.text('Sistema de Planos Funerários',W/2,28,{align:'center'});
-  doc.setDrawColor(201,168,76); doc.setLineWidth(0.5); doc.line(M,34,W-M,34);
-  doc.setFontSize(11); doc.setTextColor(255,255,255); doc.text('Tipo: '+(ST.contratacao||'Plano Novo'),M,41); doc.text('Plano: '+ST.plano,M+60,41); doc.text('Data: '+new Date().toLocaleDateString('pt-BR'),W-M,41,{align:'right'});
-}
-function miniHeader(doc,W,M){
+function miniHeaderPDF(doc,W,M){
   doc.setFillColor(15,32,68); doc.rect(0,0,W,20,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',M,13);
   doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(180,190,210); doc.text('Sistema de Planos Funerários',M+46,13);
   doc.text(new Date().toLocaleDateString('pt-BR'),W-M,13,{align:'right'});
   doc.setDrawColor(201,168,76); doc.setLineWidth(0.3); doc.line(0,20,W,20);
 }
-function secHdr(doc,M,y,txt){
-  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text(txt,M+4,y);
-}
-function rodape(doc,W,pg){
+
+function rodapePDF(doc,W,pg){
   doc.setFillColor(15,32,68); doc.rect(0,285,W,12,'F');
   doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(150,160,180);
   doc.text('PAX PREVENIR © '+new Date().getFullYear()+' – Documento gerado pelo sistema.',20,292);
@@ -1011,23 +1022,25 @@ function downloadPDF(){
   const a = document.createElement('a');
   a.href = url;
   a.download = pdfGeradoNome+'.pdf';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
   showToast('Download iniciado','success');
 }
 function sharePDF(){
   if(!pdfGeradoBlob){showToast('PDF não disponível','error');return;}
-  if(navigator.share && navigator.canShare && navigator.canShare({files: [new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'})]})){
-    const file = new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'});
+  const file = new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'});
+  if(navigator.share && navigator.canShare && navigator.canShare({files: [file]})){
     navigator.share({files: [file], title: 'PAX PREVENIR', text: 'Plano funerário'}).catch(()=>downloadPDF());
   } else { downloadPDF(); }
 }
 function abrirDlPlano(id){
   const p=planosFeitos.find(x=>x.id===id);
   if(p){ 
-    const byteChars = atob(p.pdfB64.split(',')[1]);
-    const byteNumbers = new Array(byteChars.length);
-    for(let i=0; i<byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+    const base64Data = p.pdfB64.split(',')[1];
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for(let i=0; i<byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
     const byteArray = new Uint8Array(byteNumbers);
     pdfGeradoBlob = new Blob([byteArray], {type: 'application/pdf'});
     pdfGeradoNome = p.nome+'_'+p.codigo;
@@ -1040,7 +1053,7 @@ function copiarCodigo(codigo){
   }catch(e){fallbackCopy(codigo);}
 }
 function fallbackCopy(txt){
-  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0';
+  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0;top:0;left:0';
   document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
   showToast('Código copiado: '+txt,'success');
 }
