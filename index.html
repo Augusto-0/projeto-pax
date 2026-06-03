@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>PAX PREVENIR – Sistema de Planos Funerários</title>
+<title>PAX PREVENIR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -139,6 +139,7 @@ select.field-inp{cursor:pointer}
 .dep-form .fg-full{grid-column:1/-1}
 .btn-add-dep{width:100%;padding:13px;background:rgba(15,32,68,.06);border:2px dashed var(--navy3);border-radius:var(--radius-sm);color:var(--navy);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 
+/* FOTOS — câmera nativa Android */
 .fotos-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
 .fotos-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .btn-foto{padding:14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -174,7 +175,6 @@ select.field-inp{cursor:pointer}
 .btn-secondary{width:100%;padding:14px;background:var(--white);border:2px solid var(--navy3);color:var(--navy);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-danger{width:100%;padding:14px;background:rgba(192,57,43,.08);border:2px solid rgba(192,57,43,.2);color:var(--red);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .stat-card{background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
 .stat-val{font-size:26px;font-weight:700;font-family:var(--font-display)}
@@ -183,7 +183,6 @@ select.field-inp{cursor:pointer}
 .stat-icon{font-size:20px;margin-bottom:2px}
 .stat-green .stat-icon{color:var(--green)}.stat-orange .stat-icon{color:var(--orange)}.stat-blue .stat-icon{color:var(--navy3)}
 
-/* ADESÕES */
 .nova-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:20px}
 .nova-card-ttl{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--navy);margin-bottom:16px}
 .nova-card-ttl i{color:var(--gold)}
@@ -217,7 +216,6 @@ select.field-inp{cursor:pointer}
 .empty-state{text-align:center;padding:24px;color:var(--gray4);font-size:13px;background:var(--white);border-radius:0 0 var(--radius-sm) var(--radius-sm)}
 .empty-state i{font-size:28px;display:block;margin-bottom:6px;opacity:.35}
 
-/* ===== PLANOS FEITOS ===== */
 .planos-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .planos-search-wrap{position:relative;margin-bottom:16px}
 .planos-search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray4);font-size:15px}
@@ -225,7 +223,6 @@ select.field-inp{cursor:pointer}
 
 .pf-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:12px;overflow:hidden;animation:fadeIn .25s ease}
 .pf-top{display:flex;align-items:stretch;gap:0}
-/* faixa lateral colorida com o código */
 .pf-codigo-faixa{background:var(--navy);color:var(--gold2);writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);font-size:10px;font-weight:800;letter-spacing:2px;padding:14px 8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:32px}
 .pf-body{flex:1;padding:16px}
 .pf-nome{font-size:16px;font-weight:700;color:var(--navy);font-family:var(--font-display);margin-bottom:2px}
@@ -238,43 +235,32 @@ select.field-inp{cursor:pointer}
 .pf-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--gray4)}
 .pf-meta-item i{font-size:10px;color:var(--navy3)}
 .pf-meta-item strong{color:var(--gray5)}
-
-/* CODIGO DESTAQUE */
 .pf-codigo-destaque{background:rgba(201,168,76,.08);border:1.5px solid rgba(201,168,76,.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .pf-codigo-label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
 .pf-codigo-val{font-size:16px;font-weight:800;color:var(--navy);font-family:var(--font-display);letter-spacing:1px;flex:1}
 .pf-codigo-copy{background:none;border:none;color:var(--gold);cursor:pointer;font-size:14px;padding:4px}
-
 .pf-btns{display:flex;gap:8px;flex-wrap:wrap}
 .btn-sm{padding:9px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:.2s;flex:1;justify-content:center;min-width:0}
 .btn-sm-navy{background:var(--navy);color:#fff}
-.btn-sm-gold{background:rgba(201,168,76,.12);color:#7a5c00;border:1.5px solid rgba(201,168,76,.35)}
 .btn-sm-green{background:rgba(45,125,90,.1);color:var(--green);border:1.5px solid rgba(45,125,90,.2)}
 .btn-sm-red{background:rgba(192,57,43,.08);color:var(--red);border:1.5px solid rgba(192,57,43,.2)}
 
-/* Modal download */
-.dl-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(6px)}
-.dl-modal-bg.open{opacity:1;pointer-events:all}
-.dl-sheet{background:var(--white);border-radius:24px 24px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;transform:translateY(40px);transition:.3s}
-.dl-modal-bg.open .dl-sheet{transform:translateY(0)}
-.dl-sheet-handle{width:40px;height:4px;background:var(--gray3);border-radius:4px;margin:0 auto 20px}
-.dl-sheet-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px;text-align:center}
-.dl-sheet-sub{font-size:13px;color:var(--gray4);text-align:center;margin-bottom:20px}
-.dl-codigo-box{background:rgba(201,168,76,.08);border:1.5px solid rgba(201,168,76,.3);border-radius:10px;padding:10px 16px;text-align:center;margin-bottom:20px}
-.dl-codigo-box span{font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
-.dl-codigo-box strong{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:2px;font-family:var(--font-display)}
-.dl-options{display:flex;flex-direction:column;gap:10px}
-.dl-option{display:flex;align-items:center;gap:14px;padding:16px;border-radius:var(--radius-sm);border:1.5px solid var(--gray2);cursor:pointer;transition:.2s;background:var(--gray1)}
-.dl-option:hover{border-color:var(--navy3);background:rgba(15,32,68,.04)}
-.dl-option-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.dl-opt-navy .dl-option-icon{background:rgba(15,32,68,.1);color:var(--navy)}
-.dl-opt-green .dl-option-icon{background:rgba(45,125,90,.1);color:var(--green)}
-.dl-opt-gold .dl-option-icon{background:rgba(201,168,76,.15);color:var(--gold)}
-.dl-option-info h4{font-size:14px;font-weight:700;color:var(--navy)}
-.dl-option-info p{font-size:12px;color:var(--gray4);margin-top:2px}
-.dl-cancel{width:100%;padding:14px;background:var(--gray2);border:none;color:var(--gray5);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;margin-top:14px}
+/* MODAL PDF — fullscreen overlay dentro do app */
+.pdf-viewer{position:fixed;inset:0;background:#222;z-index:900;display:none;flex-direction:column}
+.pdf-viewer.open{display:flex}
+.pdf-topbar{background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:12px}
+.pdf-topbar-title{flex:1;color:var(--gold2);font-size:14px;font-weight:700;font-family:var(--font-display)}
+.pdf-close-btn{background:rgba(255,255,255,.12);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
+.pdf-share-btn{background:var(--green);border:none;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.pdf-iframe-wrap{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
+.pdf-iframe-wrap iframe{width:100%;height:100%;border:none;display:block}
+.pdf-fallback{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
+.pdf-fallback i{font-size:48px;color:var(--gold2)}
+.pdf-fallback h3{color:#fff;font-family:var(--font-display);font-size:20px}
+.pdf-fallback p{color:rgba(255,255,255,.6);font-size:14px;line-height:1.5}
+.pdf-dl-btn{background:var(--gold);color:var(--navy);border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px}
+.pdf-share-big{background:var(--green);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px}
 
-/* CONFIG */
 .config-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:16px}
 .config-icon{font-size:28px;color:var(--navy3);margin-bottom:12px}
 .config-card h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy);margin-bottom:16px}
@@ -303,7 +289,7 @@ select.field-inp{cursor:pointer}
 .modal-ok{background:var(--navy);color:#fff}
 .modal-ok-danger{background:var(--red);color:#fff}
 
-.loading-screen{position:fixed;inset:0;background:var(--navy);z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:.3s}
+.loading-screen{position:fixed;inset:0;background:var(--navy);z-index:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:.3s}
 .loading-screen.show{opacity:1;pointer-events:all}
 .loader-ring{width:56px;height:56px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -313,11 +299,20 @@ select.field-inp{cursor:pointer}
   .form-grid{grid-template-columns:1fr}.fg-full{grid-column:1}
   .dep-form{grid-template-columns:1fr}.dep-form .fg-full{grid-column:1}
   .loc-manual-grid{grid-template-columns:1fr}
-  .pf-btns{gap:6px}
 }
 </style>
 </head>
 <body>
+
+<!-- VIEWER PDF fullscreen (funciona em WebView Android) -->
+<div class="pdf-viewer" id="pdfViewer">
+  <div class="pdf-topbar">
+    <button class="pdf-close-btn" onclick="closePdfViewer()"><i class="fas fa-times"></i></button>
+    <div class="pdf-topbar-title" id="pdfViewerTitle">PAX PREVENIR</div>
+    <button class="pdf-share-btn" onclick="sharePdfAtivo()"><i class="fas fa-share-alt"></i> Compartilhar</button>
+  </div>
+  <div class="pdf-iframe-wrap" id="pdfIframeWrap"></div>
+</div>
 
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 <nav class="sidebar" id="sidebar">
@@ -342,7 +337,7 @@ select.field-inp{cursor:pointer}
     <div class="nav-item" onclick="goPage('config')"><i class="fas fa-cog"></i><span>Configurações</span></div>
   </div>
   <div class="sidebar-footer">
-    <div class="sidebar-version">v2.1 · PAX PREVENIR</div>
+    <div class="sidebar-version">v3.0 · PAX PREVENIR</div>
     <div style="color:var(--green2);font-size:11px;display:flex;align-items:center;gap:5px"><i class="fas fa-circle" style="font-size:8px"></i> Online</div>
   </div>
 </nav>
@@ -439,11 +434,17 @@ select.field-inp{cursor:pointer}
   <div class="section-hdr"><h2>Fotos da Residência</h2></div>
   <div class="fotos-card">
     <div class="fotos-actions">
-      <button class="btn-foto btn-cam" onclick="document.getElementById('inp-foto1').click()"><i class="fas fa-camera"></i> Câmera / Galeria</button>
-      <button class="btn-foto btn-gal" onclick="document.getElementById('inp-foto2').click()"><i class="fas fa-images"></i> Arquivos</button>
+      <!-- capture="camera" abre câmera diretamente no Android -->
+      <button class="btn-foto btn-cam" onclick="document.getElementById('inp-cam').click()">
+        <i class="fas fa-camera"></i> Abrir Câmera
+      </button>
+      <button class="btn-foto btn-gal" onclick="document.getElementById('inp-gal').click()">
+        <i class="fas fa-images"></i> Galeria / Arquivo
+      </button>
     </div>
-    <input type="file" id="inp-foto1" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
-    <input type="file" id="inp-foto2" accept="image/jpeg,image/png,image/gif,image/webp" multiple style="display:none" onchange="addFotos(this)">
+    <!-- capture="camera" força câmera; segundo input sem capture = galeria -->
+    <input type="file" id="inp-cam" accept="image/*" capture="camera" style="display:none" onchange="addFotos(this)">
+    <input type="file" id="inp-gal" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
     <div class="fotos-grid" id="fotosGrid">
       <div class="fotos-empty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>
     </div>
@@ -462,7 +463,7 @@ select.field-inp{cursor:pointer}
     </div>
     <button class="btn-loc" id="btnLoc" onclick="captureGPS()"><i class="fas fa-crosshairs"></i> Capturar Localização Atual</button>
     <div class="loc-manual" id="locManual">
-      <p class="loc-manual-hint"><i class="fas fa-exclamation-triangle"></i> GPS indisponível — insira as coordenadas manualmente ou deixe em branco</p>
+      <p class="loc-manual-hint"><i class="fas fa-exclamation-triangle"></i> GPS indisponível — insira as coordenadas manualmente</p>
       <div class="loc-manual-grid">
         <div><div class="field-lbl">Latitude</div><input class="field-inp" id="f-lat-manual" placeholder="-10.123456" type="number" step="any" oninput="applyManualGPS()"></div>
         <div><div class="field-lbl">Longitude</div><input class="field-inp" id="f-lng-manual" placeholder="-37.123456" type="number" step="any" oninput="applyManualGPS()"></div>
@@ -471,7 +472,7 @@ select.field-inp{cursor:pointer}
   </div>
 
   <div class="final-btns">
-    <button class="btn-primary" onclick="gerarESalvar()"><i class="fas fa-save"></i> Salvar Plano (Gerar PDF)</button>
+    <button class="btn-primary" onclick="gerarESalvar()"><i class="fas fa-file-pdf"></i> Gerar e Visualizar PDF</button>
     <button class="btn-secondary" onclick="salvarAdesao()"><i class="fas fa-chart-line"></i> Registrar no Controle de Adesões</button>
     <button class="btn-danger" onclick="confirmClear()"><i class="fas fa-trash"></i> Limpar Formulário</button>
   </div>
@@ -547,43 +548,6 @@ select.field-inp{cursor:pointer}
 
 </main>
 
-<!-- SHEET: Download / Compartilhar PDF -->
-<div class="dl-modal-bg" id="dlModal">
-  <div class="dl-sheet">
-    <div class="dl-sheet-handle"></div>
-    <div class="dl-sheet-title" id="dlNome">Baixar PDF</div>
-    <div class="dl-sheet-sub">Escolha como deseja salvar o documento</div>
-    <div class="dl-codigo-box">
-      <span>Código do Plano</span>
-      <strong id="dlCodigo">—</strong>
-    </div>
-    <div class="dl-options">
-      <div class="dl-option dl-opt-navy" onclick="doBaixar()">
-        <div class="dl-option-icon"><i class="fas fa-download"></i></div>
-        <div class="dl-option-info">
-          <h4>Baixar no Dispositivo</h4>
-          <p>Salva o PDF na pasta Downloads do aparelho</p>
-        </div>
-      </div>
-      <div class="dl-option dl-opt-green" onclick="doCompartilhar()">
-        <div class="dl-option-icon"><i class="fas fa-share-alt"></i></div>
-        <div class="dl-option-info">
-          <h4>Compartilhar</h4>
-          <p>Envia via WhatsApp, Drive, e-mail e outros</p>
-        </div>
-      </div>
-      <div class="dl-option dl-opt-gold" onclick="doAbrirNoNavegador()">
-        <div class="dl-option-icon"><i class="fas fa-external-link-alt"></i></div>
-        <div class="dl-option-info">
-          <h4>Abrir / Visualizar</h4>
-          <p>Abre o PDF diretamente na tela</p>
-        </div>
-      </div>
-    </div>
-    <button class="dl-cancel" onclick="closeDlModal()">Cancelar</button>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 <div class="modal-bg" id="modalBg">
   <div class="modal-box">
@@ -609,9 +573,8 @@ let ST = { plano:'', contratacao:'', dependentes:[], fotos:[], localizacao:null 
 let adesoes = [];
 let planosFeitos = [];
 let config = { empresa:'PAX PREVENIR', vendedor:'', cidade:'' };
-
-// PDF ativo no modal de download
-let dlPDF = { b64:'', nome:'', codigo:'' };
+let pdfAtivoB64 = '';
+let pdfAtivoNome = '';
 
 // ============================================================
 // INIT
@@ -683,7 +646,7 @@ function renderDeps(){
 }
 
 // ============================================================
-// FOTOS
+// FOTOS — câmera nativa via <input capture="camera">
 // ============================================================
 function addFotos(input){
   const files=Array.from(input.files); if(!files.length)return;
@@ -718,14 +681,20 @@ function renderFotos(){
 }
 
 // ============================================================
-// GPS com fallback manual
+// GPS — funciona em WebView se app tem ACCESS_FINE_LOCATION
 // ============================================================
 function captureGPS(){
   const btn=document.getElementById('btnLoc');
   btn.classList.add('loading');
   btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Capturando...';
-  if(!navigator.geolocation){ showGPSFallback(); return; }
-  const tout=setTimeout(()=>showGPSFallback(), 12000);
+  if(!navigator.geolocation){
+    showToast('GPS não disponível neste dispositivo','error');
+    showGPSFallback(); return;
+  }
+  const tout=setTimeout(()=>{
+    showToast('Tempo esgotado — use entrada manual','error');
+    showGPSFallback();
+  }, 15000);
   navigator.geolocation.getCurrentPosition(
     pos=>{
       clearTimeout(tout);
@@ -734,16 +703,20 @@ function captureGPS(){
     },
     err=>{
       clearTimeout(tout);
-      showToast(err.code===1?'Permissão negada':'GPS indisponível — use entrada manual','error');
+      let msg='GPS indisponível';
+      if(err.code===1) msg='Permissão de GPS negada — ative nas configurações do app';
+      else if(err.code===2) msg='Posição indisponível — use entrada manual';
+      else if(err.code===3) msg='Tempo esgotado — use entrada manual';
+      showToast(msg,'error');
       showGPSFallback();
     },
-    {enableHighAccuracy:true,timeout:11000,maximumAge:0}
+    {enableHighAccuracy:true,timeout:14000,maximumAge:0}
   );
 }
 function showGPSFallback(){
   const btn=document.getElementById('btnLoc');
   btn.classList.remove('loading');
-  btn.innerHTML='<i class="fas fa-crosshairs"></i> Tentar GPS Novamente';
+  btn.innerHTML='<i class="fas fa-redo"></i> Tentar GPS Novamente';
   document.getElementById('locManual').style.display='block';
 }
 function applyManualGPS(){
@@ -758,7 +731,7 @@ function applyGPS(lat,lng){
   document.getElementById('mapsLink').href=`https://maps.google.com/?q=${lat},${lng}`;
   document.getElementById('locResult').style.display='block';
   const st=document.getElementById('locStatus'); st.classList.add('captured');
-  st.innerHTML='<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS obtido</p></div>';
+  st.innerHTML='<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS obtido com sucesso</p></div>';
   const btn=document.getElementById('btnLoc');
   btn.classList.remove('loading');
   btn.innerHTML='<i class="fas fa-check"></i> Localização Capturada';
@@ -825,11 +798,10 @@ function gerarESalvar(){
       savePlanosFeitos(); updatePlanosBadge();
       hideLoading();
       showToast('Plano salvo! Código: '+codigo,'success');
-      // Abre modal de download logo após salvar
-      setTimeout(()=>openDlModal(plano), 500);
+      setTimeout(()=>abrirPdfViewer(pdfB64, nome+' — '+codigo), 500);
     }catch(err){
       hideLoading();
-      showToast('Erro ao gerar PDF','error');
+      showToast('Erro ao gerar PDF: '+err.message,'error');
       console.error(err);
     }
   },300);
@@ -842,14 +814,136 @@ function gerarCodigo(nome){
 }
 
 // ============================================================
-// BUILD PDF — retorna data URI completo
+// VISUALIZADOR PDF INTERNO (fullscreen dentro do WebView)
+// ============================================================
+function abrirPdfViewer(b64, titulo){
+  pdfAtivoB64 = b64;
+  pdfAtivoNome = titulo || 'PAX PREVENIR';
+  document.getElementById('pdfViewerTitle').textContent = pdfAtivoNome;
+  const wrap = document.getElementById('pdfIframeWrap');
+  wrap.innerHTML = '';
+
+  // Tenta iframe com data URI (funciona em alguns WebViews Android com configuração correta)
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;min-height:calc(100vh - 60px)';
+  iframe.src = b64;
+  iframe.onerror = () => mostrarFallbackPdf(wrap);
+  wrap.appendChild(iframe);
+
+  // Aguarda 1.5s; se não carregou conteúdo, mostra botões alternativos
+  setTimeout(()=>{
+    try{
+      // Se iframe ficou em branco (common em WebView), mostra fallback
+      if(!iframe.contentDocument || !iframe.contentDocument.body ||
+         iframe.contentDocument.body.children.length === 0){
+        mostrarFallbackPdf(wrap);
+      }
+    }catch(e){ mostrarFallbackPdf(wrap); }
+  }, 1500);
+
+  document.getElementById('pdfViewer').classList.add('open');
+}
+
+function mostrarFallbackPdf(wrap){
+  wrap.innerHTML = `
+    <div class="pdf-fallback">
+      <i class="fas fa-file-pdf"></i>
+      <h3>PDF Gerado!</h3>
+      <p>Seu navegador interno não suporta visualização direta.<br>Use as opções abaixo para acessar o documento.</p>
+      <button class="pdf-dl-btn" onclick="tentarDownloadPdf()">
+        <i class="fas fa-download"></i> Salvar PDF
+      </button>
+      <br style="height:10px">
+      <button class="pdf-share-big" onclick="sharePdfAtivo()">
+        <i class="fas fa-share-alt"></i> Compartilhar PDF
+      </button>
+    </div>`;
+}
+
+function closePdfViewer(){
+  document.getElementById('pdfViewer').classList.remove('open');
+  document.getElementById('pdfIframeWrap').innerHTML='';
+  pdfAtivoB64='';
+}
+
+// Compartilhar via Web Share API com File (funciona em Android Chrome/WebView moderno)
+function sharePdfAtivo(){
+  if(!pdfAtivoB64){showToast('PDF não disponível','error');return;}
+  const fileName = 'PAX_'+pdfAtivoNome.replace(/[^a-zA-Z0-9]/g,'_').slice(0,40)+'.pdf';
+  try{
+    const pure=pdfAtivoB64.split(',')[1]||pdfAtivoB64;
+    const bytes=atob(pure);
+    const arr=new Uint8Array(bytes.length);
+    for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
+    const blob=new Blob([arr],{type:'application/pdf'});
+    const file=new File([blob],fileName,{type:'application/pdf'});
+
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({
+        files:[file],
+        title:'PAX PREVENIR — '+pdfAtivoNome,
+        text:'Plano funerário gerado pelo PAX PREVENIR'
+      }).then(()=>showToast('Compartilhado!','success'))
+        .catch(e=>{ if(e.name!=='AbortError') tentarDownloadPdf(); });
+    } else if(navigator.share){
+      // Share sem arquivo
+      navigator.share({title:'PAX PREVENIR',text:'Plano: '+pdfAtivoNome}).catch(()=>{});
+    } else {
+      tentarDownloadPdf();
+    }
+  }catch(e){
+    tentarDownloadPdf();
+  }
+}
+
+// Download via <a download> + fallback Blob
+function tentarDownloadPdf(){
+  if(!pdfAtivoB64){showToast('PDF não disponível','error');return;}
+  const fileName = 'PAX_'+pdfAtivoNome.replace(/[^a-zA-Z0-9]/g,'_').slice(0,40)+'.pdf';
+  // Método 1: data URI direto
+  try{
+    const a=document.createElement('a');
+    a.href=pdfAtivoB64;
+    a.download=fileName;
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ try{document.body.removeChild(a);}catch(e){} },500);
+    showToast('Iniciando download...','success');
+    return;
+  }catch(e){}
+  // Método 2: Blob URL
+  try{
+    const pure=pdfAtivoB64.split(',')[1]||pdfAtivoB64;
+    const bytes=atob(pure);
+    const arr=new Uint8Array(bytes.length);
+    for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
+    const blob=new Blob([arr],{type:'application/pdf'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=fileName;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(url); try{document.body.removeChild(a);}catch(e){} },1000);
+    showToast('Iniciando download...','success');
+  }catch(e){
+    showToast('Use "Compartilhar" para salvar o PDF','error');
+  }
+}
+
+// Abrir PDF de plano salvo
+function abrirDlPlano(id){
+  const p=planosFeitos.find(x=>x.id===id);
+  if(p){ pdfAtivoNome=p.nome+' — '+p.codigo; abrirPdfViewer(p.pdfB64, pdfAtivoNome); }
+  else showToast('Plano não encontrado','error');
+}
+
+// ============================================================
+// BUILD PDF
 // ============================================================
 function buildPDF(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
   const W=210,M=20;
-
-  // Pág 1 — Dados
   hdr0(doc,W,M);
   let y=55;
   secHdr(doc,M,y,'DADOS DO TITULAR'); y+=10;
@@ -875,8 +969,6 @@ function buildPDF(){
     y=doc.lastAutoTable.finalY+6;
   }
   addFtr(doc,W,1);
-
-  // Pág 2 — Localização
   doc.addPage(); hdrMini(doc,W,M); y=30;
   secHdr(doc,M,y,'LOCALIZAÇÃO DA RESIDÊNCIA'); y+=14;
   if(ST.localizacao){
@@ -896,8 +988,6 @@ function buildPDF(){
     doc.text('Localização não capturada para este cadastro.',M+6,y+14);
   }
   addFtr(doc,W,2);
-
-  // Pág 3 — Fotos
   doc.addPage(); hdrMini(doc,W,M); y=30;
   secHdr(doc,M,y,'FOTOS DA RESIDÊNCIA'); y+=10;
   if(ST.fotos.length){
@@ -914,7 +1004,6 @@ function buildPDF(){
     doc.setFontSize(10); doc.setTextColor(160,170,190); doc.text('Nenhuma foto adicionada.',M,y+10);
   }
   addFtr(doc,W,3);
-
   return doc.output('datauristring');
 }
 
@@ -947,113 +1036,6 @@ function addFtr(doc,W,pg){
 }
 
 // ============================================================
-// MODAL DOWNLOAD — 3 opções
-// ============================================================
-function openDlModal(plano){
-  dlPDF.b64 = plano.pdfB64;
-  dlPDF.nome = plano.nome;
-  dlPDF.codigo = plano.codigo;
-  document.getElementById('dlNome').textContent = plano.nome;
-  document.getElementById('dlCodigo').textContent = plano.codigo;
-  document.getElementById('dlModal').classList.add('open');
-}
-function closeDlModal(){ document.getElementById('dlModal').classList.remove('open'); }
-
-// Opção 1 — Baixar no dispositivo
-function doBaixar(){
-  closeDlModal();
-  const b64=dlPDF.b64; const nome=dlPDF.nome; const codigo=dlPDF.codigo;
-  if(!b64){showToast('PDF não encontrado','error');return;}
-
-  const fileName='PAX_'+codigo+'_'+nome.replace(/\s+/g,'_').slice(0,30)+'.pdf';
-
-  // Tenta <a download> — funciona em Chrome desktop e alguns WebViews com File Access
-  try{
-    const a=document.createElement('a');
-    a.href=b64; // data URI completo
-    a.download=fileName;
-    a.style.display='none';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(()=>document.body.removeChild(a),500);
-    showToast('Baixando PDF...','success');
-    return;
-  }catch(e){}
-
-  // Fallback: tenta via Blob + URL.createObjectURL
-  try{
-    const pure=b64.split(',')[1]||b64;
-    const bytes=atob(pure);
-    const arr=new Uint8Array(bytes.length);
-    for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
-    const blob=new Blob([arr],{type:'application/pdf'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url; a.download=fileName;
-    document.body.appendChild(a); a.click();
-    setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},1000);
-    showToast('Baixando PDF...','success');
-  }catch(e){
-    showToast('Download direto não suportado — use Compartilhar','error');
-  }
-}
-
-// Opção 2 — Compartilhar (Web Share API com File)
-function doCompartilhar(){
-  closeDlModal();
-  const b64=dlPDF.b64; const nome=dlPDF.nome; const codigo=dlPDF.codigo;
-  if(!b64){showToast('PDF não encontrado','error');return;}
-  const fileName='PAX_'+codigo+'_'+nome.replace(/\s+/g,'_').slice(0,30)+'.pdf';
-  try{
-    const pure=b64.split(',')[1]||b64;
-    const bytes=atob(pure);
-    const arr=new Uint8Array(bytes.length);
-    for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
-    const blob=new Blob([arr],{type:'application/pdf'});
-    const file=new File([blob],fileName,{type:'application/pdf'});
-    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-      navigator.share({files:[file],title:'PAX PREVENIR – '+nome,text:'Plano '+codigo}).then(()=>{
-        showToast('Compartilhado com sucesso!','success');
-      }).catch(e=>{if(e.name!=='AbortError') showToast('Erro ao compartilhar','error');});
-    } else if(navigator.share){
-      // Share sem arquivo (só link data)
-      navigator.share({title:'PAX PREVENIR – '+nome,text:'Plano '+codigo+'\nAbra para visualizar o PDF.'}).catch(()=>{});
-    } else {
-      showToast('Compartilhamento não suportado neste dispositivo','error');
-    }
-  }catch(e){showToast('Erro ao preparar compartilhamento','error');}
-}
-
-// Opção 3 — Abrir/Visualizar no navegador
-function doAbrirNoNavegador(){
-  closeDlModal();
-  const b64=dlPDF.b64;
-  if(!b64){showToast('PDF não encontrado','error');return;}
-  try{
-    // Abre data URI em nova aba — funciona em Chrome, pode ser bloqueado em WebView
-    const win=window.open(b64,'_blank');
-    if(!win||win.closed){
-      // Fallback: cria iframe temporário
-      const iframe=document.createElement('iframe');
-      iframe.src=b64; iframe.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:none;z-index:9999;background:#fff';
-      document.body.appendChild(iframe);
-      // Botão fechar
-      const btn=document.createElement('button');
-      btn.textContent='✕ Fechar'; btn.style.cssText='position:fixed;top:10px;right:10px;z-index:10000;background:#000;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-size:14px;font-weight:700;cursor:pointer';
-      btn.onclick=()=>{document.body.removeChild(iframe);document.body.removeChild(btn);};
-      document.body.appendChild(btn);
-    }
-  }catch(e){showToast('Não foi possível abrir — use Compartilhar','error');}
-}
-
-// Atalho: abrir modal de download para plano já salvo
-function abrirDlPlano(id){
-  const p=planosFeitos.find(x=>x.id===id);
-  if(p) openDlModal(p);
-  else showToast('Plano não encontrado','error');
-}
-
-// ============================================================
 // COPIAR CÓDIGO
 // ============================================================
 function copiarCodigo(codigo){
@@ -1062,18 +1044,18 @@ function copiarCodigo(codigo){
   }catch(e){fallbackCopy(codigo);}
 }
 function fallbackCopy(txt){
-  const el=document.createElement('textarea'); el.value=txt; el.style.position='fixed'; el.style.opacity='0';
+  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0;top:0;left:0';
   document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
   showToast('Código copiado: '+txt,'success');
 }
 
 // ============================================================
-// PLANOS FEITOS — storage & render
+// PLANOS FEITOS
 // ============================================================
 function loadPlanosFeitos(){ try{planosFeitos=JSON.parse(localStorage.getItem('pax_planos')||'[]');}catch(e){planosFeitos=[];} }
 function savePlanosFeitos(){
   try{localStorage.setItem('pax_planos',JSON.stringify(planosFeitos));}
-  catch(e){showToast('Armazenamento cheio! Exclua planos antigos para continuar.','error');}
+  catch(e){showToast('Armazenamento cheio! Exclua planos antigos.','error');}
 }
 function updatePlanosBadge(){
   const n=planosFeitos.length;
@@ -1084,17 +1066,15 @@ function updatePlanosBadge(){
   document.getElementById('pl-hoje').textContent=planosFeitos.filter(p=>p.dataCriacao&&p.dataCriacao.startsWith(hoje)).length;
 }
 function confirmDeletePlan(id){
-  openModal('Excluir Plano','Remove o plano e o PDF interno. Não pode ser desfeita!','del',()=>{
+  openModal('Excluir Plano','Remove o plano e o PDF. Não pode ser desfeita!','del',()=>{
     planosFeitos=planosFeitos.filter(p=>p.id!==id);
     savePlanosFeitos();renderPlanos();showToast('Plano excluído');
   });
 }
-
 function planTagClass(plano){
   const m={Rubi:'tag-rubi',Esmeralda:'tag-esmeralda',Ouro:'tag-ouro',Nacional:'tag-nacional'};
   return m[plano]||'tag-nacional';
 }
-
 function renderPlanos(){
   loadPlanosFeitos(); updatePlanosBadge();
   const q=(document.getElementById('searchPlanos')?.value||'').toLowerCase();
@@ -1126,13 +1106,22 @@ function renderPlanos(){
             ${p.cidade?`<span class="pf-meta-item"><i class="fas fa-city"></i>${p.cidade}</span>`:''}
           </div>
           <div class="pf-btns">
-            <button class="btn-sm btn-sm-navy" onclick="abrirDlPlano(${p.id})"><i class="fas fa-download"></i> Baixar PDF</button>
+            <button class="btn-sm btn-sm-navy" onclick="abrirDlPlano(${p.id})"><i class="fas fa-eye"></i> Ver / Baixar PDF</button>
+            <button class="btn-sm btn-sm-green" onclick="compartilharPlano(${p.id})"><i class="fas fa-share-alt"></i></button>
             <button class="btn-sm btn-sm-red" onclick="confirmDeletePlan(${p.id})"><i class="fas fa-trash"></i></button>
           </div>
         </div>
       </div>
     </div>
   `).join('');
+}
+
+function compartilharPlano(id){
+  const p=planosFeitos.find(x=>x.id===id);
+  if(!p){showToast('Plano não encontrado','error');return;}
+  pdfAtivoB64=p.pdfB64;
+  pdfAtivoNome=p.nome+' — '+p.codigo;
+  sharePdfAtivo();
 }
 
 // ============================================================
