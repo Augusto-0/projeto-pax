@@ -1,1244 +1,700 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<meta name="theme-color" content="#000000"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<title>PAX PREVENIR – Sistema de Planos Funerários</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+<title>PAX PREVENIR</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f0f2f5;padding-top:60px;padding-bottom:100px}
 :root{
-  --navy:#000000;--navy2:#11141b;--navy3:#24272c;
-  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#f5e4b0;
-  --green:#2D7D5A;--green2:#3ca873;--green3:#d4f0e4;
-  --red:#C0392B;--orange:#E67E22;--orange2:#fff3e0;
-  --gray1:#f8f9fb;--gray2:#eef0f4;--gray3:#d1d5de;--gray4:#8a91a0;--gray5:#4a5168;
-  --white:#ffffff;
-  --shadow-sm:0 2px 8px rgba(15,32,68,.08);
-  --shadow-md:0 6px 24px rgba(15,32,68,.12);
-  --shadow-lg:0 16px 48px rgba(15,32,68,.16);
-  --radius:14px;--radius-sm:8px;--radius-lg:20px;
-  --font-display:'Playfair Display',serif;
-  --font-body:'DM Sans',sans-serif;
+  --navy:#000;--gold:#C9A84C;--gold2:#E8C97A;--green:#2D7D5A;
+  --red:#C0392B;--gray1:#f8f9fb;--gray2:#eef0f4;--gray4:#8a91a0;--gray5:#4a5168
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;font-family:var(--font-body);background:var(--gray1);color:var(--gray5);overflow-x:hidden}
-input,select,textarea,button{font-family:var(--font-body)}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--gray3);border-radius:4px}
-
-.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:var(--navy);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.25)}
-.hamburger{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:5px;border-radius:8px;transition:.2s}
-.hamburger:hover{background:rgba(255,255,255,.1)}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gold2);border-radius:2px;transition:.3s}
-.topbar-logo{flex:1;display:flex;align-items:center;gap:10px}
-.topbar-dove{font-size:20px;color:var(--gold2)}
-.topbar-brand{font-family:var(--font-display);color:var(--white);font-size:18px;font-weight:600;letter-spacing:.5px}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#000;display:flex;align-items:center;padding:0 16px;z-index:100}
+.hamburger{background:none;border:none;padding:8px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gold2);margin:4px 0}
+.topbar-brand{font-family:'Playfair Display',serif;color:white;font-size:18px;margin-left:10px}
 .topbar-brand span{color:var(--gold2)}
-.topbar-pdf{background:var(--gold);border:none;color:var(--navy);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
-.topbar-pdf:hover{background:var(--gold2);transform:translateY(-1px)}
-#topbar-pdf-btn{display:none}
-
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;opacity:0;pointer-events:none;transition:.3s;backdrop-filter:blur(4px)}
-.overlay.open{opacity:1;pointer-events:all}
-.sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--navy);z-index:400;transform:translateX(-100%);transition:.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
-.sidebar.open{transform:translateX(0)}
-.sidebar-header{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sidebar-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;transition:.2s}
-.sidebar-close:hover{background:rgba(255,255,255,.2)}
-.sidebar-logobox{display:flex;align-items:center;gap:12px}
-.sidebar-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--navy);flex-shrink:0}
-.sidebar-brand{color:#fff;font-family:var(--font-display);font-size:16px;font-weight:600}
-.sidebar-sub{color:rgba(255,255,255,.5);font-size:11px;margin-top:2px}
-.sidebar-user{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px}
-.user-ava{width:40px;height:40px;background:rgba(201,168,76,.2);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:16px;flex-shrink:0}
-.user-name{color:#fff;font-size:14px;font-weight:500}
-.user-role{color:rgba(255,255,255,.45);font-size:11px;margin-top:2px}
-.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:14px;padding:13px 20px;color:rgba(255,255,255,.6);cursor:pointer;transition:.2s;position:relative;border-left:3px solid transparent}
-.nav-item:hover{color:#fff;background:rgba(255,255,255,.06)}
-.nav-item.active{color:#fff;background:rgba(201,168,76,.12);border-left-color:var(--gold)}
-.nav-item i{font-size:18px;width:22px;text-align:center}
-.nav-item span{font-size:14px;font-weight:500}
-.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;min-width:20px;text-align:center}
-
-.nav-item-fullscreen{display:flex;align-items:center;gap:14px;padding:13px 20px;color:rgba(255,255,255,.6);cursor:pointer;transition:.2s;border-left:3px solid transparent;border-top:1px solid rgba(255,255,255,.08);margin-top:4px}
-.nav-item-fullscreen:hover{color:#fff;background:rgba(255,255,255,.06)}
-.nav-item-fullscreen i{font-size:18px;width:22px;text-align:center;color:var(--gold2)}
-.nav-item-fullscreen span{font-size:14px;font-weight:500}
-.nav-item-fullscreen .fs-badge{margin-left:auto;background:rgba(201,168,76,.2);color:var(--gold2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid rgba(201,168,76,.3)}
-
-.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between}
-.sidebar-version{color:rgba(255,255,255,.3);font-size:11px}
-.pwa-dot{color:var(--green2);font-size:11px;display:flex;align-items:center;gap:5px}
-
-.main{margin-top:60px;min-height:calc(100vh - 60px);padding:20px 16px 100px}
-.page{display:none;animation:fadeIn .3s ease}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none}
+.sidebar{position:fixed;top:0;left:-280px;bottom:0;width:280px;background:#000;z-index:300;transition:.3s;padding:20px}
+.sidebar.open{left:0}
+.sidebar .nav-item{padding:15px 0;color:#ccc;cursor:pointer;display:flex;align-items:center;gap:12px;border-bottom:1px solid #222}
+.sidebar .nav-item.active{color:var(--gold2)}
+.sidebar .nav-item i{width:25px}
+.main{padding:16px}
+.page{display:none}
 .page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-.logo-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,var(--navy3) 100%);border-radius:var(--radius-lg);padding:32px 24px;margin-bottom:24px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
-.logo-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border:1px solid rgba(201,168,76,.15);border-radius:50%}
-.logo-card::after{content:'';position:absolute;bottom:-60px;left:-40px;width:200px;height:200px;border:1px solid rgba(201,168,76,.1);border-radius:50%}
-.logo-dove-wrap{width:72px;height:72px;background:rgba(201,168,76,.15);border:2px solid rgba(201,168,76,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;z-index:1}
-.logo-dove-wrap i{font-size:30px;color:var(--gold2)}
-.logo-card h1{font-family:var(--font-display);color:#fff;font-size:28px;font-weight:700;letter-spacing:2px;position:relative;z-index:1}
+.logo-card{background:linear-gradient(135deg,#000,#1a1a2e);border-radius:20px;padding:25px;text-align:center;margin-bottom:20px}
+.logo-card h1{color:white;font-family:'Playfair Display',serif}
 .logo-card h1 span{color:var(--gold2)}
-.logo-card p{color:rgba(255,255,255,.55);font-size:13px;margin-top:6px;letter-spacing:1px;text-transform:uppercase;position:relative;z-index:1}
-.logo-ornament{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:20px;position:relative;z-index:1}
-.ornament-line{flex:1;max-width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5))}
-.ornament-line.right{background:linear-gradient(90deg,rgba(201,168,76,.5),transparent)}
-.ornament-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
-
-.section-hdr{display:flex;align-items:center;gap:12px;margin:28px 0 16px}
-.section-hdr::before,.section-hdr::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gray3),transparent)}
-.section-hdr::after{background:linear-gradient(90deg,transparent,var(--gray3))}
-.section-hdr h2{font-family:var(--font-display);font-size:18px;color:var(--navy);font-weight:600;white-space:nowrap}
-
-.contratacao-card{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
-.contratacao-opts{display:flex;gap:12px;justify-content:center}
-.contratacao-opt{flex:1;position:relative}
-.contratacao-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
-.contratacao-opt label{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border-radius:var(--radius-sm);border:2px solid var(--gray2);cursor:pointer;transition:.2s;background:var(--gray1)}
-.contratacao-opt label:hover{border-color:var(--navy3);background:rgba(36,63,122,.04)}
-.contratacao-opt input:checked+label{border-color:var(--gold);background:rgba(201,168,76,.08)}
-.contratacao-opt label i{font-size:28px;color:var(--navy3)}
-.contratacao-opt input:checked+label i{color:var(--gold)}
-.contratacao-opt label span{font-size:14px;font-weight:700;color:var(--gray5)}
-.contratacao-opt label small{font-size:11px;color:var(--gray4);font-weight:normal}
-
-.plans-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px}
-.plan-card{background:var(--white);border-radius:var(--radius);padding:20px 14px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.25s;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
-.plan-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.plan-card.selected{border-color:currentColor;transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.plan-check{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;opacity:0;transition:.2s}
-.plan-card.selected .plan-check{opacity:1}
-.plan-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 12px}
-.plan-name{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:4px}
-.plan-desc{font-size:11px;color:var(--gray4)}
-.plan-rubi .plan-icon{background:rgba(192,57,43,.12);color:#C0392B}.plan-rubi .plan-name{color:#C0392B}.plan-rubi.selected{border-color:#C0392B}.plan-rubi .plan-check{background:#C0392B}
-.plan-esm .plan-icon{background:rgba(45,125,90,.12);color:var(--green)}.plan-esm .plan-name{color:var(--green)}.plan-esm.selected{border-color:var(--green)}.plan-esm .plan-check{background:var(--green)}
-.plan-ouro .plan-icon{background:rgba(201,168,76,.15);color:var(--gold)}.plan-ouro .plan-name{color:var(--gold)}.plan-ouro.selected{border-color:var(--gold)}.plan-ouro .plan-check{background:var(--gold)}
-.plan-nac .plan-icon{background:rgba(15,32,68,.1);color:var(--navy)}.plan-nac .plan-name{color:var(--navy)}.plan-nac.selected{border-color:var(--navy)}.plan-nac .plan-check{background:var(--navy)}
-
-.form-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.section-hdr{margin:20px 0 12px}
+.section-hdr h2{font-size:18px;color:#000;font-family:'Playfair Display',serif}
+.contratacao-card,.form-card,.pay-card,.fotos-card,.loc-card{background:white;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.contratacao-opts{display:flex;gap:12px}
+.contratacao-opt{flex:1}
+.contratacao-opt input{display:none}
+.contratacao-opt label{display:block;text-align:center;padding:15px;border-radius:10px;border:2px solid #e0e0e0;background:#f8f9fb;cursor:pointer}
+.contratacao-opt input:checked+label{border-color:var(--gold);background:rgba(201,168,76,.1)}
+.contratacao-opt label i{font-size:24px;margin-bottom:8px;display:block}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plan-card{background:white;border-radius:12px;padding:15px;text-align:center;cursor:pointer;border:2px solid transparent}
+.plan-card.selected{border-color:currentColor;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.plan-card .plan-icon{font-size:28px;margin-bottom:8px}
+.plan-rubi.selected{border-color:#C0392B}.plan-esm.selected{border-color:#2D7D5A}.plan-ouro.selected{border-color:#C9A84C}.plan-nac.selected{border-color:#000}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg-full{grid-column:1/-1}
-.field-lbl{font-size:12px;font-weight:600;color:var(--gray5);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.field-lbl i{color:var(--navy3);font-size:11px}
-.field-inp{width:100%;background:var(--gray1);border:1.5px solid var(--gray2);border-radius:var(--radius-sm);padding:11px 14px;font-size:14px;color:var(--gray5);outline:none;transition:.2s;-webkit-appearance:none;appearance:none}
-.field-inp:focus{border-color:var(--navy3);background:#fff;box-shadow:0 0 0 3px rgba(36,63,122,.08)}
-.field-inp::placeholder{color:var(--gray3)}
-select.field-inp{cursor:pointer}
-
-.pay-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
+.field-lbl{font-size:12px;font-weight:600;color:#666;margin-bottom:5px}
+.field-inp{width:100%;padding:12px;border:1.5px solid #e0e0e0;border-radius:10px;background:var(--gray1)}
 .pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.pay-opt{position:relative}
-.pay-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
-.pay-opt label{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border-radius:var(--radius-sm);border:2px solid var(--gray2);cursor:pointer;transition:.2s;background:var(--gray1)}
-.pay-opt label:hover{border-color:var(--navy3);background:rgba(36,63,122,.04)}
-.pay-opt input:checked+label{border-color:var(--navy);background:rgba(15,32,68,.06)}
-.pay-opt label i{font-size:22px;color:var(--navy3)}
-.pay-opt input:checked+label i{color:var(--navy)}
-.pay-opt label span{font-size:12px;font-weight:600;color:var(--gray5);text-align:center}
-
-.dep-area{margin-bottom:8px}
-.dep-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.dep-card{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);border-left:3px solid var(--navy3);display:flex;gap:12px;align-items:flex-start;animation:slideIn .25s ease}
-@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+.pay-opt input{display:none}
+.pay-opt label{display:block;text-align:center;padding:12px;border-radius:10px;border:2px solid #e0e0e0;cursor:pointer}
+.pay-opt input:checked+label{border-color:#000;background:rgba(0,0,0,.05)}
+.btn-add-dep{width:100%;padding:12px;background:#f0f0f0;border:2px dashed #999;border-radius:10px;cursor:pointer}
+.dep-card{background:#f8f9fb;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:10px}
 .dep-card-info{flex:1}
-.dep-card-num{width:28px;height:28px;background:var(--navy);color:var(--gold2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.dep-remove{background:rgba(192,57,43,.1);border:none;color:var(--red);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px;transition:.2s;flex-shrink:0}
-.dep-remove:hover{background:rgba(192,57,43,.2)}
-.dep-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dep-form .fg-full{grid-column:1/-1}
-.btn-add-dep{width:100%;padding:13px;background:rgba(15,32,68,.06);border:2px dashed var(--navy3);border-radius:var(--radius-sm);color:var(--navy);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-add-dep:hover{background:rgba(15,32,68,.1);border-style:solid}
-
-.fotos-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
-.fotos-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.btn-foto{padding:14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
-.btn-cam{background:var(--navy);color:#fff}.btn-cam:hover{background:var(--navy2)}
-.btn-gal{background:var(--gray2);color:var(--gray5)}.btn-gal:hover{background:var(--gray3)}
+.dep-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dep-remove{background:#fee;border:none;color:var(--red);border-radius:8px;width:30px;cursor:pointer}
+.fotos-actions{display:flex;gap:12px;margin-bottom:12px}
+.btn-foto{padding:12px;border-radius:10px;border:none;cursor:pointer;flex:1}
+.btn-cam{background:#000;color:white}
+.btn-gal{background:#e0e0e0}
 .fotos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.foto-item{position:relative;border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:1;background:var(--gray2)}
-.foto-item img{width:100%;height:100%;object-fit:cover;display:block}
-.foto-del{position:absolute;top:4px;right:4px;background:rgba(192,57,43,.85);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.fotos-empty{grid-column:1/-1;text-align:center;padding:30px;color:var(--gray4)}
-.fotos-empty i{font-size:36px;margin-bottom:8px;display:block;opacity:.4}
-.fotos-empty p{font-size:13px}
-
-.loc-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
-.loc-status{display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray1);border-radius:var(--radius-sm);margin-bottom:14px}
-.loc-status i{font-size:28px;color:var(--gray4)}
-.loc-status.captured i{color:var(--green)}
-.loc-status-text h4{font-size:14px;font-weight:600;color:var(--gray5)}
-.loc-status-text p{font-size:12px;color:var(--gray4);margin-top:2px}
-.loc-result{display:none;background:var(--green3);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px}
-.loc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.loc-lbl{font-size:12px;color:var(--green);font-weight:600}
-.loc-val{font-size:13px;color:var(--gray5);font-weight:500}
-.maps-link{display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#fff;padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;margin-top:6px;transition:.2s}
-.maps-link:hover{background:var(--green2)}
-.btn-loc{width:100%;padding:15px;background:linear-gradient(135deg,var(--navy),var(--navy2));border:none;color:#fff;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.25s;box-shadow:0 4px 14px rgba(15,32,68,.25)}
-.btn-loc:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,32,68,.3)}
-.btn-loc:active{transform:translateY(0)}
-.btn-loc.loading{opacity:.7;pointer-events:none}
-
-.loc-manual{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray2)}
+.foto-item{position:relative;aspect-ratio:1;background:#e0e0e0;border-radius:8px;overflow:hidden}
+.foto-item img{width:100%;height:100%;object-fit:cover}
+.foto-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer}
+.btn-loc{width:100%;padding:14px;background:#000;color:white;border:none;border-radius:10px;cursor:pointer;margin-top:8px}
+.loc-result{background:#e8f5e9;border-radius:10px;padding:12px;margin-top:12px;display:none}
+.loc-manual{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #e0e0e0}
 .loc-manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-.loc-manual-hint{font-size:11px;color:var(--orange);text-align:center;padding:8px;background:rgba(230,126,34,.08);border-radius:6px;margin-bottom:8px}
-
-.final-btns{display:flex;flex-direction:column;gap:10px;margin-top:8px;padding-bottom:24px}
-.btn-primary{width:100%;padding:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));border:none;color:#fff;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.25s;box-shadow:0 4px 14px rgba(15,32,68,.2)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,32,68,.3)}
-.btn-secondary{width:100%;padding:14px;background:var(--white);border:2px solid var(--navy3);color:var(--navy);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
-.btn-secondary:hover{background:rgba(15,32,68,.05)}
-.btn-danger{width:100%;padding:14px;background:rgba(192,57,43,.08);border:2px solid rgba(192,57,43,.2);color:var(--red);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
-.btn-danger:hover{background:rgba(192,57,43,.14)}
-
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.stat-card{background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
-.stat-val{font-size:26px;font-weight:700;font-family:var(--font-display)}
-.stat-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--gray4)}
-.stat-green .stat-val{color:var(--green)}.stat-orange .stat-val{color:var(--orange)}.stat-blue .stat-val{color:var(--navy3)}
-.stat-icon{font-size:20px;margin-bottom:2px}
-.stat-green .stat-icon{color:var(--green3)}.stat-orange .stat-icon{color:var(--orange)}.stat-blue .stat-icon{color:var(--navy3)}
-
-.nova-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:20px}
-.nova-card-ttl{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--navy);margin-bottom:16px}
-.nova-card-ttl i{color:var(--gold)}
-.pay-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
-.toggle-btn{padding:12px;border-radius:var(--radius-sm);border:2px solid var(--gray2);background:var(--gray1);color:var(--gray4);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
-.toggle-btn.active{border-color:var(--navy);background:rgba(15,32,68,.06);color:var(--navy)}
-
-.search-wrap{position:relative;margin-bottom:20px}
-.search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray4);font-size:15px}
-.search-inp{width:100%;background:var(--white);border:1.5px solid var(--gray2);border-radius:var(--radius-sm);padding:12px 14px 12px 40px;font-size:14px;color:var(--gray5);outline:none;transition:.2s;box-shadow:var(--shadow-sm)}
-.search-inp:focus{border-color:var(--navy3)}
-
+.final-btns{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.btn-primary{background:#000;color:white;padding:16px;border:none;border-radius:12px;font-weight:600;cursor:pointer}
+.btn-secondary{background:white;border:2px solid #000;padding:14px;border-radius:12px;font-weight:600;cursor:pointer}
+.btn-danger{background:#fee;border:2px solid #fcc;color:var(--red);padding:14px;border-radius:12px;cursor:pointer}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:white;border-radius:12px;padding:15px;text-align:center}
+.stat-val{font-size:28px;font-weight:700}
 .lista-section{margin-bottom:20px}
-.lista-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;margin-bottom:2px}
-.lista-hdr-left{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.3px}
-.lista-count{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px}
-.lista-green .lista-hdr{background:rgba(45,125,90,.1)}.lista-green .lista-hdr-left{color:var(--green)}.lista-green .lista-count{background:var(--green);color:#fff}
-.lista-orange .lista-hdr{background:rgba(230,126,34,.1)}.lista-orange .lista-hdr-left{color:var(--orange)}.lista-orange .lista-count{background:var(--orange);color:#fff}
-.lista-blue .lista-hdr{background:rgba(36,63,122,.08)}.lista-blue .lista-hdr-left{color:var(--navy3)}.lista-blue .lista-count{background:var(--navy3);color:#fff}
-
-.adesoes-list{display:flex;flex-direction:column;gap:6px}
-.adesao-item{background:var(--white);border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:14px 16px;box-shadow:var(--shadow-sm);border-top:1px solid var(--gray2);display:flex;align-items:center;gap:12px;transition:.2s;animation:fadeIn .25s ease}
-.adesao-item:last-child{border-radius:var(--radius-sm)}
-.adesao-info{flex:1;min-width:0}
-.adesao-nome{font-size:14px;font-weight:600;color:var(--gray5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.adesao-meta{font-size:12px;color:var(--gray4);margin-top:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.adesao-valor{font-size:15px;font-weight:700;color:var(--navy);flex-shrink:0}
-.badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
-.badge-atrasada{background:rgba(192,57,43,.12);color:var(--red)}
-.badge-vence-hoje{background:rgba(230,126,34,.12);color:var(--orange)}
-.badge-proxima{background:rgba(201,168,76,.15);color:#a07a00}
-.badge-ok{background:rgba(45,125,90,.12);color:var(--green)}
-.btn-baixa{background:var(--green);border:none;color:#fff;border-radius:var(--radius-sm);padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex-shrink:0}
-.btn-baixa:hover{background:var(--green2)}
-.btn-del{background:rgba(192,57,43,.08);border:none;color:var(--red);border-radius:6px;width:28px;height:28px;font-size:12px;cursor:pointer;transition:.2s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.btn-del:hover{background:rgba(192,57,43,.18)}
-.empty-state{text-align:center;padding:24px;color:var(--gray4);font-size:13px;background:var(--white);border-radius:0 0 var(--radius-sm) var(--radius-sm)}
-.empty-state i{font-size:28px;display:block;margin-bottom:6px;opacity:.35}
-
-.planos-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.planos-search-wrap{position:relative;margin-bottom:16px}
-.planos-search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray4);font-size:15px}
-.planos-search-inp{width:100%;background:var(--white);border:1.5px solid var(--gray2);border-radius:var(--radius-sm);padding:12px 14px 12px 40px;font-size:14px;color:var(--gray5);outline:none;box-shadow:var(--shadow-sm)}
-
-.pf-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:12px;overflow:hidden;animation:fadeIn .25s ease}
-.pf-top{display:flex;align-items:stretch;gap:0}
-.pf-codigo-faixa{background:var(--navy);color:var(--gold2);writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);font-size:10px;font-weight:800;letter-spacing:2px;padding:14px 8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:32px}
-.pf-body{flex:1;padding:16px}
-.pf-nome{font-size:16px;font-weight:700;color:var(--navy);font-family:var(--font-display);margin-bottom:2px}
-.pf-plano-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:10px}
-.tag-rubi{background:rgba(192,57,43,.1);color:#C0392B}
-.tag-esmeralda{background:rgba(45,125,90,.1);color:var(--green)}
-.tag-ouro{background:rgba(201,168,76,.15);color:#8a6200}
-.tag-nacional{background:rgba(15,32,68,.08);color:var(--navy)}
-.pf-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-.pf-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--gray4)}
-.pf-meta-item i{font-size:10px;color:var(--navy3)}
-.pf-meta-item strong{color:var(--gray5)}
-.pf-codigo-destaque{background:rgba(201,168,76,.08);border:1.5px solid rgba(201,168,76,.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.pf-codigo-label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
-.pf-codigo-val{font-size:16px;font-weight:800;color:var(--navy);font-family:var(--font-display);letter-spacing:1px;flex:1}
-.pf-codigo-copy{background:none;border:none;color:var(--gold);cursor:pointer;font-size:14px;padding:4px}
-.pf-btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn-sm{padding:9px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:6px;transition:.2s;flex:1;justify-content:center;min-width:0}
-.btn-sm-navy{background:var(--navy);color:#fff}
-.btn-sm-green{background:rgba(45,125,90,.1);color:var(--green);border:1.5px solid rgba(45,125,90,.2)}
-.btn-sm-red{background:rgba(192,57,43,.08);color:var(--red);border:1.5px solid rgba(192,57,43,.2)}
-
-.pdf-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;flex-direction:column}
-.pdf-modal.open{display:flex}
-.pdf-modal-header{background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:12px}
-.pdf-modal-header h3{flex:1;color:var(--gold2);font-size:14px;font-family:var(--font-display)}
-.pdf-modal-header button{background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px}
-.pdf-modal-content{flex:1;overflow:auto;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:center}
-.pdf-actions{display:flex;gap:12px;margin-top:20px;justify-content:center;flex-wrap:wrap}
-.pdf-actions button{padding:14px 24px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:8px}
-.btn-download{background:var(--green);color:#fff}
-.btn-share{background:var(--gold);color:var(--navy)}
-.pdf-message{color:#fff;margin-bottom:20px;font-size:16px}
-
-.config-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:16px}
-.config-icon{font-size:28px;color:var(--navy3);margin-bottom:12px}
-.config-card h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy);margin-bottom:16px}
-.config-info{background:var(--gray1);border-radius:var(--radius-sm);padding:14px;font-size:13px;color:var(--gray5);line-height:1.6}
-.config-info p{margin-bottom:6px}
-.config-info p:last-child{margin-bottom:0}
-.danger-card{border:1.5px solid rgba(192,57,43,.2)}
-.danger-card .config-icon{color:var(--red)}
-.danger-card h3{color:var(--red)}
-.danger-text{font-size:13px;color:var(--gray4);margin-bottom:16px;line-height:1.5}
-
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:40px;font-size:14px;font-weight:500;opacity:0;transition:.3s;z-index:1100;pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow-lg);white-space:nowrap;max-width:90vw}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.success{background:var(--green)}
-.toast.error{background:var(--red)}
-
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(6px)}
-.modal-bg.open{opacity:1;pointer-events:all}
-.modal-box{background:var(--white);border-radius:var(--radius-lg);padding:28px;max-width:320px;width:100%;transform:scale(.95);transition:.25s;box-shadow:var(--shadow-lg)}
-.modal-bg.open .modal-box{transform:scale(1)}
-.modal-icon-wrap{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:24px}
-.modal-icon-warn{background:rgba(230,126,34,.12);color:var(--orange)}
-.modal-icon-del{background:rgba(192,57,43,.1);color:var(--red)}
-.modal-icon-ok{background:rgba(45,125,90,.1);color:var(--green)}
-.modal-box h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:8px}
-.modal-box p{font-size:13px;color:var(--gray4);text-align:center;line-height:1.5;margin-bottom:20px}
-.modal-btns{display:flex;gap:10px}
-.modal-btns button{flex:1;padding:13px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;border:none}
-.modal-cancel{background:var(--gray2);color:var(--gray5)}.modal-cancel:hover{background:var(--gray3)}
-.modal-ok{background:var(--navy);color:#fff}.modal-ok:hover{background:var(--navy2)}
-.modal-ok-danger{background:var(--red);color:#fff}
-
-.loading-screen{position:fixed;inset:0;background:var(--navy);z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:.3s}
-.loading-screen.show{opacity:1;pointer-events:all}
-.loader-ring{width:56px;height:56px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+.lista-hdr{display:flex;justify-content:space-between;padding:10px 16px;border-radius:10px 10px 0 0}
+.lista-green .lista-hdr{background:rgba(45,125,90,.1)}
+.lista-orange .lista-hdr{background:rgba(230,126,34,.1)}
+.lista-blue .lista-hdr{background:rgba(0,0,0,.05)}
+.lista-count{background:white;padding:2px 10px;border-radius:20px}
+.adesao-item{background:white;padding:12px;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center}
+.adesao-info{flex:1}
+.adesao-nome{font-weight:600}
+.adesao-valor{font-weight:700}
+.btn-baixa{background:var(--green);color:white;border:none;padding:6px 12px;border-radius:8px;cursor:pointer}
+.btn-del{background:#fee;border:none;color:var(--red);padding:6px 10px;border-radius:8px;cursor:pointer}
+.empty-state{text-align:center;padding:30px;color:#999}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:10px 20px;border-radius:40px;font-size:14px;z-index:400;display:none}
+.toast.show{display:block}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal-box{background:white;border-radius:20px;padding:25px;width:300px;text-align:center}
+.modal-btns{display:flex;gap:12px;margin-top:20px}
+.modal-btns button{flex:1;padding:12px;border-radius:10px;border:none;cursor:pointer}
+.modal-cancel{background:#e0e0e0}
+.modal-ok{background:#000;color:white}
+.loading-screen{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;display:none;align-items:center;justify-content:center;flex-direction:column;color:white}
+.loading-screen.show{display:flex}
+.loader-ring{width:50px;height:50px;border:3px solid #fff;border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{color:rgba(255,255,255,.6);font-size:14px}
-
-@media(max-width:480px){
-  .form-grid{grid-template-columns:1fr}
-  .fg-full{grid-column:1}
-  .plans-grid{grid-template-columns:repeat(2,1fr)}
-  .pay-opts{grid-template-columns:repeat(3,1fr)}
-  .stats-row{grid-template-columns:repeat(3,1fr)}
-  .stat-val{font-size:20px}
-}
+.planos-search-wrap{position:relative;margin-bottom:15px}
+.planos-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%)}
+.planos-search-inp{width:100%;padding:12px 12px 12px 40px;border-radius:10px;border:1px solid #e0e0e0}
+.pf-card{background:white;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.pf-top{display:flex}
+.pf-codigo-faixa{background:#000;color:var(--gold2);writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;padding:10px 5px;text-align:center}
+.pf-body{padding:15px;flex:1}
+.pf-nome{font-weight:700;font-size:16px}
+.pf-plano-tag{font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;margin:8px 0}
+.tag-rubi{background:#fee;color:#C0392B}
+.tag-esmeralda{background:#e8f5e9;color:#2D7D5A}
+.tag-ouro{background:#fff8e1;color:#b8860b}
+.pf-codigo-destaque{background:#f5f5f5;border-radius:8px;padding:8px;margin:10px 0;display:flex;justify-content:space-between;align-items:center}
+.pf-codigo-val{font-weight:700;font-family:monospace}
+.pf-codigo-copy{background:none;border:none;color:var(--gold);cursor:pointer}
+.pf-meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;font-size:11px;color:#666}
+.pf-btns{display:flex;gap:8px}
+.btn-sm{padding:8px 12px;border-radius:8px;font-size:12px;cursor:pointer;border:none}
+.btn-sm-navy{background:#000;color:white}
+.btn-sm-red{background:#fee;color:var(--red)}
+.pdf-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:700;display:none;flex-direction:column}
+.pdf-modal.open{display:flex}
+.pdf-modal-header{background:#000;padding:15px;display:flex;justify-content:space-between;align-items:center}
+.pdf-modal-header button{background:rgba(255,255,255,.2);border:none;color:white;width:40px;height:40px;border-radius:50%;cursor:pointer}
+.pdf-modal-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;color:white;text-align:center}
+.pdf-actions{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap;justify-content:center}
+.pdf-actions button{padding:14px 25px;border-radius:12px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;gap:8px}
+.btn-download{background:#2D7D5A;color:white}
+.btn-share{background:#C9A84C;color:#000}
+.pdf-link{color:var(--gold2);word-break:break-all;margin-top:15px;font-size:12px}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 <nav class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <button class="sidebar-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
-    <div class="sidebar-logobox">
-      <div class="sidebar-icon"><i class="fas fa-dove"></i></div>
-      <div>
-        <div class="sidebar-brand">PAX PREVENIR</div>
-        <div class="sidebar-sub">Sistema Premium</div>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar-user">
-    <div class="user-ava"><i class="fas fa-user-tie"></i></div>
-    <div>
-      <div class="user-name" id="sidebarVendor">Vendedor</div>
-      <div class="user-role">Consultor de Planos</div>
-    </div>
-  </div>
-  <div class="sidebar-nav">
-    <div class="nav-item active" onclick="goPage('cadastro')">
-      <i class="fas fa-file-signature"></i><span>Cadastro de Plano</span>
-    </div>
-    <div class="nav-item" onclick="goPage('planos')">
-      <i class="fas fa-folder-open"></i><span>Planos Feitos</span>
-      <div class="nav-badge" id="navBadgePlanos" style="display:none">0</div>
-    </div>
-    <div class="nav-item" onclick="goPage('adesoes')">
-      <i class="fas fa-chart-line"></i><span>Controle de Adesões</span>
-      <div class="nav-badge" id="navBadge" style="display:none">0</div>
-    </div>
-    <div class="nav-item" onclick="goPage('config')">
-      <i class="fas fa-cog"></i><span>Configurações</span>
-    </div>
-
-    <div class="nav-item-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()">
-      <i class="fas fa-expand" id="fsIcon"></i>
-      <span id="fsLabel">Tela Cheia</span>
-      <span class="fs-badge" id="fsBadge">OFF</span>
-    </div>
-  </div>
-  <div class="sidebar-footer">
-    <div class="sidebar-version">v1.0 · PAX PREVENIR</div>
-    <div class="pwa-dot"><i class="fas fa-circle" style="font-size:8px"></i> Online</div>
-  </div>
+  <div class="nav-item active" onclick="goPage('cadastro')"><i class="fas fa-file-signature"></i> Cadastro</div>
+  <div class="nav-item" onclick="goPage('planos')"><i class="fas fa-folder-open"></i> Planos Feitos <span id="navBadgePlanos" style="margin-left:auto;background:red;color:white;padding:0 6px;border-radius:10px;font-size:10px;display:none">0</span></div>
+  <div class="nav-item" onclick="goPage('adesoes')"><i class="fas fa-chart-line"></i> Adesões <span id="navBadge" style="margin-left:auto;background:red;color:white;padding:0 6px;border-radius:10px;font-size:10px;display:none">0</span></div>
+  <div class="nav-item" onclick="goPage('config')"><i class="fas fa-cog"></i> Configurações</div>
 </nav>
 
 <header class="topbar">
   <button class="hamburger" onclick="openMenu()"><span></span><span></span><span></span></button>
-  <div class="topbar-logo">
-    <i class="fas fa-dove topbar-dove"></i>
-    <div class="topbar-brand">PAX <span>PREVENIR</span></div>
-  </div>
-  <button class="topbar-pdf" id="topbar-pdf-btn" onclick="gerarESalvar()" style="display:none">
-    <i class="fas fa-save"></i> Salvar
-  </button>
+  <i class="fas fa-dove topbar-dove"></i>
+  <div class="topbar-brand">PAX <span>PREVENIR</span></div>
 </header>
 
 <main class="main">
-
-<!-- PAGE: CADASTRO -->
+<!-- CADASTRO -->
 <section class="page active" id="page-cadastro">
-  <div class="logo-card">
-    <div class="logo-dove-wrap"><i class="fas fa-dove"></i></div>
-    <h1>PAX <span>PREVENIR</span></h1>
-    <p>Sistema de Planos Funerários</p>
-    <div class="logo-ornament">
-      <div class="ornament-line"></div>
-      <div class="ornament-diamond"></div>
-      <div class="ornament-line right"></div>
-    </div>
-  </div>
-
+  <div class="logo-card"><h1>PAX <span>PREVENIR</span></h1><p>Sistema de Planos Funerários</p></div>
+  
   <div class="section-hdr"><h2>Tipo de Contratação</h2></div>
   <div class="contratacao-card">
     <div class="contratacao-opts">
-      <div class="contratacao-opt">
-        <input type="radio" name="contratacao" id="ct-novo" value="Plano Novo" onchange="setContratacao(this.value)">
-        <label for="ct-novo">
-          <i class="fas fa-file-contract"></i>
-          <span>Plano Novo</span>
-          <small>Primeira contratação</small>
-        </label>
-      </div>
-      <div class="contratacao-opt">
-        <input type="radio" name="contratacao" id="ct-port" value="Portabilidade" onchange="setContratacao(this.value)">
-        <label for="ct-port">
-          <i class="fas fa-exchange-alt"></i>
-          <span>Portabilidade</span>
-          <small>Transferência de plano</small>
-        </label>
-      </div>
+      <div class="contratacao-opt"><input type="radio" name="contratacao" id="ct-novo" value="Plano Novo"><label for="ct-novo"><i class="fas fa-file-contract"></i>Plano Novo<small>Primeira contratação</small></label></div>
+      <div class="contratacao-opt"><input type="radio" name="contratacao" id="ct-port" value="Portabilidade"><label for="ct-port"><i class="fas fa-exchange-alt"></i>Portabilidade<small>Transferência</small></label></div>
     </div>
   </div>
 
   <div class="section-hdr"><h2>Selecione o Plano</h2></div>
   <div class="plans-grid">
-    <div class="plan-card plan-rubi" data-plan="Rubi" onclick="selectPlan(this)"><div class="plan-check"><i class="fas fa-check"></i></div><div class="plan-icon"><i class="fas fa-gem"></i></div><div class="plan-name">Rubi</div><div class="plan-desc">Cobertura Essencial</div></div>
-    <div class="plan-card plan-esm" data-plan="Esmeralda" onclick="selectPlan(this)"><div class="plan-check"><i class="fas fa-check"></i></div><div class="plan-icon"><i class="fas fa-leaf"></i></div><div class="plan-name">Esmeralda</div><div class="plan-desc">Cobertura Completa</div></div>
-    <div class="plan-card plan-ouro" data-plan="Ouro" onclick="selectPlan(this)"><div class="plan-check"><i class="fas fa-check"></i></div><div class="plan-icon"><i class="fas fa-crown"></i></div><div class="plan-name">Ouro</div><div class="plan-desc">Cobertura Premium</div></div>
-    <div class="plan-card plan-nac" data-plan="Nacional" onclick="selectPlan(this)"><div class="plan-check"><i class="fas fa-check"></i></div><div class="plan-icon"><i class="fas fa-flag"></i></div><div class="plan-name">Nacional</div><div class="plan-desc">Cobertura Nacional</div></div>
+    <div class="plan-card plan-rubi" data-plan="Rubi" onclick="selectPlan(this)"><div class="plan-icon"><i class="fas fa-gem"></i></div><div class="plan-name">Rubi</div></div>
+    <div class="plan-card plan-esm" data-plan="Esmeralda" onclick="selectPlan(this)"><div class="plan-icon"><i class="fas fa-leaf"></i></div><div class="plan-name">Esmeralda</div></div>
+    <div class="plan-card plan-ouro" data-plan="Ouro" onclick="selectPlan(this)"><div class="plan-icon"><i class="fas fa-crown"></i></div><div class="plan-name">Ouro</div></div>
+    <div class="plan-card plan-nac" data-plan="Nacional" onclick="selectPlan(this)"><div class="plan-icon"><i class="fas fa-flag"></i></div><div class="plan-name">Nacional</div></div>
   </div>
 
   <div class="section-hdr"><h2>Dados do Cliente</h2></div>
   <div class="form-card">
     <div class="form-grid">
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-user"></i> Nome Completo *</div><input class="field-inp" id="f-nome" placeholder="Nome completo do titular" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar"></i> Data de Nascimento</div><input class="field-inp" id="f-nasc" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-id-card"></i> CPF</div><input class="field-inp" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-id-badge"></i> RG</div><input class="field-inp" id="f-rg" placeholder="00.000.000-0" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-phone"></i> Telefone *</div><input class="field-inp" id="f-tel" placeholder="(00) 00000-0000" maxlength="15" oninput="mTel(this);autoSave()"></div>
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-map-marker-alt"></i> Endereço</div><input class="field-inp" id="f-end" placeholder="Rua, Avenida..." oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-hashtag"></i> Número</div><input class="field-inp" id="f-num" placeholder="Nº" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-map"></i> Bairro</div><input class="field-inp" id="f-bairro" placeholder="Bairro" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-mail-bulk"></i> CEP</div><input class="field-inp" id="f-cep" placeholder="00000-000" maxlength="9" oninput="mCEP(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-city"></i> Cidade</div><input class="field-inp" id="f-cidade" placeholder="Cidade" oninput="autoSave()"></div>
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-thumbtack"></i> Ponto de Referência</div><input class="field-inp" id="f-ref" placeholder="Próximo a..." oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-heart"></i> Estado Civil</div>
-        <select class="field-inp" id="f-civil" onchange="autoSave()">
-          <option value="">Selecionar...</option>
-          <option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option>
-        </select>
-      </div>
-      <div><div class="field-lbl"><i class="fas fa-church"></i> Religião</div><input class="field-inp" id="f-rel" placeholder="Religião" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar-check"></i> Data de Adesão</div><input class="field-inp" id="f-dadesao" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar-times"></i> Data de Vencimento</div><input class="field-inp" id="f-dvenc" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-dollar-sign"></i> Valor do Plano</div><input class="field-inp" id="f-valor" placeholder="R$ 0,00" oninput="mMoney(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-user-tie"></i> Nome do Vendedor</div><input class="field-inp" id="f-vendedor" placeholder="Seu nome" oninput="updateVendor();autoSave()"></div>
+      <div class="fg-full"><input class="field-inp" id="f-nome" placeholder="Nome Completo *"></div>
+      <div><input class="field-inp" id="f-nasc" type="date" placeholder="Nascimento"></div>
+      <div><input class="field-inp" id="f-cpf" placeholder="CPF"></div>
+      <div><input class="field-inp" id="f-rg" placeholder="RG"></div>
+      <div><input class="field-inp" id="f-tel" placeholder="Telefone"></div>
+      <div class="fg-full"><input class="field-inp" id="f-end" placeholder="Endereço"></div>
+      <div><input class="field-inp" id="f-num" placeholder="Nº"></div>
+      <div><input class="field-inp" id="f-bairro" placeholder="Bairro"></div>
+      <div><input class="field-inp" id="f-cep" placeholder="CEP"></div>
+      <div><input class="field-inp" id="f-cidade" placeholder="Cidade"></div>
+      <div class="fg-full"><input class="field-inp" id="f-ref" placeholder="Referência"></div>
+      <div><select class="field-inp" id="f-civil"><option>Estado Civil</option><option>Solteiro</option><option>Casado</option></select></div>
+      <div><input class="field-inp" id="f-rel" placeholder="Religião"></div>
+      <div><input class="field-inp" id="f-dadesao" type="date" placeholder="Adesão"></div>
+      <div><input class="field-inp" id="f-dvenc" type="date" placeholder="Vencimento"></div>
+      <div><input class="field-inp" id="f-valor" placeholder="Valor"></div>
+      <div class="fg-full"><input class="field-inp" id="f-vendedor" placeholder="Vendedor"></div>
     </div>
   </div>
 
-  <div class="section-hdr"><h2>Forma de Pagamento</h2></div>
+  <div class="section-hdr"><h2>Pagamento</h2></div>
   <div class="pay-card">
     <div class="pay-opts">
-      <div class="pay-opt"><input type="radio" name="pg" id="pg-banco" value="Banco" onchange="autoSave()"><label for="pg-banco"><i class="fas fa-university"></i><span>Banco</span></label></div>
-      <div class="pay-opt"><input type="radio" name="pg" id="pg-res" value="Residência" onchange="autoSave()"><label for="pg-res"><i class="fas fa-home"></i><span>Residência</span></label></div>
-      <div class="pay-opt"><input type="radio" name="pg" id="pg-esc" value="Escritório" onchange="autoSave()"><label for="pg-esc"><i class="fas fa-building"></i><span>Escritório</span></label></div>
+      <div class="pay-opt"><input type="radio" name="pg" id="pg-banco" value="Banco"><label for="pg-banco"><i class="fas fa-university"></i>Banco</label></div>
+      <div class="pay-opt"><input type="radio" name="pg" id="pg-res" value="Residência"><label for="pg-res"><i class="fas fa-home"></i>Casa</label></div>
+      <div class="pay-opt"><input type="radio" name="pg" id="pg-esc" value="Escritório"><label for="pg-esc"><i class="fas fa-building"></i>Escritório</label></div>
     </div>
   </div>
 
   <div class="section-hdr"><h2>Dependentes</h2></div>
   <div class="dep-area">
-    <div class="dep-list" id="depList"></div>
-    <button class="btn-add-dep" onclick="addDep()"><i class="fas fa-user-plus"></i> Adicionar Dependente</button>
+    <div id="depList"></div>
+    <button class="btn-add-dep" onclick="addDep()"><i class="fas fa-plus"></i> Adicionar</button>
   </div>
 
-  <div class="section-hdr"><h2>Fotos da Residência</h2></div>
+  <div class="section-hdr"><h2>Fotos</h2></div>
   <div class="fotos-card">
     <div class="fotos-actions">
-      <button class="btn-foto btn-cam" onclick="abrirCameraKodular()"><i class="fas fa-camera"></i> Abrir Câmera</button>
-      <button class="btn-foto btn-gal" onclick="abrirGaleriaKodular()"><i class="fas fa-images"></i> Galeria</button>
+      <button class="btn-foto btn-cam" onclick="document.getElementById('inp-cam').click()"><i class="fas fa-camera"></i> Câmera</button>
+      <button class="btn-foto btn-gal" onclick="document.getElementById('inp-gal').click()"><i class="fas fa-images"></i> Galeria</button>
     </div>
-    <input type="file" id="inp-cam" accept="image/*" style="display:none" onchange="addFotos(this)">
+    <input type="file" id="inp-cam" accept="image/*" capture="environment" style="display:none" onchange="addFotos(this)">
     <input type="file" id="inp-gal" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
-    <div class="fotos-grid" id="fotosGrid">
-      <div class="fotos-empty" id="fotosEmpty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>
-    </div>
+    <div class="fotos-grid" id="fotosGrid"><div class="fotos-empty">Nenhuma foto</div></div>
   </div>
 
-  <div class="section-hdr"><h2>Localização da Residência</h2></div>
+  <div class="section-hdr"><h2>Localização</h2></div>
   <div class="loc-card">
-    <div class="loc-status" id="locStatus">
-      <i class="fas fa-map-pin"></i>
-      <div class="loc-status-text"><h4>Localização não capturada</h4><p>Clique para capturar o GPS</p></div>
-    </div>
+    <div class="loc-status" id="locStatus"><i class="fas fa-map-pin"></i> Não capturada</div>
     <div class="loc-result" id="locResult">
-      <div class="loc-row"><span class="loc-lbl">Latitude</span><span class="loc-val" id="locLat">—</span></div>
-      <div class="loc-row"><span class="loc-lbl">Longitude</span><span class="loc-val" id="locLng">—</span></div>
-      <a class="maps-link" id="mapsLink" href="#" target="_blank"><i class="fab fa-google"></i> Abrir no Google Maps</a>
+      <p>Lat: <span id="locLat">-</span> | Lng: <span id="locLng">-</span></p>
+      <a id="mapsLink" href="#" target="_blank">Ver no Maps</a>
     </div>
-    <button class="btn-loc" id="btnLoc" onclick="captureGPS()"><i class="fas fa-crosshairs"></i> Capturar Localização Atual</button>
+    <button class="btn-loc" id="btnLoc" onclick="capturarGPS()"><i class="fas fa-crosshairs"></i> Capturar GPS</button>
     <div class="loc-manual" id="locManual">
-      <p class="loc-manual-hint"><i class="fas fa-exclamation-triangle"></i> Se o GPS não funcionar, insira as coordenadas manualmente</p>
+      <p class="loc-manual-hint"><i class="fas fa-exclamation-triangle"></i> Ou digite manualmente:</p>
       <div class="loc-manual-grid">
-        <div><div class="field-lbl">Latitude</div><input class="field-inp" id="f-lat-manual" placeholder="-10.123456" oninput="applyManualGPS()"></div>
-        <div><div class="field-lbl">Longitude</div><input class="field-inp" id="f-lng-manual" placeholder="-37.123456" oninput="applyManualGPS()"></div>
+        <input class="field-inp" id="f-lat-manual" placeholder="Latitude">
+        <input class="field-inp" id="f-lng-manual" placeholder="Longitude">
+        <button class="btn-loc" style="margin-top:5px" onclick="aplicarGPSManual()">Aplicar</button>
       </div>
     </div>
   </div>
 
   <div class="final-btns">
-    <button class="btn-primary" onclick="gerarESalvar()"><i class="fas fa-file-pdf"></i> Gerar e Salvar Plano</button>
-    <button class="btn-secondary" onclick="salvarAdesao()"><i class="fas fa-save"></i> Salvar Adesão</button>
-    <button class="btn-danger" onclick="confirmClear()"><i class="fas fa-trash"></i> Limpar Formulário</button>
+    <button class="btn-primary" onclick="gerarESalvar()"><i class="fas fa-save"></i> Gerar e Salvar Plano</button>
+    <button class="btn-secondary" onclick="salvarAdesao()"><i class="fas fa-chart-line"></i> Registrar Adesão</button>
+    <button class="btn-danger" onclick="confirmClear()"><i class="fas fa-trash"></i> Limpar</button>
   </div>
 </section>
 
-<!-- PAGE: PLANOS FEITOS -->
+<!-- PLANOS FEITOS -->
 <section class="page" id="page-planos">
-  <div class="planos-top">
-    <div class="stat-card stat-blue"><div class="stat-icon"><i class="fas fa-folder-open"></i></div><div class="stat-val" id="pl-total">0</div><div class="stat-lbl">Total de Planos</div></div>
-    <div class="stat-card stat-green"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-val" id="pl-hoje">0</div><div class="stat-lbl">Hoje</div></div>
-  </div>
-  <div class="planos-search-wrap">
-    <i class="fas fa-search"></i>
-    <input class="planos-search-inp" id="searchPlanos" placeholder="Buscar por nome ou código..." oninput="renderPlanos()">
-  </div>
+  <div class="planos-search-wrap"><i class="fas fa-search"></i><input class="planos-search-inp" id="searchPlanos" placeholder="Buscar..." oninput="renderPlanos()"></div>
   <div id="planosList"></div>
 </section>
 
-<!-- PAGE: ADESÕES -->
+<!-- ADESÕES -->
 <section class="page" id="page-adesoes">
   <div class="stats-row">
-    <div class="stat-card stat-green"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-val" id="st-pagas">0</div><div class="stat-lbl">Pagas</div></div>
-    <div class="stat-card stat-orange"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-val" id="st-pend">0</div><div class="stat-lbl">Pendentes</div></div>
-    <div class="stat-card stat-blue"><div class="stat-icon"><i class="fas fa-check-double"></i></div><div class="stat-val" id="st-baix">0</div><div class="stat-lbl">Baixadas</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-pagas">0</div><div>Pagas</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-pend">0</div><div>Pendentes</div></div>
+    <div class="stat-card"><div class="stat-val" id="st-baix">0</div><div>Baixadas</div></div>
   </div>
-  <div class="nova-card">
-    <div class="nova-card-ttl"><i class="fas fa-plus-circle"></i> Nova Adesão</div>
-    <div class="form-grid">
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-user"></i> Nome do Cliente</div><input class="field-inp" id="ad-nome" placeholder="Nome completo"></div>
-      <div><div class="field-lbl"><i class="fas fa-dollar-sign"></i> Valor (R$)</div><input class="field-inp" id="ad-valor" placeholder="R$ 0,00" oninput="mMoney(this)"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar-times"></i> Vencimento</div><input class="field-inp" id="ad-venc" type="date"></div>
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-user-tie"></i> Vendedor</div><input class="field-inp" id="ad-vend" placeholder="Nome do vendedor"></div>
+  <div class="form-card">
+    <input class="field-inp" id="ad-nome" placeholder="Nome"><br><br>
+    <input class="field-inp" id="ad-valor" placeholder="Valor"><br><br>
+    <input class="field-inp" id="ad-venc" type="date"><br><br>
+    <input class="field-inp" id="ad-vend" placeholder="Vendedor"><br><br>
+    <div class="pay-toggle" style="display:flex;gap:10px;margin:10px 0">
+      <button class="toggle-btn active" onclick="selAdTipo('hora')">Pago na Hora</button>
+      <button class="toggle-btn" onclick="selAdTipo('futuro')">Pagamento Futuro</button>
     </div>
-    <div class="pay-toggle">
-      <button class="toggle-btn active" id="tb-hora" onclick="selAdTipo('hora')"><i class="fas fa-bolt"></i> Pago na Hora</button>
-      <button class="toggle-btn" id="tb-fut" onclick="selAdTipo('futuro')"><i class="fas fa-hourglass-half"></i> Pagamento Futuro</button>
-    </div>
-    <button class="btn-primary" onclick="addAdesao()" style="margin-top:4px"><i class="fas fa-plus"></i> Registrar Adesão</button>
+    <button class="btn-primary" onclick="addAdesao()">Registrar</button>
   </div>
-  <div class="search-wrap"><i class="fas fa-search"></i><input class="search-inp" id="searchAd" placeholder="Pesquisar por nome..." oninput="renderAdesoes()"></div>
-  <div class="lista-section lista-green">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-check-circle"></i> Pagas na Hora</div><span class="lista-count" id="cnt-pagas">0</span></div>
-    <div class="adesoes-list" id="list-pagas"></div>
-  </div>
-  <div class="lista-section lista-orange">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-clock"></i> Futuras Pendentes</div><span class="lista-count" id="cnt-pend">0</span></div>
-    <div class="adesoes-list" id="list-pend"></div>
-  </div>
-  <div class="lista-section lista-blue">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-hand-holding-usd"></i> Pagas Após Baixa</div><span class="lista-count" id="cnt-baix">0</span></div>
-    <div class="adesoes-list" id="list-baix"></div>
-  </div>
+  <div class="lista-section lista-green"><div class="lista-hdr"><span>Pagas na Hora</span><span class="lista-count" id="cnt-pagas">0</span></div><div id="list-pagas"></div></div>
+  <div class="lista-section lista-orange"><div class="lista-hdr"><span>Pendentes</span><span class="lista-count" id="cnt-pend">0</span></div><div id="list-pend"></div></div>
+  <div class="lista-section lista-blue"><div class="lista-hdr"><span>Baixadas</span><span class="lista-count" id="cnt-baix">0</span></div><div id="list-baix"></div></div>
 </section>
 
-<!-- PAGE: CONFIG -->
+<!-- CONFIG -->
 <section class="page" id="page-config">
-  <div class="config-card">
-    <div class="config-icon"><i class="fas fa-building"></i></div>
-    <h3>Empresa</h3>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div><div class="field-lbl">Nome da Empresa</div><input class="field-inp" id="cfg-emp" value="PAX PREVENIR" oninput="saveConfig()"></div>
-      <div><div class="field-lbl">Vendedor Padrão</div><input class="field-inp" id="cfg-vend" placeholder="Seu nome completo" oninput="saveConfig()"></div>
-      <div><div class="field-lbl">Cidade / Estado</div><input class="field-inp" id="cfg-cidade" placeholder="Ex: Aracaju / SE" oninput="saveConfig()"></div>
-    </div>
-  </div>
-  <div class="config-card">
-    <div class="config-icon"><i class="fas fa-mobile-alt"></i></div>
-    <h3>PWA / Aplicativo</h3>
-    <div class="config-info">
-      <p>Para instalar como app no celular, use a opção <strong>"Adicionar à tela inicial"</strong> do navegador.</p>
-      <p>O sistema funciona <strong>100% offline</strong> após a primeira abertura.</p>
-    </div>
-  </div>
-  <div class="config-card danger-card">
-    <div class="config-icon" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i></div>
-    <h3>Zona de Perigo</h3>
-    <p class="danger-text">Esta ação apaga todos os dados salvos no dispositivo. Não pode ser desfeita.</p>
-    <button class="btn-danger" onclick="confirmDeleteAll()"><i class="fas fa-trash-alt"></i> Apagar Todos os Dados</button>
-  </div>
+  <div class="form-card"><h3>Empresa</h3><input class="field-inp" id="cfg-emp" placeholder="Nome da Empresa"><br><br><input class="field-inp" id="cfg-vend" placeholder="Vendedor Padrão"></div>
+  <button class="btn-danger" onclick="confirmDeleteAll()">Apagar Todos os Dados</button>
 </section>
-
 </main>
 
 <!-- MODAL PDF -->
 <div class="pdf-modal" id="pdfModal">
-  <div class="pdf-modal-header">
-    <h3 id="pdfModalTitle">PAX PREVENIR</h3>
-    <button onclick="closePdfModal()"><i class="fas fa-times"></i></button>
-  </div>
+  <div class="pdf-modal-header"><h3>PDF Gerado</h3><button onclick="closePdfModal()"><i class="fas fa-times"></i></button></div>
   <div class="pdf-modal-content">
-    <div class="pdf-message">
-      <i class="fas fa-file-pdf" style="font-size:48px;color:var(--red);margin-bottom:15px;display:block"></i>
-      <p>PDF gerado com sucesso!</p>
-      <p style="font-size:12px;margin-top:10px">Clique no botão abaixo para salvar ou compartilhar</p>
-    </div>
+    <i class="fas fa-file-pdf" style="font-size:60px;color:var(--red);margin-bottom:20px"></i>
+    <p>PDF gerado com sucesso!</p>
     <div class="pdf-actions">
-      <button class="btn-download" onclick="downloadPDF()"><i class="fas fa-download"></i> Salvar PDF</button>
-      <button class="btn-share" onclick="sharePDF()"><i class="fas fa-share-alt"></i> Compartilhar</button>
+      <button class="btn-download" onclick="baixarPDF()"><i class="fas fa-download"></i> Baixar PDF</button>
+      <button class="btn-share" onclick="compartilharPDF()"><i class="fas fa-share-alt"></i> Compartilhar</button>
     </div>
+    <div class="pdf-link" id="pdfLinkArea"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-<div class="modal-bg" id="modalBg">
-  <div class="modal-box">
-    <div class="modal-icon-wrap" id="modalIcon"></div>
-    <h3 id="modalTitle"></h3>
-    <p id="modalText"></p>
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="modal-ok" id="modalOK">Confirmar</button>
-    </div>
-  </div>
-</div>
-<div class="loading-screen" id="loadingScreen">
-  <div class="loader-ring"></div>
-  <div class="loading-text" id="loadingTxt">Aguarde...</div>
-</div>
+<div class="modal-bg" id="modalBg"><div class="modal-box"><h3 id="modalTitle"></h3><p id="modalText"></p><div class="modal-btns"><button class="modal-cancel" onclick="closeModal()">Cancelar</button><button class="modal-ok" id="modalOK">Confirmar</button></div></div></div>
+<div class="loading-screen" id="loadingScreen"><div class="loader-ring"></div><div class="loading-text">Aguarde...</div></div>
 
 <script>
-// =========================================================
-// TELA CHEIA
-// =========================================================
-let isFullscreen = false;
-
-function toggleFullscreen(){
-  if(!isFullscreen){
-    const el = document.documentElement;
-    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-    if(req){
-      req.call(el).then(()=>{
-        isFullscreen = true;
-        updateFsUI();
-        closeMenu();
-      }).catch(()=>{
-        window.scrollTo({top: 1});
-        isFullscreen = true;
-        updateFsUI();
-      });
-    } else {
-      window.scrollTo({top: 1});
-      isFullscreen = true;
-      updateFsUI();
-    }
-  } else {
-    const exit = document.exitFullscreen || document.webkitExitFullscreen;
-    if(exit && document.fullscreenElement) exit.call(document);
-    window.scrollTo({top: 0});
-    isFullscreen = false;
-    updateFsUI();
-  }
-}
-
-function updateFsUI(){
-  const icon = document.getElementById('fsIcon');
-  const label = document.getElementById('fsLabel');
-  const badge = document.getElementById('fsBadge');
-  if(isFullscreen){
-    icon.className = 'fas fa-compress';
-    label.textContent = 'Sair da Tela Cheia';
-    badge.textContent = 'ON';
-  } else {
-    icon.className = 'fas fa-expand';
-    label.textContent = 'Tela Cheia';
-    badge.textContent = 'OFF';
-  }
-}
-
-// =========================================================
-// STATE
-// =========================================================
+// ========== ESTADO GLOBAL ==========
 let ST = { plano:'', contratacao:'', dependentes:[], fotos:[], localizacao:null };
 let adesoes = [];
 let planosFeitos = [];
-let config = { empresa:'PAX PREVENIR', vendedor:'', cidade:'' };
-let pdfGeradoBlob = null;
-let pdfGeradoNome = '';
+let pdfBlobAtual = null;
+let pdfNomeAtual = '';
 
+// ========== INICIALIZAÇÃO ==========
 function init(){
-  loadData(); loadConfig(); loadPlanosFeitos(); setToday();
-  renderDeps(); renderFotos(); renderAdesoes(); updateStats();
-  renderPlanos(); updatePlanosBadge();
-  document.getElementById('topbar-pdf-btn').style.display='flex';
+  carregarDados(); carregarPlanos(); carregarAdesoes();
+  document.getElementById('f-dadesao').value = new Date().toISOString().split('T')[0];
+  renderizarDeps(); renderizarFotos(); renderizarAdesoes(); renderizarPlanos();
+  atualizarStats();
 }
-function setToday(){ document.getElementById('f-dadesao').value=new Date().toISOString().split('T')[0]; }
+init();
 
-function openMenu(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
-function closeMenu(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
-
+// ========== MENU ==========
+function openMenu(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').style.display='block'; }
+function closeMenu(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').style.display='none'; }
 function goPage(p){
   closeMenu();
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  const items=document.querySelectorAll('.nav-item');
-  const map={'cadastro':0,'planos':1,'adesoes':2,'config':3};
-  if(items[map[p]]) items[map[p]].classList.add('active');
-  if(p==='adesoes'){ renderAdesoes(); updateStats(); }
-  if(p==='planos'){ renderPlanos(); }
+  if(p==='planos') renderizarPlanos();
+  if(p==='adesoes'){ renderizarAdesoes(); atualizarStats(); }
 }
 
-function setContratacao(val){ ST.contratacao = val; autoSave(); showToast('Tipo: '+val+' selecionado','success'); }
+// ========== HELPERS ==========
+function g(id){ return document.getElementById(id)?.value||''; }
+function s(id,val){ let el=document.getElementById(id); if(el) el.value=val||''; }
+function fmtDate(d){ if(!d)return''; let p=d.split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d; }
+function showToast(msg,type=''){ 
+  let t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'; 
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function showLoading(){ document.getElementById('loadingScreen').classList.add('show'); }
+function hideLoading(){ document.getElementById('loadingScreen').classList.remove('show'); }
 
+// ========== FORMULÁRIO ==========
+function setContratacao(val){ ST.contratacao=val; salvarAuto(); }
 function selectPlan(el){
   document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected'); ST.plano=el.dataset.plan; autoSave();
-  showToast('Plano '+ST.plano+' selecionado','success');
+  el.classList.add('selected'); ST.plano=el.dataset.plan; salvarAuto();
+  showToast('Plano '+ST.plano);
+}
+function addDep(){ ST.dependentes.push({nome:'',parentesco:'',nasc:''}); renderizarDeps(); salvarAuto(); }
+function removeDep(i){ ST.dependentes.splice(i,1); renderizarDeps(); salvarAuto(); }
+function depChange(i,campo,val){ ST.dependentes[i][campo]=val; salvarAuto(); }
+function renderizarDeps(){
+  let html='';
+  ST.dependentes.forEach((d,i)=>{ html+=`<div class="dep-card"><div class="dep-card-info"><div class="dep-form"><input class="field-inp" value="${d.nome}" placeholder="Nome" oninput="depChange(${i},'nome',this.value)"><input class="field-inp" value="${d.parentesco}" placeholder="Parentesco" oninput="depChange(${i},'parentesco',this.value)"><input class="field-inp" type="date" value="${d.nasc}" oninput="depChange(${i},'nasc',this.value)"></div></div><button class="dep-remove" onclick="removeDep(${i})"><i class="fas fa-trash"></i></button></div>`; });
+  document.getElementById('depList').innerHTML=html;
 }
 
-function mCPF(el){ let v=el.value.replace(/\D/g,''); if(v.length>3)v=v.slice(0,3)+'.'+v.slice(3); if(v.length>7)v=v.slice(0,7)+'.'+v.slice(7); if(v.length>11)v=v.slice(0,11)+'-'+v.slice(11); el.value=v.slice(0,14); }
-function mTel(el){ let v=el.value.replace(/\D/g,''); if(v.length>0)v='('+v; if(v.length>3)v=v.slice(0,3)+') '+v.slice(3); if(v.length>10)v=v.slice(0,10)+'-'+v.slice(10); el.value=v.slice(0,15); }
-function mCEP(el){ let v=el.value.replace(/\D/g,''); if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5); el.value=v.slice(0,9); }
-function mMoney(el){ let v=el.value.replace(/\D/g,''); if(!v){el.value='';return;} v=(parseInt(v)/100).toFixed(2); el.value='R$ '+v.replace('.',',').replace(/(\d)(?=(\d{3})+(?!\d))/g,'$1.'); }
-
-function addDep(){ ST.dependentes.push({nome:'',parentesco:'',nasc:''}); renderDeps(); autoSave(); }
-function removeDep(i){ ST.dependentes.splice(i,1); renderDeps(); autoSave(); }
-function depChange(i,field,val){ ST.dependentes[i][field]=val; autoSave(); }
-function renderDeps(){
-  const list=document.getElementById('depList');
-  if(!ST.dependentes.length){list.innerHTML='';return;}
-  list.innerHTML=ST.dependentes.map((d,i)=>`
-    <div class="dep-card">
-      <div class="dep-card-num">${i+1}</div>
-      <div class="dep-card-info">
-        <div class="dep-form">
-          <div class="fg-full"><div class="field-lbl">Nome</div><input class="field-inp" value="${d.nome}" placeholder="Nome completo" oninput="depChange(${i},'nome',this.value)"></div>
-          <div><div class="field-lbl">Parentesco</div><input class="field-inp" value="${d.parentesco}" placeholder="Ex: Cônjuge" oninput="depChange(${i},'parentesco',this.value)"></div>
-          <div><div class="field-lbl">Data de Nascimento</div><input class="field-inp" type="date" value="${d.nasc}" oninput="depChange(${i},'nasc',this.value)"></div>
-        </div>
-      </div>
-      <button class="dep-remove" onclick="removeDep(${i})"><i class="fas fa-times"></i></button>
-    </div>`).join('');
-}
-
-// =========================================================
-// FOTOS - CORRIGIDO PARA KODULAR
-// =========================================================
-function abrirCameraKodular(){
-  const input = document.getElementById('inp-cam');
-  input.setAttribute('capture', 'environment');
-  input.click();
-}
-
-function abrirGaleriaKodular(){
-  const input = document.getElementById('inp-gal');
-  input.removeAttribute('capture');
-  input.click();
-}
-
+// ========== FOTOS ==========
 function addFotos(input){
-  const files=Array.from(input.files); let count=0;
-  if(files.length === 0) return;
-  files.forEach(file=>{
-    const reader=new FileReader();
+  Array.from(input.files).forEach(file=>{
+    let reader=new FileReader();
     reader.onload=e=>{
-      const img=new Image();
+      let img=new Image();
       img.onload=()=>{
-        const canvas=document.createElement('canvas');
-        const max=800; let w=img.width,h=img.height;
-        if(w>max){h=Math.round(h*max/w);w=max;} if(h>max){w=Math.round(w*max/h);h=max;}
+        let canvas=document.createElement('canvas');
+        let w=img.width,h=img.height,max=800;
+        if(w>max){h=Math.round(h*max/w);w=max;}
+        if(h>max){w=Math.round(w*max/h);h=max;}
         canvas.width=w;canvas.height=h;
         canvas.getContext('2d').drawImage(img,0,0,w,h);
-        ST.fotos.push(canvas.toDataURL('image/jpeg',0.75));
-        count++; if(count===files.length){renderFotos();autoSave();showToast(count+' foto(s) adicionada(s)','success');}
+        ST.fotos.push(canvas.toDataURL('image/jpeg',0.7));
+        renderizarFotos(); salvarAuto();
       };
-      img.onerror = function(){ count++; if(count===files.length){renderFotos();autoSave();} };
       img.src=e.target.result;
     };
-    reader.onerror = function(){ count++; if(count===files.length){renderFotos();autoSave();} };
     reader.readAsDataURL(file);
   });
   input.value='';
 }
-function removeFoto(i){ ST.fotos.splice(i,1); renderFotos(); autoSave(); }
-function renderFotos(){
-  const grid=document.getElementById('fotosGrid');
-  if(!ST.fotos.length){grid.innerHTML='<div class="fotos-empty" id="fotosEmpty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>';return;}
-  grid.innerHTML=ST.fotos.map((src,i)=>`<div class="foto-item"><img src="${src}" alt="Foto ${i+1}"><button class="foto-del" onclick="removeFoto(${i})"><i class="fas fa-times"></i></button></div>`).join('');
+function removeFoto(i){ ST.fotos.splice(i,1); renderizarFotos(); salvarAuto(); }
+function renderizarFotos(){
+  let grid=document.getElementById('fotosGrid');
+  if(!ST.fotos.length){ grid.innerHTML='<div class="fotos-empty">Nenhuma foto</div>'; return; }
+  grid.innerHTML=ST.fotos.map((src,i)=>`<div class="foto-item"><img src="${src}"><button class="foto-del" onclick="removeFoto(${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
-// =========================================================
-// GPS
-// =========================================================
-function captureGPS(){
-  const btn=document.getElementById('btnLoc');
-  btn.classList.add('loading');btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Capturando...';
+// ========== GPS (CORRIGIDO) ==========
+function capturarGPS(){
+  let btn=document.getElementById('btnLoc');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Capturando...';
   if(!navigator.geolocation){
-    showToast('GPS não disponível - use entrada manual','error');
+    showToast('GPS não disponível','error');
     document.getElementById('locManual').style.display='block';
-    resetBtn(); return;
+    btn.innerHTML='<i class="fas fa-crosshairs"></i> Tentar GPS';
+    return;
   }
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const lat=pos.coords.latitude.toFixed(6),lng=pos.coords.longitude.toFixed(6);
-    applyGPS(lat,lng);
-    showToast('Localização capturada!','success');
-    resetBtn();
-  },err=>{
-    let msg='GPS indisponível';
-    if(err.code===1) msg='Permissão negada - use entrada manual';
-    else if(err.code===2) msg='Posição indisponível - use manual';
-    showToast(msg,'error');
-    document.getElementById('locManual').style.display='block';
-    resetBtn();
-  },{enableHighAccuracy:true,timeout:10000});
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      let lat=pos.coords.latitude.toFixed(6);
+      let lng=pos.coords.longitude.toFixed(6);
+      aplicarGPS(lat,lng);
+      showToast('Localização capturada!','success');
+      btn.innerHTML='<i class="fas fa-check"></i> GPS OK';
+    },
+    err=>{
+      showToast('Erro GPS - use manual','error');
+      document.getElementById('locManual').style.display='block';
+      btn.innerHTML='<i class="fas fa-crosshairs"></i> Tentar GPS';
+    },
+    {enableHighAccuracy:true,timeout:10000}
+  );
 }
-function resetBtn(){ const b=document.getElementById('btnLoc');b.classList.remove('loading');b.innerHTML='<i class="fas fa-crosshairs"></i> Capturar Localização Atual'; }
-function applyManualGPS(){
-  const lat=document.getElementById('f-lat-manual').value;
-  const lng=document.getElementById('f-lng-manual').value;
-  if(lat&&lng&&!isNaN(lat)&&!isNaN(lng)) applyGPS(parseFloat(lat).toFixed(6),parseFloat(lng).toFixed(6));
+function aplicarGPSManual(){
+  let lat=document.getElementById('f-lat-manual').value;
+  let lng=document.getElementById('f-lng-manual').value;
+  if(lat && lng && !isNaN(lat) && !isNaN(lng)){
+    aplicarGPS(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+  } else { showToast('Digite coordenadas válidas','error'); }
 }
-function applyGPS(lat,lng){
+function aplicarGPS(lat,lng){
   ST.localizacao={lat,lng};
-  document.getElementById('locLat').textContent=lat;
-  document.getElementById('locLng').textContent=lng;
+  document.getElementById('locLat').innerHTML=lat;
+  document.getElementById('locLng').innerHTML=lng;
   document.getElementById('mapsLink').href=`https://maps.google.com/?q=${lat},${lng}`;
   document.getElementById('locResult').style.display='block';
-  const st=document.getElementById('locStatus');st.classList.add('captured');
-  st.innerHTML='<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS obtido com sucesso</p></div>';
-  const btn=document.getElementById('btnLoc');btn.innerHTML='<i class="fas fa-check"></i> Localização Capturada';btn.style.background='var(--green)';
-  autoSave();
+  document.getElementById('locStatus').innerHTML='<i class="fas fa-check-circle"></i> Localização capturada!';
+  salvarAuto();
 }
-function updateVendor(){ document.getElementById('sidebarVendor').textContent=document.getElementById('f-vendedor').value||'Vendedor'; }
 
-function g(id){ return document.getElementById(id)?.value||''; }
-function s(id,val){ const el=document.getElementById(id);if(el)el.value=val||''; }
-
-function autoSave(){
-  const data={plano:ST.plano,contratacao:ST.contratacao,nome:g('f-nome'),nasc:g('f-nasc'),cpf:g('f-cpf'),rg:g('f-rg'),tel:g('f-tel'),end:g('f-end'),num:g('f-num'),bairro:g('f-bairro'),cep:g('f-cep'),cidade:g('f-cidade'),ref:g('f-ref'),civil:g('f-civil'),rel:g('f-rel'),dadesao:g('f-dadesao'),dvenc:g('f-dvenc'),valor:g('f-valor'),vendedor:g('f-vendedor'),pagamento:document.querySelector('input[name="pg"]:checked')?.value||'',dependentes:ST.dependentes,fotos:ST.fotos,localizacao:ST.localizacao};
-  localStorage.setItem('pax_cadastro',JSON.stringify(data));
+// ========== AUTO SALVAR ==========
+function salvarAuto(){
+  let dados={
+    plano:ST.plano, contratacao:ST.contratacao,
+    nome:g('f-nome'), nasc:g('f-nasc'), cpf:g('f-cpf'), rg:g('f-rg'), tel:g('f-tel'),
+    end:g('f-end'), num:g('f-num'), bairro:g('f-bairro'), cep:g('f-cep'), cidade:g('f-cidade'),
+    ref:g('f-ref'), civil:g('f-civil'), rel:g('f-rel'),
+    dadesao:g('f-dadesao'), dvenc:g('f-dvenc'), valor:g('f-valor'), vendedor:g('f-vendedor'),
+    pagamento:document.querySelector('input[name="pg"]:checked')?.value||'',
+    dependentes:ST.dependentes, fotos:ST.fotos, localizacao:ST.localizacao
+  };
+  localStorage.setItem('pax_cadastro',JSON.stringify(dados));
 }
-function loadData(){
-  const raw=localStorage.getItem('pax_cadastro');if(!raw)return;
+function carregarDados(){
+  let raw=localStorage.getItem('pax_cadastro'); if(!raw) return;
   try{
-    const d=JSON.parse(raw);
-    ST.plano=d.plano||'';ST.contratacao=d.contratacao||'';ST.dependentes=d.dependentes||[];ST.fotos=d.fotos||[];ST.localizacao=d.localizacao||null;
-    s('f-nome',d.nome);s('f-nasc',d.nasc);s('f-cpf',d.cpf);s('f-rg',d.rg);s('f-tel',d.tel);
-    s('f-end',d.end);s('f-num',d.num);s('f-bairro',d.bairro);s('f-cep',d.cep);s('f-cidade',d.cidade);
-    s('f-ref',d.ref);s('f-civil',d.civil);s('f-rel',d.rel);
-    s('f-dadesao',d.dadesao);s('f-dvenc',d.dvenc);s('f-valor',d.valor);s('f-vendedor',d.vendedor);
-    if(d.pagamento){const el=document.querySelector(`input[value="${d.pagamento}"]`);if(el)el.checked=true;}
-    if(d.contratacao){const el=document.querySelector(`input[value="${d.contratacao}"]`);if(el)el.checked=true;}
-    if(ST.plano){const el=document.querySelector(`.plan-card[data-plan="${ST.plano}"]`);if(el)el.classList.add('selected');}
-    if(ST.localizacao){applyGPS(ST.localizacao.lat,ST.localizacao.lng);}
-    if(d.vendedor)document.getElementById('sidebarVendor').textContent=d.vendedor;
+    let d=JSON.parse(raw);
+    ST.plano=d.plano||''; ST.contratacao=d.contratacao||''; ST.dependentes=d.dependentes||[]; ST.fotos=d.fotos||[]; ST.localizacao=d.localizacao||null;
+    s('f-nome',d.nome); s('f-nasc',d.nasc); s('f-cpf',d.cpf); s('f-rg',d.rg); s('f-tel',d.tel);
+    s('f-end',d.end); s('f-num',d.num); s('f-bairro',d.bairro); s('f-cep',d.cep); s('f-cidade',d.cidade);
+    s('f-ref',d.ref); s('f-civil',d.civil); s('f-rel',d.rel);
+    s('f-dadesao',d.dadesao); s('f-dvenc',d.dvenc); s('f-valor',d.valor); s('f-vendedor',d.vendedor);
+    if(d.pagamento){ let el=document.querySelector(`input[value="${d.pagamento}"]`); if(el) el.checked=true; }
+    if(d.contratacao){ let el=document.querySelector(`input[value="${d.contratacao}"]`); if(el) el.checked=true; }
+    if(ST.plano){ let el=document.querySelector(`.plan-card[data-plan="${ST.plano}"]`); if(el) el.classList.add('selected'); }
+    if(ST.localizacao){ aplicarGPS(ST.localizacao.lat, ST.localizacao.lng); }
   }catch(e){}
 }
 
-// =========================================================
-// PDF - CORRIGIDO (variáveis W e M definidas dentro da função)
-// =========================================================
+// ========== PDF (CORRIGIDO PARA DOWNLOAD NO KODULAR) ==========
 function gerarCodigo(nome){
-  const ini=nome.trim().split(/\s+/).map(p=>p[0]||'').join('').toUpperCase().slice(0,3).padEnd(3,'X');
-  const num=String(Date.now()).slice(-5);
+  let ini=nome.trim().split(/\s+/).map(p=>p[0]||'').join('').toUpperCase().slice(0,3).padEnd(3,'X');
+  let num=String(Date.now()).slice(-5);
   return ini+'-'+num;
 }
 
 function gerarESalvar(){
-  const nome=g('f-nome').trim();
-  if(!ST.plano){showToast('Selecione um plano','error');return;}
-  if(!nome){showToast('Preencha o nome do cliente','error');return;}
-  showLoading('Gerando PDF...');
+  let nome=g('f-nome').trim();
+  if(!ST.plano){ showToast('Selecione um plano','error'); return; }
+  if(!nome){ showToast('Digite o nome do cliente','error'); return; }
+  showLoading();
   setTimeout(()=>{
     try{
-      const pdfBlob = buildPDFBlob();
-      if(!pdfBlob){ throw new Error('Falha ao gerar PDF'); }
-      const codigo = gerarCodigo(nome);
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        const pdfB64 = reader.result;
-        const plano = {
+      let pdfBlob = criarPDFBlob();
+      let codigo = gerarCodigo(nome);
+      let reader = new FileReader();
+      reader.onloadend = function(){
+        let plano = {
           id:Date.now(), codigo, nome, plano:ST.plano,
           contratacao:ST.contratacao||'Plano Novo',
           valor:g('f-valor'), vendedor:g('f-vendedor'),
           dadesao:g('f-dadesao'), dvenc:g('f-dvenc'),
           cidade:g('f-cidade'), ref:g('f-ref'),
-          pdfB64, dataCriacao:new Date().toISOString()
+          pdfB64:reader.result, dataCriacao:new Date().toISOString()
         };
         planosFeitos.unshift(plano);
-        savePlanosFeitos(); updatePlanosBadge();
-        pdfGeradoBlob = pdfBlob;
-        pdfGeradoNome = nome.replace(/\s+/g,'_')+'_'+codigo;
+        salvarPlanos();
+        pdfBlobAtual = pdfBlob;
+        pdfNomeAtual = nome.replace(/\s+/g,'_')+'_'+codigo;
         hideLoading();
         showToast('Plano salvo! Código: '+codigo,'success');
         abrirModalPDF();
       };
-      reader.onerror = function(){ hideLoading(); showToast('Erro ao salvar plano','error'); };
       reader.readAsDataURL(pdfBlob);
-    }catch(err){hideLoading();showToast('Erro ao gerar PDF: '+err.message,'error');console.error(err);}
-  },300);
+    }catch(err){ hideLoading(); showToast('Erro: '+err.message,'error'); console.error(err); }
+  }, 200);
 }
 
-function buildPDFBlob(){
+function criarPDFBlob(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=210;
-  const M=20;
+  const w=210, m=20;
   
-  // Header principal
-  doc.setFillColor(15,32,68); doc.rect(0,0,W,45,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',W/2,20,{align:'center'});
-  doc.setFontSize(10); doc.setTextColor(180,190,210); doc.text('Sistema de Planos Funerários',W/2,28,{align:'center'});
-  doc.setDrawColor(201,168,76); doc.setLineWidth(0.5); doc.line(M,34,W-M,34);
-  doc.setFontSize(11); doc.setTextColor(255,255,255); doc.text('Tipo: '+(ST.contratacao||'Plano Novo'),M,41); doc.text('Plano: '+ST.plano,M+60,41); doc.text('Data: '+new Date().toLocaleDateString('pt-BR'),W-M,41,{align:'right'});
+  // Cabeçalho
+  doc.setFillColor(0,0,0); doc.rect(0,0,w,45,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',w/2,20,{align:'center'});
+  doc.setFontSize(10); doc.setTextColor(200,200,210); doc.text('Sistema de Planos Funerários',w/2,28,{align:'center'});
+  doc.setFontSize(11); doc.setTextColor(255,255,255); doc.text('Tipo: '+(ST.contratacao||'Plano Novo'),m,41); doc.text('Plano: '+ST.plano,m+60,41);
   
   let y=55;
-  
-  // DADOS DO TITULAR
-  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('DADOS DO TITULAR',M+4,y); y+=10;
-  const campos=[['Nome Completo',g('f-nome')],['CPF',g('f-cpf')],['RG',g('f-rg')],['Data de Nascimento',fmtDate(g('f-nasc'))],['Telefone',g('f-tel')],['Estado Civil',g('f-civil')],['Religião',g('f-rel')],['Endereço',(g('f-end')+' '+g('f-num')).trim()],['Bairro',g('f-bairro')],['CEP',g('f-cep')],['Cidade',g('f-cidade')],['Ponto de Referência',g('f-ref')]].filter(c=>c[1].trim());
+  // Dados do titular
+  doc.setFillColor(240,243,250); doc.roundedRect(m,y-6,w-2*m,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(0,0,0); doc.text('DADOS DO TITULAR',m+4,y); y+=10;
+  let campos=[['Nome',g('f-nome')],['CPF',g('f-cpf')],['RG',g('f-rg')],['Nascimento',fmtDate(g('f-nasc'))],['Telefone',g('f-tel')],['Endereço',g('f-end')+' '+g('f-num')],['Cidade',g('f-cidade')],['Vendedor',g('f-vendedor')]].filter(c=>c[1]);
   doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
-  campos.forEach(([lbl,val])=>{
-    if(y>275){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
-    doc.setTextColor(100,110,130); doc.text(lbl+':',M,y);
-    doc.setTextColor(30,40,60); doc.setFont('helvetica','bold'); doc.text(val,M+52,y);
-    doc.setFont('helvetica','normal'); doc.setDrawColor(220,225,235); doc.setLineWidth(0.2); doc.line(M,y+2,W-M,y+2); y+=9;
-  });
+  campos.forEach(([lbl,val])=>{ doc.setTextColor(100,110,130); doc.text(lbl+':',m,y); doc.setTextColor(0,0,0); doc.setFont('helvetica','bold'); doc.text(val,m+40,y); doc.setFont('helvetica','normal'); y+=8; });
   
-  y+=4; if(y>255){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
+  y+=5;
+  doc.setFillColor(240,243,250); doc.roundedRect(m,y-6,w-2*m,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.text('INFORMAÇÕES DO PLANO',m+4,y); y+=10;
+  let planosInfo=[['Plano',ST.plano],['Valor',g('f-valor')],['Adesão',fmtDate(g('f-dadesao'))],['Vencimento',fmtDate(g('f-dvenc'))]];
+  planosInfo.forEach(([lbl,val])=>{ doc.setTextColor(100,110,130); doc.text(lbl+':',m,y); doc.setTextColor(0,0,0); doc.setFont('helvetica','bold'); doc.text(val,m+40,y); doc.setFont('helvetica','normal'); y+=8; });
   
-  // INFORMAÇÕES DO PLANO
-  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('INFORMAÇÕES DO PLANO',M+4,y); y+=10;
-  const planCampos=[['Tipo de Contratação',ST.contratacao||'Plano Novo'],['Plano',ST.plano],['Valor',g('f-valor')],['Data de Adesão',fmtDate(g('f-dadesao'))],['Data de Vencimento',fmtDate(g('f-dvenc'))],['Forma de Pagamento',document.querySelector('input[name="pg"]:checked')?.value||''],['Vendedor',g('f-vendedor')]].filter(c=>c[1].trim());
-  planCampos.forEach(([lbl,val])=>{
-    doc.setTextColor(100,110,130); doc.text(lbl+':',M,y);
-    doc.setTextColor(30,40,60); doc.setFont('helvetica','bold'); doc.text(val,M+52,y);
-    doc.setFont('helvetica','normal'); doc.setDrawColor(220,225,235); doc.setLineWidth(0.2); doc.line(M,y+2,W-M,y+2); y+=9;
-  });
-  
-  // DEPENDENTES
-  if(ST.dependentes.length){
-    y+=4; if(y>240){doc.addPage(); miniHeaderPDF(doc,W,M); y=30;}
-    doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('DEPENDENTES',M+4,y); y+=8;
-    doc.autoTable({startY:y,margin:{left:M,right:M},head:[['#','Nome','Parentesco','Nascimento']],body:ST.dependentes.map((d,i)=>[i+1,d.nome,d.parentesco,fmtDate(d.nasc)]),headStyles:{fillColor:[15,32,68],textColor:255,fontSize:9,fontStyle:'bold'},bodyStyles:{fontSize:9,textColor:[40,50,70]},alternateRowStyles:{fillColor:[248,249,252]},theme:'grid'});
-    y=doc.lastAutoTable.finalY+6;
-  }
-  
-  rodapePDF(doc,W,1);
-  
-  // LOCALIZAÇÃO
-  doc.addPage(); miniHeaderPDF(doc,W,M); y=30;
-  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('LOCALIZAÇÃO DA RESIDÊNCIA',M+4,y); y+=14;
-  if(ST.localizacao){
-    doc.setFillColor(232,246,240); doc.roundedRect(M,y,W-2*M,40,3,3,'F'); doc.setDrawColor(45,125,90); doc.setLineWidth(0.5); doc.roundedRect(M,y,W-2*M,40,3,3,'S');
-    doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(45,125,90); doc.text('Coordenadas GPS',M+6,y+10);
-    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(30,50,40); doc.text('Latitude:',M+6,y+20); doc.setFont('helvetica','bold'); doc.text(String(ST.localizacao.lat),M+40,y+20); doc.setFont('helvetica','normal'); doc.text('Longitude:',M+6,y+30); doc.setFont('helvetica','bold'); doc.text(String(ST.localizacao.lng),M+40,y+30); y+=48;
-    doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(15,32,68); doc.text('Link Google Maps:',M,y+4); doc.setTextColor(15,85,200); const link=`https://maps.google.com/?q=${ST.localizacao.lat},${ST.localizacao.lng}`; doc.textWithLink(link,M+44,y+4,{url:link});
-  } else {
-    doc.setFillColor(250,245,230); doc.roundedRect(M,y,W-2*M,24,3,3,'F'); doc.setFont('helvetica','italic'); doc.setFontSize(10); doc.setTextColor(150,120,40); doc.text('Localização não capturada para este cadastro.',M+6,y+14);
-  }
-  rodapePDF(doc,W,2);
-  
-  // FOTOS
-  doc.addPage(); miniHeaderPDF(doc,W,M); y=30;
-  doc.setFillColor(240,243,250); doc.roundedRect(M,y-6,W-2*M,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(15,32,68); doc.text('FOTOS DA RESIDÊNCIA',M+4,y); y+=10;
+  // Fotos
+  doc.addPage();
+  doc.setFillColor(15,32,68); doc.rect(0,0,w,20,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',m,13);
+  y=30;
+  doc.setFillColor(240,243,250); doc.roundedRect(m,y-6,w-2*m,8,2,2,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(0,0,0); doc.text('FOTOS',m+4,y); y+=10;
   if(ST.fotos.length){
-    const cols=2,fw=(W-2*M-8)/cols,fh=fw*0.7;
-    ST.fotos.forEach((foto,i)=>{
-      if(y+fh>285){doc.addPage();miniHeaderPDF(doc,W,M);y=30;}
-      const col=i%cols,x=M+(col*(fw+8));
-      if(col===0&&i>0)y+=fh+8;
-      try{doc.addImage(foto,'JPEG',x,y,fw,fh,undefined,'MEDIUM');}catch(e){}
-      doc.setDrawColor(210,215,225); doc.setLineWidth(0.3); doc.rect(x,y,fw,fh,'S'); doc.setFontSize(8); doc.setTextColor(120,130,150); doc.text(`Foto ${i+1}`,x,y+fh+4);
-    });
-  } else {
-    doc.setFontSize(10); doc.setTextColor(160,170,190); doc.text('Nenhuma foto foi adicionada a este cadastro.',M,y+10);
-  }
-  rodapePDF(doc,W,3);
+    let cols=2, fw=(w-2*m-8)/cols, fh=fw*0.7;
+    ST.fotos.forEach((foto,i)=>{ let col=i%cols, x=m+(col*(fw+8)); if(col===0&&i>0) y+=fh+8; try{ doc.addImage(foto,'JPEG',x,y,fw,fh,undefined,'MEDIUM'); }catch(e){} });
+  } else { doc.text('Nenhuma foto',m,y+10); }
   
   return doc.output('blob');
 }
 
-function miniHeaderPDF(doc,W,M){
-  doc.setFillColor(15,32,68); doc.rect(0,0,W,20,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(201,168,76); doc.text('PAX PREVENIR',M,13);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(180,190,210); doc.text('Sistema de Planos Funerários',M+46,13);
-  doc.text(new Date().toLocaleDateString('pt-BR'),W-M,13,{align:'right'});
-  doc.setDrawColor(201,168,76); doc.setLineWidth(0.3); doc.line(0,20,W,20);
-}
-
-function rodapePDF(doc,W,pg){
-  doc.setFillColor(15,32,68); doc.rect(0,285,W,12,'F');
-  doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(150,160,180);
-  doc.text('PAX PREVENIR © '+new Date().getFullYear()+' – Documento gerado pelo sistema.',20,292);
-  doc.setTextColor(201,168,76); doc.text('Pág. '+pg,W-20,292,{align:'right'});
-}
-
-function fmtDate(d){ if(!d)return''; const[y,m,day]=d.split('-'); return`${day}/${m}/${y}`; }
-
 function abrirModalPDF(){
-  document.getElementById('pdfModalTitle').textContent = 'PDF - '+g('f-nome');
   document.getElementById('pdfModal').classList.add('open');
 }
-function closePdfModal(){ document.getElementById('pdfModal').classList.remove('open'); pdfGeradoBlob=null; }
-function downloadPDF(){
-  if(!pdfGeradoBlob){showToast('PDF não disponível','error');return;}
-  const url = URL.createObjectURL(pdfGeradoBlob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = pdfGeradoNome+'.pdf';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
-  showToast('Download iniciado','success');
+function closePdfModal(){
+  document.getElementById('pdfModal').classList.remove('open');
+  pdfBlobAtual = null;
 }
-function sharePDF(){
-  if(!pdfGeradoBlob){showToast('PDF não disponível','error');return;}
-  const file = new File([pdfGeradoBlob], pdfGeradoNome+'.pdf', {type: 'application/pdf'});
-  if(navigator.share && navigator.canShare && navigator.canShare({files: [file]})){
-    navigator.share({files: [file], title: 'PAX PREVENIR', text: 'Plano funerário'}).catch(()=>downloadPDF());
-  } else { downloadPDF(); }
-}
-function abrirDlPlano(id){
-  const p=planosFeitos.find(x=>x.id===id);
-  if(p){ 
-    const base64Data = p.pdfB64.split(',')[1];
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for(let i=0; i<byteCharacters.length; i++) byteNumbers[i] = byteCharacters.charCodeAt(i);
-    const byteArray = new Uint8Array(byteNumbers);
-    pdfGeradoBlob = new Blob([byteArray], {type: 'application/pdf'});
-    pdfGeradoNome = p.nome+'_'+p.codigo;
-    abrirModalPDF();
-  } else showToast('Plano não encontrado','error');
-}
-function copiarCodigo(codigo){
+function baixarPDF(){
+  if(!pdfBlobAtual){ showToast('PDF não disponível','error'); return; }
   try{
-    navigator.clipboard.writeText(codigo).then(()=>showToast('Código copiado: '+codigo,'success')).catch(()=>fallbackCopy(codigo));
-  }catch(e){fallbackCopy(codigo);}
-}
-function fallbackCopy(txt){
-  const el=document.createElement('textarea'); el.value=txt; el.style.cssText='position:fixed;opacity:0;top:0;left:0';
-  document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-  showToast('Código copiado: '+txt,'success');
-}
-function planTagClass(plano){
-  const m={Rubi:'tag-rubi',Esmeralda:'tag-esmeralda',Ouro:'tag-ouro',Nacional:'tag-nacional'};
-  return m[plano]||'tag-nacional';
-}
-function loadPlanosFeitos(){ try{planosFeitos=JSON.parse(localStorage.getItem('pax_planos')||'[]');}catch(e){planosFeitos=[];} }
-function savePlanosFeitos(){ try{localStorage.setItem('pax_planos',JSON.stringify(planosFeitos));} catch(e){showToast('Armazenamento cheio! Exclua planos antigos.','error');} }
-function updatePlanosBadge(){
-  const n=planosFeitos.length;
-  const b=document.getElementById('navBadgePlanos');
-  if(n>0){b.style.display='flex';b.textContent=n;}else b.style.display='none';
-  document.getElementById('pl-total').textContent=n;
-  const hoje=new Date().toISOString().split('T')[0];
-  document.getElementById('pl-hoje').textContent=planosFeitos.filter(p=>p.dataCriacao&&p.dataCriacao.startsWith(hoje)).length;
-}
-function confirmDeletePlan(id){
-  openModal('Excluir Plano','Remove o plano e o PDF. Não pode ser desfeita!','del',()=>{
-    planosFeitos=planosFeitos.filter(p=>p.id!==id);
-    savePlanosFeitos();renderPlanos();showToast('Plano excluído');
-  });
-}
-function renderPlanos(){
-  loadPlanosFeitos(); updatePlanosBadge();
-  const q=(document.getElementById('searchPlanos')?.value||'').toLowerCase();
-  const lista=planosFeitos.filter(p=>!q||p.nome.toLowerCase().includes(q)||p.codigo.toLowerCase().includes(q));
-  const container=document.getElementById('planosList');
-  if(!lista.length){
-    container.innerHTML='<div class="empty-state" style="border-radius:var(--radius)"><i class="fas fa-folder-open"></i>Nenhum plano encontrado</div>';
-    return;
+    // Método 1: usar a tag <a> com download
+    let url = URL.createObjectURL(pdfBlobAtual);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = pdfNomeAtual+'.pdf';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+    showToast('Download iniciado!','success');
+  }catch(e){
+    // Método 2: fallback - abrir em nova janela
+    let url = URL.createObjectURL(pdfBlobAtual);
+    window.open(url, '_blank');
+    showToast('Abrindo PDF...','success');
   }
-  container.innerHTML=lista.map(p=>`
-    <div class="pf-card">
-      <div class="pf-top">
-        <div class="pf-codigo-faixa">${p.codigo}</div>
-        <div class="pf-body">
-          <div class="pf-nome">${p.nome}</div>
-          <span class="pf-plano-tag ${planTagClass(p.plano)}"><i class="fas fa-tag"></i>${p.plano} · ${p.contratacao}</span>
-          <div class="pf-codigo-destaque">
-            <div>
-              <div class="pf-codigo-label">Código do Plano</div>
-              <div class="pf-codigo-val">${p.codigo}</div>
-            </div>
-            <button class="pf-codigo-copy" onclick="copiarCodigo('${p.codigo}')" title="Copiar código"><i class="fas fa-copy"></i></button>
-          </div>
-          <div class="pf-meta">
-            ${p.valor?`<span class="pf-meta-item"><i class="fas fa-dollar-sign"></i><strong>${p.valor}</strong></span>`:''}
-            ${p.vendedor?`<span class="pf-meta-item"><i class="fas fa-user-tie"></i><strong>${p.vendedor}</strong></span>`:''}
-            ${p.dadesao?`<span class="pf-meta-item"><i class="fas fa-calendar-check"></i>${fmtDate(p.dadesao)}</span>`:''}
-            ${p.dvenc?`<span class="pf-meta-item"><i class="fas fa-calendar-times"></i>Venc: ${fmtDate(p.dvenc)}</span>`:''}
-            ${p.cidade?`<span class="pf-meta-item"><i class="fas fa-city"></i>${p.cidade}</span>`:''}
-          </div>
-          <div class="pf-btns">
-            <button class="btn-sm btn-sm-navy" onclick="abrirDlPlano(${p.id})"><i class="fas fa-eye"></i> Ver / Baixar PDF</button>
-            <button class="btn-sm btn-sm-red" onclick="confirmDeletePlan(${p.id})"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `).join('');
+}
+function compartilharPDF(){
+  if(!pdfBlobAtual){ showToast('PDF não disponível','error'); return; }
+  let file = new File([pdfBlobAtual], pdfNomeAtual+'.pdf', {type:'application/pdf'});
+  if(navigator.share){
+    navigator.share({files:[file], title:'PAX PREVENIR'}).catch(()=>baixarPDF());
+  } else { baixarPDF(); }
+}
+function abrirPlanoPDF(id){
+  let p = planosFeitos.find(x=>x.id===id);
+  if(p){
+    let byteChars = atob(p.pdfB64.split(',')[1]);
+    let byteNums = new Uint8Array(byteChars.length);
+    for(let i=0;i<byteChars.length;i++) byteNums[i]=byteChars.charCodeAt(i);
+    pdfBlobAtual = new Blob([byteNums], {type:'application/pdf'});
+    pdfNomeAtual = p.nome+'_'+p.codigo;
+    abrirModalPDF();
+  } else { showToast('Plano não encontrado','error'); }
 }
 
-// =========================================================
-// ADESÕES
-// =========================================================
+// ========== PLANOS FEITOS ==========
+function carregarPlanos(){ try{ planosFeitos=JSON.parse(localStorage.getItem('pax_planos')||'[]'); }catch(e){ planosFeitos=[]; } }
+function salvarPlanos(){ localStorage.setItem('pax_planos',JSON.stringify(planosFeitos)); }
+function renderizarPlanos(){
+  carregarPlanos();
+  let q=(document.getElementById('searchPlanos')?.value||'').toLowerCase();
+  let lista=planosFeitos.filter(p=>!q||p.nome.toLowerCase().includes(q)||p.codigo.toLowerCase().includes(q));
+  let container=document.getElementById('planosList');
+  if(!lista.length){ container.innerHTML='<div class="empty-state">Nenhum plano</div>'; return; }
+  container.innerHTML=lista.map(p=>`
+    <div class="pf-card"><div class="pf-top"><div class="pf-codigo-faixa">${p.codigo}</div><div class="pf-body"><div class="pf-nome">${p.nome}</div><div class="pf-plano-tag tag-ouro">${p.plano}</div><div class="pf-codigo-destaque"><span class="pf-codigo-val">${p.codigo}</span><button class="pf-codigo-copy" onclick="copiarTexto('${p.codigo}')"><i class="fas fa-copy"></i></button></div><div class="pf-meta"><span>${p.valor||''}</span><span>${p.vendedor||''}</span></div><div class="pf-btns"><button class="btn-sm btn-sm-navy" onclick="abrirPlanoPDF(${p.id})"><i class="fas fa-eye"></i> Ver PDF</button><button class="btn-sm btn-sm-red" onclick="excluirPlano(${p.id})"><i class="fas fa-trash"></i></button></div></div></div></div>
+  `).join('');
+  let badge=document.getElementById('navBadgePlanos');
+  if(planosFeitos.length>0){ badge.style.display='inline-block'; badge.textContent=planosFeitos.length; } else { badge.style.display='none'; }
+}
+function copiarTexto(txt){
+  navigator.clipboard.writeText(txt).then(()=>showToast('Copiado!')).catch(()=>{ alert('Copie manual: '+txt); });
+}
+function excluirPlano(id){
+  openModal('Excluir','Remover este plano?','del',()=>{ planosFeitos=planosFeitos.filter(p=>p.id!==id); salvarPlanos(); renderizarPlanos(); showToast('Plano excluído'); });
+}
+
+// ========== ADESÕES ==========
 let adTipo='hora';
-function selAdTipo(t){ adTipo=t; document.getElementById('tb-hora').classList.toggle('active',t==='hora'); document.getElementById('tb-fut').classList.toggle('active',t==='futuro'); }
-function loadAdesoes(){ try{adesoes=JSON.parse(localStorage.getItem('pax_adesoes')||'[]');}catch(e){adesoes=[];} }
-function saveAdesoes(){ localStorage.setItem('pax_adesoes',JSON.stringify(adesoes)); }
+function selAdTipo(t){ adTipo=t; document.querySelectorAll('.toggle-btn').forEach(btn=>btn.classList.remove('active')); document.getElementById(t==='hora'?'tb-hora':'tb-fut').classList.add('active'); }
+function carregarAdesoes(){ try{ adesoes=JSON.parse(localStorage.getItem('pax_adesoes')||'[]'); }catch(e){ adesoes=[]; } }
+function salvarAdesoes(){ localStorage.setItem('pax_adesoes',JSON.stringify(adesoes)); }
 function addAdesao(){
-  const nome=g('ad-nome').trim(),valor=g('ad-valor').trim();
-  if(!nome){showToast('Informe o nome do cliente','error');return;}
-  if(!valor){showToast('Informe o valor','error');return;}
-  const ad={id:Date.now(),nome,valor,venc:g('ad-venc'),vendedor:g('ad-vend').trim(),tipo:adTipo,status:adTipo==='hora'?'paga':'pendente',dataCriacao:new Date().toISOString()};
-  adesoes.unshift(ad);saveAdesoes();
-  s('ad-nome','');s('ad-valor','');s('ad-venc','');s('ad-vend','');
-  renderAdesoes();updateStats();showToast('Adesão registrada!','success');
+  let nome=g('ad-nome').trim(), valor=g('ad-valor').trim();
+  if(!nome||!valor){ showToast('Preencha nome e valor','error'); return; }
+  let ad={id:Date.now(), nome, valor, venc:g('ad-venc'), vendedor:g('ad-vend'), tipo:adTipo, status:adTipo==='hora'?'paga':'pendente'};
+  adesoes.unshift(ad); salvarAdesoes();
+  s('ad-nome',''); s('ad-valor',''); s('ad-venc',''); s('ad-vend','');
+  renderizarAdesoes(); atualizarStats(); showToast('Adesão registrada!');
 }
 function darBaixa(id){
-  openModal('Dar Baixa na Adesão','Confirmar pagamento desta adesão?','ok',()=>{
-    const ad=adesoes.find(a=>a.id===id);if(ad){ad.status='baixada';ad.dataBaixa=new Date().toISOString();}
-    saveAdesoes();renderAdesoes();updateStats();showToast('Adesão baixada!','success');
+  openModal('Dar Baixa','Confirmar pagamento?','ok',()=>{
+    let ad=adesoes.find(a=>a.id===id); if(ad) ad.status='baixada';
+    salvarAdesoes(); renderizarAdesoes(); atualizarStats(); showToast('Baixada!');
   });
 }
 function deleteAdesao(id){
-  openModal('Excluir Adesão','Esta ação não pode ser desfeita. Continuar?','del',()=>{
-    adesoes=adesoes.filter(a=>a.id!==id);saveAdesoes();renderAdesoes();updateStats();showToast('Adesão excluída');
+  openModal('Excluir','Remover adesão?','del',()=>{
+    adesoes=adesoes.filter(a=>a.id!==id); salvarAdesoes(); renderizarAdesoes(); atualizarStats(); showToast('Excluída');
   });
 }
-function getStatusBadge(ad){
-  if(ad.status!=='pendente')return'';
-  if(!ad.venc)return'<span class="badge badge-ok">Pendente</span>';
-  const hoje=new Date();hoje.setHours(0,0,0,0);const venc=new Date(ad.venc+'T00:00:00');
-  const diff=Math.round((venc-hoje)/86400000);
-  if(diff<0)return'<span class="badge badge-atrasada">Atrasada '+Math.abs(diff)+'d</span>';
-  if(diff===0)return'<span class="badge badge-vence-hoje">Vence Hoje</span>';
-  if(diff<=7)return'<span class="badge badge-proxima">Vence em '+diff+'d</span>';
-  return'<span class="badge badge-ok">Pendente</span>';
-}
-function renderAdesoes(){
-  loadAdesoes();
-  const q=(document.getElementById('searchAd')?.value||'').toLowerCase();
-  const f=ad=>!q||ad.nome.toLowerCase().includes(q);
-  const pagas=adesoes.filter(a=>a.status==='paga'&&f(a));
-  const pend=adesoes.filter(a=>a.status==='pendente'&&f(a)).sort((a,b)=>a.venc>b.venc?1:-1);
-  const baix=adesoes.filter(a=>a.status==='baixada'&&f(a));
-  function ri(ad,sb){ return`<div class="adesao-item"><div class="adesao-info"><div class="adesao-nome">${ad.nome}</div><div class="adesao-meta">${ad.vendedor?'<span><i class="fas fa-user-tie" style="font-size:10px"></i> '+ad.vendedor+'</span>':''}${ad.venc?'<span><i class="fas fa-calendar" style="font-size:10px"></i> '+fmtDate(ad.venc)+'</span>':''}${getStatusBadge(ad)}</div></div><div class="adesao-valor">${ad.valor}</div>${sb?`<button class="btn-baixa" onclick="darBaixa(${ad.id})"><i class="fas fa-check"></i> Baixa</button>`:''}<button class="btn-del" onclick="deleteAdesao(${ad.id})"><i class="fas fa-trash"></i></button></div>`; }
-  const es=m=>`<div class="empty-state"><i class="fas fa-inbox"></i>${m}</div>`;
-  document.getElementById('list-pagas').innerHTML=pagas.length?pagas.map(a=>ri(a,false)).join(''):es('Nenhuma adesão paga na hora');
-  document.getElementById('list-pend').innerHTML=pend.length?pend.map(a=>ri(a,true)).join(''):es('Nenhuma adesão pendente');
-  document.getElementById('list-baix').innerHTML=baix.length?baix.map(a=>ri(a,false)).join(''):es('Nenhuma baixa registrada');
+function renderizarAdesoes(){
+  carregarAdesoes();
+  let pagas=adesoes.filter(a=>a.status==='paga');
+  let pend=adesoes.filter(a=>a.status==='pendente');
+  let baix=adesoes.filter(a=>a.status==='baixada');
+  let ri=(ad,sb)=>`<div class="adesao-item"><div class="adesao-info"><div class="adesao-nome">${ad.nome}</div><div class="adesao-meta">${ad.vendedor||''} ${ad.venc?fmtDate(ad.venc):''}</div></div><div class="adesao-valor">${ad.valor}</div>${sb?`<button class="btn-baixa" onclick="darBaixa(${ad.id})">Baixar</button>`:''}<button class="btn-del" onclick="deleteAdesao(${ad.id})"><i class="fas fa-trash"></i></button></div>`;
+  let es=m=>`<div class="empty-state">${m}</div>`;
+  document.getElementById('list-pagas').innerHTML=pagas.length?pagas.map(a=>ri(a,false)).join(''):es('Nenhuma');
+  document.getElementById('list-pend').innerHTML=pend.length?pend.map(a=>ri(a,true)).join(''):es('Nenhuma');
+  document.getElementById('list-baix').innerHTML=baix.length?baix.map(a=>ri(a,false)).join(''):es('Nenhuma');
   document.getElementById('cnt-pagas').textContent=pagas.length;
   document.getElementById('cnt-pend').textContent=pend.length;
   document.getElementById('cnt-baix').textContent=baix.length;
 }
-function updateStats(){
-  loadAdesoes();
+function atualizarStats(){
+  carregarAdesoes();
   document.getElementById('st-pagas').textContent=adesoes.filter(a=>a.status==='paga').length;
   document.getElementById('st-pend').textContent=adesoes.filter(a=>a.status==='pendente').length;
   document.getElementById('st-baix').textContent=adesoes.filter(a=>a.status==='baixada').length;
-  const pend=adesoes.filter(a=>a.status==='pendente').length;
-  const nb=document.getElementById('navBadge');
-  if(pend>0){nb.style.display='flex';nb.textContent=pend;}else nb.style.display='none';
+  let pend=adesoes.filter(a=>a.status==='pendente').length;
+  let badge=document.getElementById('navBadge');
+  if(pend>0){ badge.style.display='inline-block'; badge.textContent=pend; } else badge.style.display='none';
 }
 function salvarAdesao(){
-  const nome=g('f-nome').trim();if(!nome){showToast('Preencha o nome do cliente','error');return;}
-  openModal('Salvar Adesão','Deseja salvar esta adesão no controle?','ok',()=>{
-    const ad={id:Date.now(),nome,valor:g('f-valor'),venc:g('f-dvenc'),vendedor:g('f-vendedor'),tipo:'hora',status:'paga',dataCriacao:new Date().toISOString()};
-    adesoes.unshift(ad);saveAdesoes();updateStats();showToast('Adesão salva no controle!','success');
+  let nome=g('f-nome').trim();
+  if(!nome){ showToast('Preencha o nome','error'); return; }
+  openModal('Salvar','Registrar no controle?','ok',()=>{
+    let ad={id:Date.now(), nome, valor:g('f-valor'), venc:g('f-dvenc'), vendedor:g('f-vendedor'), tipo:'hora', status:'paga'};
+    adesoes.unshift(ad); salvarAdesoes(); atualizarStats(); showToast('Adesão salva!');
   });
 }
 
-// =========================================================
-// CONFIG
-// =========================================================
-function saveConfig(){ config.empresa=g('cfg-emp');config.vendedor=g('cfg-vend');config.cidade=g('cfg-cidade');localStorage.setItem('pax_config',JSON.stringify(config)); }
-function loadConfig(){ try{const c=JSON.parse(localStorage.getItem('pax_config')||'{}');Object.assign(config,c);}catch(e){} s('cfg-emp',config.empresa||'PAX PREVENIR');s('cfg-vend',config.vendedor);s('cfg-cidade',config.cidade); }
-
-// =========================================================
-// MODAIS
-// =========================================================
-let modalCB=null;
-function openModal(title,text,type,cb){
-  modalCB=cb;document.getElementById('modalTitle').textContent=title;document.getElementById('modalText').textContent=text;
-  const icon=document.getElementById('modalIcon'),ok=document.getElementById('modalOK');
-  icon.className='modal-icon-wrap';ok.className='modal-ok';
-  if(type==='del'){icon.className='modal-icon-wrap modal-icon-del';icon.innerHTML='<i class="fas fa-trash"></i>';ok.className='modal-ok modal-ok-danger';ok.textContent='Excluir';}
-  else if(type==='warn'){icon.className='modal-icon-wrap modal-icon-warn';icon.innerHTML='<i class="fas fa-exclamation-triangle"></i>';ok.textContent='Confirmar';}
-  else{icon.className='modal-icon-wrap modal-icon-ok';icon.innerHTML='<i class="fas fa-check"></i>';ok.textContent='Confirmar';}
-  document.getElementById('modalOK').onclick=()=>{closeModal();if(modalCB)modalCB();};
+// ========== MODAIS ==========
+let modalCb=null;
+function openModal(titulo,texto,tipo,cb){
+  modalCb=cb;
+  document.getElementById('modalTitle').textContent=titulo;
+  document.getElementById('modalText').textContent=texto;
+  let okBtn=document.getElementById('modalOK');
+  if(tipo==='del') okBtn.classList.add('modal-ok-danger');
+  else okBtn.classList.remove('modal-ok-danger');
+  document.getElementById('modalOK').onclick=()=>{ closeModal(); if(modalCb) modalCb(); };
   document.getElementById('modalBg').classList.add('open');
 }
 function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
 function confirmClear(){
-  openModal('Limpar Formulário','Todos os dados preenchidos serão apagados. Continuar?','warn',()=>{
-    document.querySelectorAll('.field-inp').forEach(el=>{if(el.closest('#page-cadastro'))el.value='';});
-    document.querySelectorAll('input[name="pg"],input[name="contratacao"]').forEach(r=>r.checked=false);
+  openModal('Limpar','Apagar todos os dados do formulário?','warn',()=>{
+    document.querySelectorAll('#page-cadastro .field-inp').forEach(el=>el.value='');
+    document.querySelectorAll('input[type="radio"]').forEach(r=>r.checked=false);
     document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
-    ST.plano='';ST.contratacao='';ST.dependentes=[];ST.fotos=[];ST.localizacao=null;
-    renderDeps();renderFotos();
+    ST={plano:'',contratacao:'',dependentes:[],fotos:[],localizacao:null};
+    renderizarDeps(); renderizarFotos();
     document.getElementById('locResult').style.display='none';
     document.getElementById('locManual').style.display='none';
-    document.getElementById('locStatus').className='loc-status';
-    document.getElementById('locStatus').innerHTML='<i class="fas fa-map-pin"></i><div class="loc-status-text"><h4>Localização não capturada</h4><p>Clique para capturar o GPS</p></div>';
-    const btn=document.getElementById('btnLoc');btn.style.background='';btn.innerHTML='<i class="fas fa-crosshairs"></i> Capturar Localização Atual';
-    localStorage.removeItem('pax_cadastro');setToday();showToast('Formulário limpo');
+    document.getElementById('locStatus').innerHTML='<i class="fas fa-map-pin"></i> Não capturada';
+    document.getElementById('btnLoc').innerHTML='<i class="fas fa-crosshairs"></i> Capturar GPS';
+    localStorage.removeItem('pax_cadastro');
+    showToast('Formulário limpo');
   });
 }
 function confirmDeleteAll(){
-  openModal('Apagar Todos os Dados','ATENÇÃO: Esta ação apagará clientes, adesões e configurações. Não pode ser desfeita!','del',()=>{
-    localStorage.clear();adesoes=[];planosFeitos=[];ST.dependentes=[];ST.fotos=[];ST.localizacao=null;ST.plano='';ST.contratacao='';
-    renderDeps();renderFotos();renderAdesoes();renderPlanos();updateStats();updatePlanosBadge();
-    showToast('Todos os dados foram apagados');
+  openModal('Apagar Tudo','TODOS os dados serão apagados!','del',()=>{
+    localStorage.clear();
+    ST={plano:'',contratacao:'',dependentes:[],fotos:[],localizacao:null};
+    adesoes=[]; planosFeitos=[];
+    renderizarDeps(); renderizarFotos(); renderizarAdesoes(); renderizarPlanos(); atualizarStats();
+    showToast('Todos os dados apagados');
   });
 }
-let toastT;
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(type?' '+type:'');t.classList.add('show');
-  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3000);
-}
-function showLoading(txt='Aguarde...'){ document.getElementById('loadingTxt').textContent=txt;document.getElementById('loadingScreen').classList.add('show'); }
-function hideLoading(){ document.getElementById('loadingScreen').classList.remove('show'); }
-
-init();
 </script>
 </body>
 </html>
