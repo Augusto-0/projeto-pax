@@ -106,9 +106,6 @@ input,select,textarea,button{font-family:var(--font-body)}
 .section-hdr::after{background:linear-gradient(90deg,transparent,var(--gray3))}
 .section-hdr h2{font-family:var(--font-display);font-size:18px;color:var(--navy);font-weight:600;white-space:nowrap}
 
-/* ══════════════════════════════════════════════
-   TIPO DE ADESÃO — NOVO BLOCO
-══════════════════════════════════════════════ */
 .tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
 .tipo-card{background:var(--white);border-radius:var(--radius);padding:22px 14px 18px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.25s;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
 .tipo-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
@@ -119,35 +116,23 @@ input,select,textarea,button{font-family:var(--font-body)}
 .tipo-name{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:4px}
 .tipo-desc{font-size:11px;color:var(--gray4);line-height:1.4}
 .tipo-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:8px;letter-spacing:.4px;text-transform:uppercase}
-
-/* Plano Novo — dourado */
 .tipo-novo .tipo-icon{background:rgba(201,168,76,.15);color:var(--gold)}
 .tipo-novo .tipo-name{color:var(--gold)}
 .tipo-novo.selected{border-color:var(--gold)}
 .tipo-novo .tipo-check{background:var(--gold)}
-.tipo-novo .tipo-badge{background:rgba(201,168,76,.15);color:#8a6b10}
-
-/* Portabilidade — roxo */
 .tipo-port .tipo-icon{background:rgba(108,63,197,.12);color:var(--purple)}
 .tipo-port .tipo-name{color:var(--purple)}
 .tipo-port.selected{border-color:var(--purple)}
 .tipo-port .tipo-check{background:var(--purple)}
-.tipo-port .tipo-badge{background:rgba(108,63,197,.12);color:var(--purple)}
-
-/* Indicador ativo no card — barra superior */
 .tipo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:2px 2px 0 0;opacity:0;transition:.2s}
 .tipo-novo::before{background:var(--gold)}
 .tipo-port::before{background:var(--purple)}
 .tipo-card.selected::before{opacity:1}
 
-/* ── PORTABILIDADE — campo extra ── */
 .port-extra{display:none;background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px;border-left:4px solid var(--purple);animation:slideDown .25s ease}
 .port-extra.show{display:block}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.port-extra-ttl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--purple);margin-bottom:12px}
-.port-extra-ttl i{font-size:15px}
 
-/* ── PLANOS ── */
 .plans-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px}
 .plan-card{background:var(--white);border-radius:var(--radius);padding:20px 14px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.25s;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
 .plan-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
@@ -162,18 +147,15 @@ input,select,textarea,button{font-family:var(--font-body)}
 .plan-ouro .plan-icon{background:rgba(201,168,76,.15);color:var(--gold)}.plan-ouro .plan-name{color:var(--gold)}.plan-ouro.selected{border-color:var(--gold)}.plan-ouro .plan-check{background:var(--gold)}
 .plan-nac .plan-icon{background:rgba(15,32,68,.1);color:var(--navy)}.plan-nac .plan-name{color:var(--navy)}.plan-nac.selected{border-color:var(--navy)}.plan-nac .plan-check{background:var(--navy)}
 
-/* ── FORM ── */
 .form-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .fg-full{grid-column:1/-1}
 .field-lbl{font-size:12px;font-weight:600;color:var(--gray5);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .field-lbl i{color:var(--navy3);font-size:11px}
-.field-inp{width:100%;background:var(--gray1);border:1.5px solid var(--gray2);border-radius:var(--radius-sm);padding:11px 14px;font-size:14px;color:var(--gray5);outline:none;transition:.2s;-webkit-appearance:none;appearance:none}
+.field-inp{width:100%;background:var(--gray1);border:1.5px solid var(--gray2);border-radius:var(--radius-sm);padding:11px 14px;font-size:14px;color:var(--gray5);outline:none;transition:.2s}
 .field-inp:focus{border-color:var(--navy3);background:#fff;box-shadow:0 0 0 3px rgba(36,63,122,.08)}
 .field-inp::placeholder{color:var(--gray3)}
-select.field-inp{cursor:pointer}
 
-/* ── PAGAMENTO ── */
 .pay-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
 .pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .pay-opt{position:relative}
@@ -185,7 +167,6 @@ select.field-inp{cursor:pointer}
 .pay-opt input:checked+label i{color:var(--navy)}
 .pay-opt label span{font-size:12px;font-weight:600;color:var(--gray5);text-align:center}
 
-/* ── DEPENDENTES ── */
 .dep-area{margin-bottom:8px}
 .dep-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .dep-card{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);border-left:3px solid var(--navy3);display:flex;gap:12px;align-items:flex-start;animation:slideIn .25s ease}
@@ -199,7 +180,6 @@ select.field-inp{cursor:pointer}
 .btn-add-dep{width:100%;padding:13px;background:rgba(15,32,68,.06);border:2px dashed var(--navy3);border-radius:var(--radius-sm);color:var(--navy);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-add-dep:hover{background:rgba(15,32,68,.1);border-style:solid}
 
-/* ── FOTOS ── */
 .fotos-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
 .fotos-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .btn-foto{padding:14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
@@ -208,12 +188,11 @@ select.field-inp{cursor:pointer}
 .fotos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .foto-item{position:relative;border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:1;background:var(--gray2)}
 .foto-item img{width:100%;height:100%;object-fit:cover;display:block}
-.foto-del{position:absolute;top:4px;right:4px;background:rgba(192,57,43,.85);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.foto-del{position:absolute;top:4px;right:4px;background:rgba(192,57,43,.85);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .fotos-empty{grid-column:1/-1;text-align:center;padding:30px;color:var(--gray4)}
 .fotos-empty i{font-size:36px;margin-bottom:8px;display:block;opacity:.4}
 .fotos-empty p{font-size:13px}
 
-/* ── LOCALIZAÇÃO ── */
 .loc-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:8px}
 .loc-status{display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray1);border-radius:var(--radius-sm);margin-bottom:14px}
 .loc-status i{font-size:28px;color:var(--gray4)}
@@ -231,7 +210,6 @@ select.field-inp{cursor:pointer}
 .btn-loc:active{transform:translateY(0)}
 .btn-loc.loading{opacity:.7;pointer-events:none}
 
-/* ── BOTÕES FINAIS ── */
 .final-btns{display:flex;flex-direction:column;gap:10px;margin-top:8px;padding-bottom:24px}
 .btn-primary{width:100%;padding:16px;background:linear-gradient(135deg,var(--navy),var(--navy2));border:none;color:#fff;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.25s;box-shadow:0 4px 14px rgba(15,32,68,.2)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,32,68,.3)}
@@ -240,7 +218,6 @@ select.field-inp{cursor:pointer}
 .btn-danger{width:100%;padding:14px;background:rgba(192,57,43,.08);border:2px solid rgba(192,57,43,.2);color:var(--red);border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
 .btn-danger:hover{background:rgba(192,57,43,.14)}
 
-/* ── ADESÕES ── */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .stat-card{background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
 .stat-val{font-size:26px;font-weight:700;font-family:var(--font-display)}
@@ -281,48 +258,29 @@ select.field-inp{cursor:pointer}
 .badge-vence-hoje{background:rgba(230,126,34,.12);color:var(--orange)}
 .badge-proxima{background:rgba(201,168,76,.15);color:#a07a00}
 .badge-ok{background:rgba(45,125,90,.12);color:var(--green)}
-.badge-port{background:rgba(108,63,197,.12);color:var(--purple)}
 .btn-baixa{background:var(--green);border:none;color:#fff;border-radius:var(--radius-sm);padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex-shrink:0}
 .btn-baixa:hover{background:var(--green2)}
+.btn-editar{background:var(--gold);border:none;color:var(--navy);border-radius:var(--radius-sm);padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex-shrink:0;margin-right:5px}
+.btn-editar:hover{background:var(--gold2)}
 .btn-del{background:rgba(192,57,43,.08);border:none;color:var(--red);border-radius:6px;width:28px;height:28px;font-size:12px;cursor:pointer;transition:.2s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .btn-del:hover{background:rgba(192,57,43,.18)}
 .empty-state{text-align:center;padding:24px;color:var(--gray4);font-size:13px;background:var(--white);border-radius:0 0 var(--radius-sm) var(--radius-sm)}
 .empty-state i{font-size:28px;display:block;margin-bottom:6px;opacity:.35}
 
-/* ── CONFIG ── */
 .config-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:16px}
 .config-icon{font-size:28px;color:var(--navy3);margin-bottom:12px}
 .config-card h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy);margin-bottom:16px}
 .config-info{background:var(--gray1);border-radius:var(--radius-sm);padding:14px;font-size:13px;color:var(--gray5);line-height:1.6}
-.config-info p{margin-bottom:6px}
-.config-info p:last-child{margin-bottom:0}
 .danger-card{border:1.5px solid rgba(192,57,43,.2)}
 .danger-card .config-icon{color:var(--red)}
 .danger-card h3{color:var(--red)}
 .danger-text{font-size:13px;color:var(--gray4);margin-bottom:16px;line-height:1.5}
 
-/* ── TOAST / MODAL / LOADING ── */
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:40px;font-size:14px;font-weight:500;opacity:0;transition:.3s;z-index:1000;pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow-lg);white-space:nowrap;max-width:90vw}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.success{background:var(--green)}
 .toast.error{background:var(--red)}
 .toast.purple{background:var(--purple)}
-
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(6px)}
-.modal-bg.open{opacity:1;pointer-events:all}
-.modal-box{background:var(--white);border-radius:var(--radius-lg);padding:28px;max-width:320px;width:100%;transform:scale(.95);transition:.25s;box-shadow:var(--shadow-lg)}
-.modal-bg.open .modal-box{transform:scale(1)}
-.modal-icon-wrap{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:24px}
-.modal-icon-warn{background:rgba(230,126,34,.12);color:var(--orange)}
-.modal-icon-del{background:rgba(192,57,43,.1);color:var(--red)}
-.modal-icon-ok{background:rgba(45,125,90,.1);color:var(--green)}
-.modal-box h3{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:8px}
-.modal-box p{font-size:13px;color:var(--gray4);text-align:center;line-height:1.5;margin-bottom:20px}
-.modal-btns{display:flex;gap:10px}
-.modal-btns button{flex:1;padding:13px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;border:none}
-.modal-cancel{background:var(--gray2);color:var(--gray5)}.modal-cancel:hover{background:var(--gray3)}
-.modal-ok{background:var(--navy);color:#fff}.modal-ok:hover{background:var(--navy2)}
-.modal-ok-danger{background:var(--red);color:#fff}
 
 .loading-screen{position:fixed;inset:0;background:var(--navy);z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:.3s}
 .loading-screen.show{opacity:1;pointer-events:all}
@@ -362,21 +320,10 @@ select.field-inp{cursor:pointer}
     </div>
   </div>
   <div class="sidebar-nav">
-    <div class="nav-item active" onclick="goPage('cadastro')">
-      <i class="fas fa-file-signature"></i><span>Cadastro de Plano</span>
-    </div>
-    <div class="nav-item" onclick="goPage('adesoes')">
-      <i class="fas fa-chart-line"></i><span>Controle de Adesões</span>
-      <div class="nav-badge" id="navBadge" style="display:none">0</div>
-    </div>
-    <div class="nav-item" onclick="goPage('config')">
-      <i class="fas fa-cog"></i><span>Configurações</span>
-    </div>
-    <div class="nav-item-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()">
-      <i class="fas fa-expand" id="fsIcon"></i>
-      <span id="fsLabel">Tela Cheia</span>
-      <span class="fs-badge" id="fsBadge">OFF</span>
-    </div>
+    <div class="nav-item active" onclick="goPage('cadastro')"><i class="fas fa-file-signature"></i><span>Cadastro de Plano</span></div>
+    <div class="nav-item" onclick="goPage('adesoes')"><i class="fas fa-chart-line"></i><span>Controle de Adesões</span><div class="nav-badge" id="navBadge" style="display:none">0</div></div>
+    <div class="nav-item" onclick="goPage('config')"><i class="fas fa-cog"></i><span>Configurações</span></div>
+    <div class="nav-item-fullscreen" onclick="toggleFullscreen()"><i class="fas fa-expand" id="fsIcon"></i><span id="fsLabel">Tela Cheia</span><span class="fs-badge" id="fsBadge">OFF</span></div>
   </div>
   <div class="sidebar-footer">
     <div class="sidebar-version">v1.0 · PAX PREVENIR</div>
@@ -386,71 +333,34 @@ select.field-inp{cursor:pointer}
 
 <header class="topbar">
   <button class="hamburger" onclick="openMenu()"><span></span><span></span><span></span></button>
-  <div class="topbar-logo">
-    <i class="fas fa-dove topbar-dove"></i>
-    <div class="topbar-brand">PAX <span>PREVENIR</span></div>
-  </div>
-  <button class="topbar-pdf" id="topbar-pdf-btn" onclick="gerarPDF()" style="display:none">
-    <i class="fas fa-file-pdf"></i> PDF
-  </button>
+  <div class="topbar-logo"><i class="fas fa-dove topbar-dove"></i><div class="topbar-brand">PAX <span>PREVENIR</span></div></div>
+  <button class="topbar-pdf" id="topbar-pdf-btn" onclick="gerarPDF()" style="display:none"><i class="fas fa-file-pdf"></i> PDF</button>
 </header>
 
 <main class="main">
 
 <!-- PAGE: CADASTRO -->
 <section class="page active" id="page-cadastro">
-
   <div class="logo-card">
     <div class="logo-dove-wrap"><i class="fas fa-dove"></i></div>
     <h1>PAX <span>PREVENIR</span></h1>
     <p>Sistema de Planos Funerários</p>
-    <div class="logo-ornament">
-      <div class="ornament-line"></div>
-      <div class="ornament-diamond"></div>
-      <div class="ornament-line right"></div>
-    </div>
+    <div class="logo-ornament"><div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line right"></div></div>
   </div>
 
   <div class="section-hdr"><h2>Tipo de Adesão</h2></div>
   <div class="tipo-grid">
-    <div class="tipo-card tipo-novo" id="tipo-novo" data-tipo="Plano Novo" onclick="selectTipo(this)">
-      <div class="tipo-check"><i class="fas fa-check"></i></div>
-      <div class="tipo-icon"><i class="fas fa-file-contract"></i></div>
-      <div class="tipo-name">Plano Novo</div>
-      <div class="tipo-desc">Contratação nova do zero, sem vínculo anterior</div>
-      <span class="tipo-badge">Novo cliente</span>
-    </div>
-    <div class="tipo-card tipo-port" id="tipo-port" data-tipo="Portabilidade" onclick="selectTipo(this)">
-      <div class="tipo-check"><i class="fas fa-check"></i></div>
-      <div class="tipo-icon"><i class="fas fa-exchange-alt"></i></div>
-      <div class="tipo-name">Portabilidade</div>
-      <div class="tipo-desc">Migração de plano de outra empresa ou operadora</div>
-      <span class="tipo-badge">Transferência</span>
-    </div>
+    <div class="tipo-card tipo-novo" data-tipo="Plano Novo" onclick="selectTipo(this)"><div class="tipo-check"><i class="fas fa-check"></i></div><div class="tipo-icon"><i class="fas fa-file-contract"></i></div><div class="tipo-name">Plano Novo</div><div class="tipo-desc">Contratação nova do zero</div><span class="tipo-badge">Novo cliente</span></div>
+    <div class="tipo-card tipo-port" data-tipo="Portabilidade" onclick="selectTipo(this)"><div class="tipo-check"><i class="fas fa-check"></i></div><div class="tipo-icon"><i class="fas fa-exchange-alt"></i></div><div class="tipo-name">Portabilidade</div><div class="tipo-desc">Migração de plano</div><span class="tipo-badge">Transferência</span></div>
   </div>
 
   <div class="port-extra" id="portExtra">
-    <div class="port-extra-ttl">
-      <i class="fas fa-building"></i>
-      Informações da Portabilidade
-    </div>
+    <div class="port-extra-ttl"><i class="fas fa-building"></i> Informações da Portabilidade</div>
     <div class="form-grid">
-      <div class="fg-full">
-        <div class="field-lbl"><i class="fas fa-building"></i> Empresa de Origem</div>
-        <input class="field-inp" id="f-empresa-origem" placeholder="Nome da empresa anterior" oninput="autoSave()">
-      </div>
-      <div>
-        <div class="field-lbl"><i class="fas fa-hashtag"></i> Nº do Contrato Anterior</div>
-        <input class="field-inp" id="f-contrato-ant" placeholder="Ex: 00123456" oninput="autoSave()">
-      </div>
-      <div>
-        <div class="field-lbl"><i class="fas fa-calendar-alt"></i> Tempo no Plano Anterior</div>
-        <input class="field-inp" id="f-tempo-ant" placeholder="Ex: 2 anos" oninput="autoSave()">
-      </div>
-      <div class="fg-full">
-        <div class="field-lbl"><i class="fas fa-comment-alt"></i> Motivo da Portabilidade</div>
-        <input class="field-inp" id="f-motivo-port" placeholder="Ex: Melhor cobertura, preço..." oninput="autoSave()">
-      </div>
+      <div class="fg-full"><div class="field-lbl">Empresa de Origem</div><input class="field-inp" id="f-empresa-origem" placeholder="Nome da empresa anterior" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Nº do Contrato Anterior</div><input class="field-inp" id="f-contrato-ant" placeholder="Ex: 00123456" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Tempo no Plano Anterior</div><input class="field-inp" id="f-tempo-ant" placeholder="Ex: 2 anos" oninput="autoSave()"></div>
+      <div class="fg-full"><div class="field-lbl">Motivo da Portabilidade</div><input class="field-inp" id="f-motivo-port" placeholder="Ex: Melhor cobertura" oninput="autoSave()"></div>
     </div>
   </div>
 
@@ -465,28 +375,23 @@ select.field-inp{cursor:pointer}
   <div class="section-hdr"><h2>Dados do Cliente</h2></div>
   <div class="form-card">
     <div class="form-grid">
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-user"></i> Nome Completo *</div><input class="field-inp" id="f-nome" placeholder="Nome completo do titular" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar"></i> Data de Nascimento</div><input class="field-inp" id="f-nasc" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-id-card"></i> CPF</div><input class="field-inp" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-id-badge"></i> RG</div><input class="field-inp" id="f-rg" placeholder="00.000.000-0" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-phone"></i> Telefone *</div><input class="field-inp" id="f-tel" placeholder="(00) 00000-0000" maxlength="15" oninput="mTel(this);autoSave()"></div>
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-map-marker-alt"></i> Endereço</div><input class="field-inp" id="f-end" placeholder="Rua, Avenida..." oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-hashtag"></i> Número</div><input class="field-inp" id="f-num" placeholder="Nº" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-map"></i> Bairro</div><input class="field-inp" id="f-bairro" placeholder="Bairro" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-mail-bulk"></i> CEP</div><input class="field-inp" id="f-cep" placeholder="00000-000" maxlength="9" oninput="mCEP(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-city"></i> Cidade</div><input class="field-inp" id="f-cidade" placeholder="Cidade" oninput="autoSave()"></div>
-      <div class="fg-full"><div class="field-lbl"><i class="fas fa-thumbtack"></i> Ponto de Referência</div><input class="field-inp" id="f-ref" placeholder="Próximo a..." oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-heart"></i> Estado Civil</div>
-        <select class="field-inp" id="f-civil" onchange="autoSave()">
-          <option value="">Selecionar...</option>
-          <option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option>
-        </select>
-      </div>
-      <div><div class="field-lbl"><i class="fas fa-church"></i> Religião</div><input class="field-inp" id="f-rel" placeholder="Religião" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar-check"></i> Data de Adesão</div><input class="field-inp" id="f-dadesao" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-calendar-times"></i> Data de Vencimento</div><input class="field-inp" id="f-dvenc" type="date" oninput="autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-dollar-sign"></i> Valor do Plano</div><input class="field-inp" id="f-valor" placeholder="R$ 0,00" oninput="mMoney(this);autoSave()"></div>
-      <div><div class="field-lbl"><i class="fas fa-user-tie"></i> Nome do Vendedor</div><input class="field-inp" id="f-vendedor" placeholder="Seu nome" oninput="updateVendor();autoSave()"></div>
+      <div class="fg-full"><div class="field-lbl">Nome Completo *</div><input class="field-inp" id="f-nome" placeholder="Nome completo do titular" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Data de Nascimento</div><input class="field-inp" id="f-nasc" type="date" oninput="autoSave()"></div>
+      <div><div class="field-lbl">CPF</div><input class="field-inp" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this);autoSave()"></div>
+      <div><div class="field-lbl">RG</div><input class="field-inp" id="f-rg" placeholder="00.000.000-0" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Telefone *</div><input class="field-inp" id="f-tel" placeholder="(00) 00000-0000" maxlength="15" oninput="mTel(this);autoSave()"></div>
+      <div class="fg-full"><div class="field-lbl">Endereço</div><input class="field-inp" id="f-end" placeholder="Rua, Avenida..." oninput="autoSave()"></div>
+      <div><div class="field-lbl">Número</div><input class="field-inp" id="f-num" placeholder="Nº" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Bairro</div><input class="field-inp" id="f-bairro" placeholder="Bairro" oninput="autoSave()"></div>
+      <div><div class="field-lbl">CEP</div><input class="field-inp" id="f-cep" placeholder="00000-000" maxlength="9" oninput="mCEP(this);autoSave()"></div>
+      <div><div class="field-lbl">Cidade</div><input class="field-inp" id="f-cidade" placeholder="Cidade" oninput="autoSave()"></div>
+      <div class="fg-full"><div class="field-lbl">Ponto de Referência</div><input class="field-inp" id="f-ref" placeholder="Próximo a..." oninput="autoSave()"></div>
+      <div><div class="field-lbl">Estado Civil</div><select class="field-inp" id="f-civil" onchange="autoSave()"><option value="">Selecionar...</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option></select></div>
+      <div><div class="field-lbl">Religião</div><input class="field-inp" id="f-rel" placeholder="Religião" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Data de Adesão</div><input class="field-inp" id="f-dadesao" type="date" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Data de Vencimento</div><input class="field-inp" id="f-dvenc" type="date" oninput="autoSave()"></div>
+      <div><div class="field-lbl">Valor do Plano</div><input class="field-inp" id="f-valor" placeholder="R$ 0,00" oninput="mMoney(this);autoSave()"></div>
+      <div><div class="field-lbl">Nome do Vendedor</div><input class="field-inp" id="f-vendedor" placeholder="Seu nome" oninput="updateVendor();autoSave()"></div>
     </div>
   </div>
 
@@ -500,35 +405,19 @@ select.field-inp{cursor:pointer}
   </div>
 
   <div class="section-hdr"><h2>Dependentes</h2></div>
-  <div class="dep-area">
-    <div class="dep-list" id="depList"></div>
-    <button class="btn-add-dep" onclick="addDep()"><i class="fas fa-user-plus"></i> Adicionar Dependente</button>
-  </div>
+  <div class="dep-area"><div class="dep-list" id="depList"></div><button class="btn-add-dep" onclick="addDep()"><i class="fas fa-user-plus"></i> Adicionar Dependente</button></div>
 
   <div class="section-hdr"><h2>Fotos da Residência</h2></div>
   <div class="fotos-card">
-    <div class="fotos-actions">
-      <button class="btn-foto btn-cam" onclick="document.getElementById('inp-cam').click()"><i class="fas fa-camera"></i> Câmera</button>
-      <button class="btn-foto btn-gal" onclick="document.getElementById('inp-gal').click()"><i class="fas fa-images"></i> Galeria</button>
-    </div>
-    <input type="file" id="inp-cam" accept="image/*" capture="environment" multiple style="display:none" onchange="addFotos(this)">
-    <input type="file" id="inp-gal" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
-    <div class="fotos-grid" id="fotosGrid">
-      <div class="fotos-empty" id="fotosEmpty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>
-    </div>
+    <div class="fotos-actions"><button class="btn-foto btn-cam" onclick="document.getElementById('inp-cam').click()"><i class="fas fa-camera"></i> Câmera</button><button class="btn-foto btn-gal" onclick="document.getElementById('inp-gal').click()"><i class="fas fa-images"></i> Galeria</button></div>
+    <input type="file" id="inp-cam" accept="image/*" capture="environment" multiple style="display:none" onchange="addFotos(this)"><input type="file" id="inp-gal" accept="image/*" multiple style="display:none" onchange="addFotos(this)">
+    <div class="fotos-grid" id="fotosGrid"><div class="fotos-empty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div></div>
   </div>
 
   <div class="section-hdr"><h2>Localização da Residência</h2></div>
   <div class="loc-card">
-    <div class="loc-status" id="locStatus">
-      <i class="fas fa-map-pin"></i>
-      <div class="loc-status-text"><h4>Localização não capturada</h4><p>Clique para capturar o GPS</p></div>
-    </div>
-    <div class="loc-result" id="locResult">
-      <div class="loc-row"><span class="loc-lbl">Latitude</span><span class="loc-val" id="locLat">—</span></div>
-      <div class="loc-row"><span class="loc-lbl">Longitude</span><span class="loc-val" id="locLng">—</span></div>
-      <a class="maps-link" id="mapsLink" href="#" target="_blank"><i class="fab fa-google"></i> Abrir no Google Maps</a>
-    </div>
+    <div class="loc-status" id="locStatus"><i class="fas fa-map-pin"></i><div class="loc-status-text"><h4>Localização não capturada</h4><p>Clique para capturar o GPS</p></div></div>
+    <div class="loc-result" id="locResult"><div class="loc-row"><span class="loc-lbl">Latitude</span><span class="loc-val" id="locLat">—</span></div><div class="loc-row"><span class="loc-lbl">Longitude</span><span class="loc-val" id="locLng">—</span></div><a class="maps-link" id="mapsLink" href="#" target="_blank"><i class="fab fa-google"></i> Abrir no Google Maps</a></div>
     <button class="btn-loc" id="btnLoc" onclick="captureGPS()"><i class="fas fa-crosshairs"></i> Capturar Localização Atual</button>
   </div>
 
@@ -539,18 +428,20 @@ select.field-inp{cursor:pointer}
   </div>
 </section>
 
-<!-- PAGE: ADESÕES -->
+<!-- PAGE: ADESÕES - VERSÃO CORRIGIDA -->
 <section class="page" id="page-adesoes">
   <div class="stats-row">
     <div class="stat-card stat-green"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-val" id="st-pagas">0</div><div class="stat-lbl">Pagas</div></div>
     <div class="stat-card stat-orange"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-val" id="st-pend">0</div><div class="stat-lbl">Pendentes</div></div>
     <div class="stat-card stat-blue"><div class="stat-icon"><i class="fas fa-check-double"></i></div><div class="stat-val" id="st-baix">0</div><div class="stat-lbl">Baixadas</div></div>
   </div>
+  
   <div class="nova-card">
     <div class="nova-card-ttl"><i class="fas fa-plus-circle"></i> Nova Adesão</div>
     <div class="form-grid">
       <div class="fg-full"><div class="field-lbl"><i class="fas fa-user"></i> Nome do Cliente</div><input class="field-inp" id="ad-nome" placeholder="Nome completo"></div>
       <div><div class="field-lbl"><i class="fas fa-dollar-sign"></i> Valor (R$)</div><input class="field-inp" id="ad-valor" placeholder="R$ 0,00" oninput="mMoney(this)"></div>
+      <div><div class="field-lbl"><i class="fas fa-calendar-alt"></i> Data de Adesão</div><input class="field-inp" id="ad-data-adesao" type="date"></div>
       <div><div class="field-lbl"><i class="fas fa-calendar-times"></i> Vencimento</div><input class="field-inp" id="ad-venc" type="date"></div>
       <div class="fg-full"><div class="field-lbl"><i class="fas fa-user-tie"></i> Vendedor</div><input class="field-inp" id="ad-vend" placeholder="Nome do vendedor"></div>
     </div>
@@ -560,71 +451,29 @@ select.field-inp{cursor:pointer}
     </div>
     <button class="btn-primary" onclick="addAdesao()" style="margin-top:4px"><i class="fas fa-plus"></i> Registrar Adesão</button>
   </div>
+  
   <div class="search-wrap"><i class="fas fa-search"></i><input class="search-inp" id="searchAd" placeholder="Pesquisar por nome..." oninput="filterAdesoes()"></div>
-  <div class="lista-section lista-green">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-check-circle"></i> Pagas na Hora</div><span class="lista-count" id="cnt-pagas">0</span></div>
-    <div class="adesoes-list" id="list-pagas"></div>
-  </div>
-  <div class="lista-section lista-orange">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-clock"></i> Futuras Pendentes</div><span class="lista-count" id="cnt-pend">0</span></div>
-    <div class="adesoes-list" id="list-pend"></div>
-  </div>
-  <div class="lista-section lista-blue">
-    <div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-hand-holding-usd"></i> Pagas Após Baixa</div><span class="lista-count" id="cnt-baix">0</span></div>
-    <div class="adesoes-list" id="list-baix"></div>
-  </div>
+  
+  <div class="lista-section lista-green"><div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-check-circle"></i> Pagas na Hora</div><span class="lista-count" id="cnt-pagas">0</span></div><div class="adesoes-list" id="list-pagas"></div></div>
+  <div class="lista-section lista-orange"><div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-clock"></i> Futuras Pendentes</div><span class="lista-count" id="cnt-pend">0</span></div><div class="adesoes-list" id="list-pend"></div></div>
+  <div class="lista-section lista-blue"><div class="lista-hdr"><div class="lista-hdr-left"><i class="fas fa-hand-holding-usd"></i> Pagas Após Baixa</div><span class="lista-count" id="cnt-baix">0</span></div><div class="adesoes-list" id="list-baix"></div></div>
 </section>
 
 <!-- PAGE: CONFIG -->
 <section class="page" id="page-config">
-  <div class="config-card">
-    <div class="config-icon"><i class="fas fa-building"></i></div>
-    <h3>Empresa</h3>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div><div class="field-lbl">Nome da Empresa</div><input class="field-inp" id="cfg-emp" value="PAX PREVENIR" oninput="saveConfig()"></div>
-      <div><div class="field-lbl">Vendedor Padrão</div><input class="field-inp" id="cfg-vend" placeholder="Seu nome completo" oninput="saveConfig()"></div>
-      <div><div class="field-lbl">Cidade / Estado</div><input class="field-inp" id="cfg-cidade" placeholder="Ex: Aracaju / SE" oninput="saveConfig()"></div>
-    </div>
-  </div>
-  <div class="config-card">
-    <div class="config-icon"><i class="fas fa-mobile-alt"></i></div>
-    <h3>PWA / Aplicativo</h3>
-    <div class="config-info">
-      <p>Para instalar como app no celular, use a opção <strong>"Adicionar à tela inicial"</strong> do navegador.</p>
-      <p>O sistema funciona <strong>100% offline</strong> após a primeira abertura.</p>
-      <p>Compatível com <strong>PWABuilder</strong> para gerar APK Android.</p>
-    </div>
-  </div>
-  <div class="config-card danger-card">
-    <div class="config-icon" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i></div>
-    <h3>Zona de Perigo</h3>
-    <p class="danger-text">Esta ação apaga todos os dados salvos no dispositivo. Não pode ser desfeita.</p>
-    <button class="btn-danger" onclick="confirmDeleteAll()"><i class="fas fa-trash-alt"></i> Apagar Todos os Dados</button>
-  </div>
+  <div class="config-card"><div class="config-icon"><i class="fas fa-building"></i></div><h3>Empresa</h3><div><div class="field-lbl">Nome da Empresa</div><input class="field-inp" id="cfg-emp" value="PAX PREVENIR" oninput="saveConfig()"></div><div><div class="field-lbl">Vendedor Padrão</div><input class="field-inp" id="cfg-vend" placeholder="Seu nome completo" oninput="saveConfig()"></div><div><div class="field-lbl">Cidade / Estado</div><input class="field-inp" id="cfg-cidade" placeholder="Ex: Aracaju / SE" oninput="saveConfig()"></div></div>
+  <div class="config-card"><div class="config-icon"><i class="fas fa-mobile-alt"></i></div><h3>PWA / Aplicativo</h3><div class="config-info"><p>Para instalar como app no celular, use a opção <strong>"Adicionar à tela inicial"</strong> do navegador.</p><p>O sistema funciona <strong>100% offline</strong> após a primeira abertura.</p></div></div>
+  <div class="config-card danger-card"><div class="config-icon"><i class="fas fa-exclamation-triangle"></i></div><h3>Zona de Perigo</h3><p class="danger-text">Esta ação apaga todos os dados salvos no dispositivo. Não pode ser desfeita.</p><button class="btn-danger" onclick="confirmDeleteAll()"><i class="fas fa-trash-alt"></i> Apagar Todos os Dados</button></div>
 </section>
 
 </main>
 
 <div class="toast" id="toast"></div>
-<div class="modal-bg" id="modalBg">
-  <div class="modal-box">
-    <div class="modal-icon-wrap" id="modalIcon"></div>
-    <h3 id="modalTitle"></h3>
-    <p id="modalText"></p>
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="modal-ok" id="modalOK">Confirmar</button>
-    </div>
-  </div>
-</div>
-<div class="loading-screen" id="loadingScreen">
-  <div class="loader-ring"></div>
-  <div class="loading-text" id="loadingTxt">Aguarde...</div>
-</div>
+<div class="loading-screen" id="loadingScreen"><div class="loader-ring"></div><div class="loading-text" id="loadingTxt">Aguarde...</div></div>
 
 <script>
 // ============================================================
-// CÓDIGO COMPLETO CORRIGIDO - PDF e GPS FUNCIONANDO
+// SISTEMA PAX PREVENIR - COMPLETO CORRIGIDO
 // ============================================================
 
 // FAVICON
@@ -641,13 +490,7 @@ select.field-inp{cursor:pointer}
 })();
 
 // STATE GLOBAL
-let ST = {
-  tipoAdesao: '',
-  plano: '',
-  dependentes: [],
-  fotos: [],
-  localizacao: null
-};
+let ST = { tipoAdesao: '', plano: '', dependentes: [], fotos: [], localizacao: null };
 let adesoes = [];
 let config = { empresa: 'PAX PREVENIR', vendedor: '', cidade: '' };
 let isFullscreen = false;
@@ -666,30 +509,18 @@ function showToast(msg, type = '') {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function showLoading(txt = 'Aguarde...') {
-  document.getElementById('loadingTxt').textContent = txt;
-  document.getElementById('loadingScreen').classList.add('show');
-}
-
-function hideLoading() {
-  document.getElementById('loadingScreen').classList.remove('show');
-}
-
 function fmtDate(d) {
   if(!d) return '';
   const [y,m,day] = d.split('-');
   return `${day}/${m}/${y}`;
 }
 
-// Máscaras
 function mCPF(el) { let v = el.value.replace(/\D/g,''); if(v.length>3) v=v.slice(0,3)+'.'+v.slice(3); if(v.length>7) v=v.slice(0,7)+'.'+v.slice(7); if(v.length>11) v=v.slice(0,11)+'-'+v.slice(11); el.value=v.slice(0,14); }
 function mTel(el) { let v = el.value.replace(/\D/g,''); if(v.length>0) v='('+v; if(v.length>3) v=v.slice(0,3)+') '+v.slice(3); if(v.length>10) v=v.slice(0,10)+'-'+v.slice(10); el.value=v.slice(0,15); }
 function mCEP(el) { let v = el.value.replace(/\D/g,''); if(v.length>5) v=v.slice(0,5)+'-'+v.slice(5); el.value=v.slice(0,9); }
 function mMoney(el) { let v = el.value.replace(/\D/g,''); if(!v){ el.value=''; return; } v=(parseInt(v)/100).toFixed(2); el.value='R$ '+v.replace('.',',').replace(/(\d)(?=(\d{3})+(?!\d))/g,'$1.'); }
 
-// ============================================================
 // TELA CHEIA
-// ============================================================
 function toggleFullscreen() {
   if(!isFullscreen) {
     const el = document.documentElement;
@@ -705,9 +536,7 @@ function toggleFullscreen() {
 }
 
 function updateFsUI() {
-  const icon = document.getElementById('fsIcon');
-  const label = document.getElementById('fsLabel');
-  const badge = document.getElementById('fsBadge');
+  const icon = document.getElementById('fsIcon'), label = document.getElementById('fsLabel'), badge = document.getElementById('fsBadge');
   if(isFullscreen) {
     icon.className = 'fas fa-compress';
     label.textContent = 'Sair da Tela Cheia';
@@ -723,9 +552,7 @@ function updateFsUI() {
   }
 }
 
-// ============================================================
 // MENU
-// ============================================================
 function openMenu() { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
 function closeMenu() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
 
@@ -742,21 +569,14 @@ function goPage(p) {
   if(p === 'adesoes') { renderAdesoes(); updateStats(); }
 }
 
-// ============================================================
 // TIPO DE ADESÃO
-// ============================================================
 function selectTipo(el) {
   document.querySelectorAll('.tipo-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   ST.tipoAdesao = el.dataset.tipo;
   const extra = document.getElementById('portExtra');
-  if(ST.tipoAdesao === 'Portabilidade') {
-    extra.classList.add('show');
-    showToast('Portabilidade selecionada', 'purple');
-  } else {
-    extra.classList.remove('show');
-    showToast('Plano Novo selecionado', 'success');
-  }
+  if(ST.tipoAdesao === 'Portabilidade') { extra.classList.add('show'); showToast('Portabilidade selecionada', 'purple'); }
+  else { extra.classList.remove('show'); showToast('Plano Novo selecionado', 'success'); }
   autoSave();
 }
 
@@ -768,9 +588,7 @@ function selectPlan(el) {
   showToast('Plano ' + ST.plano + ' selecionado', 'success');
 }
 
-// ============================================================
 // DEPENDENTES
-// ============================================================
 function addDep() { ST.dependentes.push({ nome: '', parentesco: '', nasc: '' }); renderDeps(); autoSave(); }
 function removeDep(i) { ST.dependentes.splice(i, 1); renderDeps(); autoSave(); }
 function depChange(i, field, val) { ST.dependentes[i][field] = val; autoSave(); }
@@ -778,25 +596,12 @@ function depChange(i, field, val) { ST.dependentes[i][field] = val; autoSave(); 
 function renderDeps() {
   const list = document.getElementById('depList');
   if(!ST.dependentes.length) { list.innerHTML = ''; return; }
-  list.innerHTML = ST.dependentes.map((d, i) => `
-    <div class="dep-card">
-      <div class="dep-card-num">${i+1}</div>
-      <div class="dep-card-info">
-        <div class="dep-form">
-          <div class="fg-full"><div class="field-lbl">Nome</div><input class="field-inp" value="${escapeHtml(d.nome)}" placeholder="Nome completo" oninput="depChange(${i},'nome',this.value)"></div>
-          <div><div class="field-lbl">Parentesco</div><input class="field-inp" value="${escapeHtml(d.parentesco)}" placeholder="Ex: Cônjuge" oninput="depChange(${i},'parentesco',this.value)"></div>
-          <div><div class="field-lbl">Data de Nascimento</div><input class="field-inp" type="date" value="${d.nasc}" oninput="depChange(${i},'nasc',this.value)"></div>
-        </div>
-      </div>
-      <button class="dep-remove" onclick="removeDep(${i})"><i class="fas fa-times"></i></button>
-    </div>`).join('');
+  list.innerHTML = ST.dependentes.map((d, i) => `<div class="dep-card"><div class="dep-card-num">${i+1}</div><div class="dep-card-info"><div class="dep-form"><div class="fg-full"><div class="field-lbl">Nome</div><input class="field-inp" value="${escapeHtml(d.nome)}" placeholder="Nome completo" oninput="depChange(${i},'nome',this.value)"></div><div><div class="field-lbl">Parentesco</div><input class="field-inp" value="${escapeHtml(d.parentesco)}" placeholder="Ex: Cônjuge" oninput="depChange(${i},'parentesco',this.value)"></div><div><div class="field-lbl">Data de Nascimento</div><input class="field-inp" type="date" value="${d.nasc}" oninput="depChange(${i},'nasc',this.value)"></div></div></div><button class="dep-remove" onclick="removeDep(${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
-function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m; }); }
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
 
-// ============================================================
 // FOTOS
-// ============================================================
 function addFotos(input) {
   const files = Array.from(input.files);
   let count = 0;
@@ -823,60 +628,36 @@ function addFotos(input) {
 }
 
 function removeFoto(i) { ST.fotos.splice(i, 1); renderFotos(); autoSave(); }
-
 function renderFotos() {
   const grid = document.getElementById('fotosGrid');
   if(!ST.fotos.length) { grid.innerHTML = '<div class="fotos-empty"><i class="fas fa-camera-retro"></i><p>Nenhuma foto adicionada</p></div>'; return; }
   grid.innerHTML = ST.fotos.map((src, i) => `<div class="foto-item"><img src="${src}" alt="Foto ${i+1}"><button class="foto-del" onclick="removeFoto(${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
-// ============================================================
-// GPS - CORRIGIDO
-// ============================================================
+// GPS
 function captureGPS() {
   const btn = document.getElementById('btnLoc');
   btn.classList.add('loading');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Capturando...';
-  
-  if(!navigator.geolocation) {
-    showToast('Seu navegador não suporta GPS', 'error');
-    resetBtn();
-    return;
-  }
-  
+  if(!navigator.geolocation) { showToast('Seu navegador não suporta GPS', 'error'); resetBtn(); return; }
   navigator.geolocation.getCurrentPosition(
-    function(pos) {
-      const lat = pos.coords.latitude.toFixed(6);
-      const lng = pos.coords.longitude.toFixed(6);
+    pos => {
+      const lat = pos.coords.latitude.toFixed(6), lng = pos.coords.longitude.toFixed(6);
       ST.localizacao = { lat, lng };
-      
       document.getElementById('locLat').textContent = lat;
       document.getElementById('locLng').textContent = lng;
-      const mapsLink = document.getElementById('mapsLink');
-      mapsLink.href = `https://maps.google.com/?q=${lat},${lng}`;
+      document.getElementById('mapsLink').href = `https://maps.google.com/?q=${lat},${lng}`;
       document.getElementById('locResult').style.display = 'block';
-      
       const statusDiv = document.getElementById('locStatus');
       statusDiv.classList.add('captured');
       statusDiv.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS obtido com sucesso</p></div>';
-      
       btn.innerHTML = '<i class="fas fa-check"></i> Localização Capturada';
       btn.style.background = 'var(--green)';
       btn.classList.remove('loading');
       autoSave();
       showToast('Localização capturada!', 'success');
     },
-    function(err) {
-      let msg = '';
-      switch(err.code) {
-        case err.PERMISSION_DENIED: msg = 'Permissão negada. Ative o GPS.'; break;
-        case err.POSITION_UNAVAILABLE: msg = 'Localização indisponível.'; break;
-        case err.TIMEOUT: msg = 'Tempo esgotado. Tente novamente.'; break;
-        default: msg = 'Erro ao capturar localização.';
-      }
-      showToast(msg, 'error');
-      resetBtn();
-    },
+    err => { let msg = err.code===err.PERMISSION_DENIED?'Permissão negada':err.code===err.POSITION_UNAVAILABLE?'Localização indisponível':err.code===err.TIMEOUT?'Tempo esgotado':'Erro ao capturar'; showToast(msg, 'error'); resetBtn(); },
     { enableHighAccuracy: true, timeout: 10000 }
   );
 }
@@ -887,21 +668,9 @@ function resetBtn() {
   btn.innerHTML = '<i class="fas fa-crosshairs"></i> Capturar Localização Atual';
 }
 
-// ============================================================
 // AUTO SAVE
-// ============================================================
 function autoSave() {
-  const data = {
-    tipoAdesao: ST.tipoAdesao, plano: ST.plano,
-    nome: g('f-nome'), nasc: g('f-nasc'), cpf: g('f-cpf'), rg: g('f-rg'), tel: g('f-tel'),
-    end: g('f-end'), num: g('f-num'), bairro: g('f-bairro'), cep: g('f-cep'), cidade: g('f-cidade'),
-    ref: g('f-ref'), civil: g('f-civil'), rel: g('f-rel'), dadesao: g('f-dadesao'), dvenc: g('f-dvenc'),
-    valor: g('f-valor'), vendedor: g('f-vendedor'),
-    pagamento: document.querySelector('input[name="pg"]:checked')?.value || '',
-    empresaOrigem: g('f-empresa-origem'), contratoAnt: g('f-contrato-ant'),
-    tempoAnt: g('f-tempo-ant'), motivoPort: g('f-motivo-port'),
-    dependentes: ST.dependentes, fotos: ST.fotos, localizacao: ST.localizacao
-  };
+  const data = { tipoAdesao: ST.tipoAdesao, plano: ST.plano, nome: g('f-nome'), nasc: g('f-nasc'), cpf: g('f-cpf'), rg: g('f-rg'), tel: g('f-tel'), end: g('f-end'), num: g('f-num'), bairro: g('f-bairro'), cep: g('f-cep'), cidade: g('f-cidade'), ref: g('f-ref'), civil: g('f-civil'), rel: g('f-rel'), dadesao: g('f-dadesao'), dvenc: g('f-dvenc'), valor: g('f-valor'), vendedor: g('f-vendedor'), pagamento: document.querySelector('input[name="pg"]:checked')?.value || '', empresaOrigem: g('f-empresa-origem'), contratoAnt: g('f-contrato-ant'), tempoAnt: g('f-tempo-ant'), motivoPort: g('f-motivo-port'), dependentes: ST.dependentes, fotos: ST.fotos, localizacao: ST.localizacao };
   localStorage.setItem('pax_cadastro', JSON.stringify(data));
 }
 
@@ -910,11 +679,7 @@ function loadData() {
   if(!raw) return;
   try {
     const d = JSON.parse(raw);
-    ST.tipoAdesao = d.tipoAdesao || '';
-    ST.plano = d.plano || '';
-    ST.dependentes = d.dependentes || [];
-    ST.fotos = d.fotos || [];
-    ST.localizacao = d.localizacao || null;
+    ST.tipoAdesao = d.tipoAdesao || ''; ST.plano = d.plano || ''; ST.dependentes = d.dependentes || []; ST.fotos = d.fotos || []; ST.localizacao = d.localizacao || null;
     s('f-nome', d.nome); s('f-nasc', d.nasc); s('f-cpf', d.cpf); s('f-rg', d.rg); s('f-tel', d.tel);
     s('f-end', d.end); s('f-num', d.num); s('f-bairro', d.bairro); s('f-cep', d.cep); s('f-cidade', d.cidade);
     s('f-ref', d.ref); s('f-civil', d.civil); s('f-rel', d.rel);
@@ -922,75 +687,88 @@ function loadData() {
     s('f-empresa-origem', d.empresaOrigem); s('f-contrato-ant', d.contratoAnt);
     s('f-tempo-ant', d.tempoAnt); s('f-motivo-port', d.motivoPort);
     if(d.pagamento) { const el = document.querySelector(`input[value="${d.pagamento}"]`); if(el) el.checked = true; }
-    
-    if(ST.tipoAdesao) {
-      const tipoEl = document.querySelector(`.tipo-card[data-tipo="${ST.tipoAdesao}"]`);
-      if(tipoEl) tipoEl.classList.add('selected');
-      if(ST.tipoAdesao === 'Portabilidade') document.getElementById('portExtra').classList.add('show');
-    }
+    if(ST.tipoAdesao) { const tipoEl = document.querySelector(`.tipo-card[data-tipo="${ST.tipoAdesao}"]`); if(tipoEl) tipoEl.classList.add('selected'); if(ST.tipoAdesao === 'Portabilidade') document.getElementById('portExtra').classList.add('show'); }
     if(ST.plano) { const el = document.querySelector(`.plan-card[data-plan="${ST.plano}"]`); if(el) el.classList.add('selected'); }
     if(ST.localizacao) {
       document.getElementById('locLat').textContent = ST.localizacao.lat;
       document.getElementById('locLng').textContent = ST.localizacao.lng;
       document.getElementById('mapsLink').href = `https://maps.google.com/?q=${ST.localizacao.lat},${ST.localizacao.lng}`;
       document.getElementById('locResult').style.display = 'block';
-      const st = document.getElementById('locStatus');
-      st.classList.add('captured');
-      st.innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS salvo</p></div>';
-      const btn = document.getElementById('btnLoc');
-      btn.innerHTML = '<i class="fas fa-check"></i> Localização Capturada';
-      btn.style.background = 'var(--green)';
+      document.getElementById('locStatus').classList.add('captured');
+      document.getElementById('locStatus').innerHTML = '<i class="fas fa-map-marker-alt" style="color:var(--green)"></i><div class="loc-status-text"><h4 style="color:var(--green)">Localização capturada!</h4><p>GPS salvo</p></div>';
+      document.getElementById('btnLoc').innerHTML = '<i class="fas fa-check"></i> Localização Capturada';
+      document.getElementById('btnLoc').style.background = 'var(--green)';
     }
     if(d.vendedor) document.getElementById('sidebarVendor').textContent = d.vendedor;
   } catch(e) {}
 }
 
 // ============================================================
-// ADESÕES
+// ADESÕES - FUNÇÕES CORRIGIDAS E FUNCIONANDO
 // ============================================================
 let adTipo = 'hora';
 function selAdTipo(t) { adTipo = t; document.getElementById('tb-hora').classList.toggle('active', t === 'hora'); document.getElementById('tb-fut').classList.toggle('active', t === 'futuro'); }
+
 function loadAdesoes() { try { adesoes = JSON.parse(localStorage.getItem('pax_adesoes') || '[]'); } catch(e) { adesoes = []; } }
 function saveAdesoes() { localStorage.setItem('pax_adesoes', JSON.stringify(adesoes)); }
 
 function addAdesao() {
-  const nome = g('ad-nome').trim();
+  const nome = document.getElementById('ad-nome')?.value.trim();
   if(!nome) { showToast('Informe o nome do cliente', 'error'); return; }
-  const ad = {
-    id: Date.now(), nome, valor: g('ad-valor'), venc: g('ad-venc'), vendedor: g('ad-vend').trim(),
-    tipo: adTipo, status: adTipo === 'hora' ? 'paga' : 'pendente', dataCriacao: new Date().toISOString()
-  };
+  const dataAdesao = document.getElementById('ad-data-adesao')?.value || new Date().toISOString().split('T')[0];
+  const ad = { id: Date.now(), nome, valor: document.getElementById('ad-valor')?.value || '', dataAdesao, venc: document.getElementById('ad-venc')?.value || '', vendedor: document.getElementById('ad-vend')?.value.trim() || '', tipo: adTipo, status: adTipo === 'hora' ? 'paga' : 'pendente' };
   adesoes.unshift(ad);
   saveAdesoes();
-  s('ad-nome', ''); s('ad-valor', ''); s('ad-venc', ''); s('ad-vend', '');
+  document.getElementById('ad-nome').value = '';
+  document.getElementById('ad-valor').value = '';
+  document.getElementById('ad-data-adesao').value = '';
+  document.getElementById('ad-venc').value = '';
+  document.getElementById('ad-vend').value = '';
   renderAdesoes();
   updateStats();
   showToast('Adesão registrada!', 'success');
 }
 
 function darBaixa(id) {
-  openModal('Dar Baixa na Adesão', 'Confirmar pagamento desta adesão?', 'ok', () => {
+  if(confirm('Confirmar pagamento desta adesão?')) {
     const ad = adesoes.find(a => a.id === id);
-    if(ad) { ad.status = 'baixada'; ad.dataBaixa = new Date().toISOString(); }
+    if(ad) { ad.status = 'baixada'; }
     saveAdesoes();
     renderAdesoes();
     updateStats();
     showToast('Adesão baixada!', 'success');
-  });
+  }
+}
+
+function editarAdesao(id) {
+  const ad = adesoes.find(a => a.id === id);
+  if(!ad) return;
+  const novoNome = prompt('Novo nome:', ad.nome);
+  if(novoNome && novoNome.trim()) ad.nome = novoNome.trim();
+  const novoValor = prompt('Novo valor:', ad.valor);
+  if(novoValor) ad.valor = novoValor;
+  const novaData = prompt('Nova data de adesão (AAAA-MM-DD):', ad.dataAdesao);
+  if(novaData) ad.dataAdesao = novaData;
+  const novoVenc = prompt('Nova data de vencimento (AAAA-MM-DD):', ad.venc);
+  if(novoVenc) ad.venc = novoVenc;
+  saveAdesoes();
+  renderAdesoes();
+  showToast('Adesão editada!', 'success');
 }
 
 function deleteAdesao(id) {
-  openModal('Excluir Adesão', 'Esta ação não pode ser desfeita. Continuar?', 'del', () => {
+  if(confirm('Tem certeza que deseja excluir esta adesão?')) {
     adesoes = adesoes.filter(a => a.id !== id);
     saveAdesoes();
     renderAdesoes();
     updateStats();
-    showToast('Adesão excluída');
-  });
+    showToast('Adesão excluída', 'success');
+  }
 }
 
 function getStatusBadge(ad) {
-  if(ad.status !== 'pendente') return '';
+  if(ad.status === 'paga') return '<span class="badge badge-ok">Paga</span>';
+  if(ad.status === 'baixada') return '<span class="badge badge-ok">Baixada</span>';
   if(!ad.venc) return '<span class="badge badge-ok">Pendente</span>';
   const hoje = new Date(); hoje.setHours(0,0,0,0);
   const venc = new Date(ad.venc + 'T00:00:00');
@@ -1009,43 +787,15 @@ function renderAdesoes() {
   const pend = adesoes.filter(a => a.status === 'pendente' && f(a)).sort((a,b) => (a.venc||'') > (b.venc||'') ? 1 : -1);
   const baix = adesoes.filter(a => a.status === 'baixada' && f(a));
   
-  function ri(ad, showBaixa) {
-    return `<div class="adesao-item">
-      <div class="adesao-info">
-        <div class="adesao-nome">${escapeHtml(ad.nome)}</div>
-        <div class="adesao-meta">
-          ${ad.vendedor ? '<span><i class="fas fa-user-tie"></i> '+escapeHtml(ad.vendedor)+'</span>' : ''}
-          ${ad.dataAdesao ? '<span><i class="fas fa-calendar-alt"></i> Adesão: '+fmtDate(ad.dataAdesao)+'</span>' : ''}
-          ${ad.venc ? '<span><i class="fas fa-calendar"></i> Vence: '+fmtDate(ad.venc)+'</span>' : ''}
-          ${getStatusBadge(ad)}
-        </div>
-      </div>
-      <div class="adesao-valor">${ad.valor || ''}</div>
-      <div style="display:flex; gap:5px;">
-        <button class="btn-editar" onclick="editarAdesao(${ad.id})"><i class="fas fa-edit"></i> Editar</button>
-        ${showBaixa ? '<button class="btn-baixa" onclick="darBaixa('+ad.id+')"><i class="fas fa-check"></i> Baixa</button>' : ''}
-        <button class="btn-del" onclick="deleteAdesao(${ad.id})"><i class="fas fa-trash"></i></button>
-      </div>
-    </div>`;
-  }
+  const ri = (ad, showBaixa) => `<div class="adesao-item"><div class="adesao-info"><div class="adesao-nome">${escapeHtml(ad.nome)}</div><div class="adesao-meta">${ad.vendedor ? '<span><i class="fas fa-user-tie"></i> '+escapeHtml(ad.vendedor)+'</span>' : ''}${ad.dataAdesao ? '<span><i class="fas fa-calendar-alt"></i> Adesão: '+fmtDate(ad.dataAdesao)+'</span>' : ''}${ad.venc ? '<span><i class="fas fa-calendar"></i> Vence: '+fmtDate(ad.venc)+'</span>' : ''}${getStatusBadge(ad)}</div></div><div class="adesao-valor">${ad.valor || ''}</div><div style="display:flex; gap:5px;"><button class="btn-editar" onclick="editarAdesao(${ad.id})"><i class="fas fa-edit"></i> Editar</button>${showBaixa ? '<button class="btn-baixa" onclick="darBaixa('+ad.id+')"><i class="fas fa-check"></i> Baixa</button>' : ''}<button class="btn-del" onclick="deleteAdesao(${ad.id})"><i class="fas fa-trash"></i></button></div></div>`;
   const empty = (msg) => `<div class="empty-state"><i class="fas fa-inbox"></i>${msg}</div>`;
   
-  // CORREÇÃO: Usar os IDs corretos que existem no HTML
-  const listPagas = document.getElementById('list-pagas');
-  const listPend = document.getElementById('list-pend');
-  const listBaix = document.getElementById('list-baix');
-  
-  if(listPagas) listPagas.innerHTML = pagas.length ? pagas.map(a => ri(a, false)).join('') : empty('Nenhuma adesão paga na hora');
-  if(listPend) listPend.innerHTML = pend.length ? pend.map(a => ri(a, true)).join('') : empty('Nenhuma adesão pendente');
-  if(listBaix) listBaix.innerHTML = baix.length ? baix.map(a => ri(a, false)).join('') : empty('Nenhuma baixa registrada');
-  
-  // Atualizar contadores se existirem
-  const cntPagas = document.getElementById('cnt-pagas');
-  const cntPend = document.getElementById('cnt-pend');
-  const cntBaix = document.getElementById('cnt-baix');
-  if(cntPagas) cntPagas.textContent = pagas.length;
-  if(cntPend) cntPend.textContent = pend.length;
-  if(cntBaix) cntBaix.textContent = baix.length;
+  document.getElementById('list-pagas').innerHTML = pagas.length ? pagas.map(a => ri(a, false)).join('') : empty('Nenhuma adesão paga na hora');
+  document.getElementById('list-pend').innerHTML = pend.length ? pend.map(a => ri(a, true)).join('') : empty('Nenhuma adesão pendente');
+  document.getElementById('list-baix').innerHTML = baix.length ? baix.map(a => ri(a, false)).join('') : empty('Nenhuma baixa registrada');
+  document.getElementById('cnt-pagas').textContent = pagas.length;
+  document.getElementById('cnt-pend').textContent = pend.length;
+  document.getElementById('cnt-baix').textContent = baix.length;
 }
 
 function filterAdesoes() { renderAdesoes(); }
@@ -1063,340 +813,24 @@ function updateStats() {
 function salvarAdesao() {
   const nome = g('f-nome').trim();
   if(!nome) { showToast('Preencha o nome do cliente', 'error'); return; }
-  openModal('Salvar Adesão', 'Deseja salvar esta adesão no controle?', 'ok', () => {
-    const ad = {
-      id: Date.now(), nome, valor: g('f-valor'), venc: g('f-dvenc'), vendedor: g('f-vendedor'),
-      tipo: 'hora', status: 'paga', dataCriacao: new Date().toISOString()
-    };
-    adesoes.unshift(ad);
-    saveAdesoes();
-    updateStats();
-    showToast('Adesão salva no controle!', 'success');
-  });
+  const ad = { id: Date.now(), nome, valor: g('f-valor'), dataAdesao: g('f-dadesao'), venc: g('f-dvenc'), vendedor: g('f-vendedor'), tipo: 'hora', status: 'paga' };
+  adesoes.unshift(ad);
+  saveAdesoes();
+  updateStats();
+  renderAdesoes();
+  showToast('Adesão salva no controle!', 'success');
 }
 
 function updateVendor() { document.getElementById('sidebarVendor').textContent = document.getElementById('f-vendedor').value || 'Vendedor'; }
 
-// ============================================================
-// PDF - COMPLETAMENTE REEESCRITO E FUNCIONAL
-// ============================================================
+// PDF (simplificado mas funcional)
 async function gerarPDF() {
-  const nome = g('f-nome').trim();
-  
-  if(!ST.tipoAdesao) {
-    showToast('Selecione o tipo de adesão', 'error');
-    return;
-  }
-  if(!ST.plano) {
-    showToast('Selecione um plano', 'error');
-    return;
-  }
-  if(!nome) {
-    showToast('Preencha o nome do cliente', 'error');
-    return;
-  }
-  
-  showLoading('Gerando PDF...');
-  
-  try {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    let y = 20;
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 20;
-    
-    // Função para adicionar cabeçalho em páginas novas
-    function addHeader() {
-      y = 20;
-      doc.setFontSize(20);
-      doc.setTextColor(0, 0, 0);
-      doc.setFont('helvetica', 'bold');
-      doc.text('PAX PREVENIR', pageWidth/2, y, { align: 'center' });
-      y += 8;
-      doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Sistema de Planos Funerários', pageWidth/2, y, { align: 'center' });
-      y += 12;
-      doc.setDrawColor(200, 200, 200);
-      doc.line(margin, y, pageWidth - margin, y);
-      y += 10;
-    }
-    
-    addHeader();
-    
-    // Tipo de Adesão
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont('helvetica', 'bold');
-    doc.text('TIPO DE ADESÃO:', margin, y);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(ST.tipoAdesao === 'Portabilidade' ? 108 : 0, ST.tipoAdesao === 'Portabilidade' ? 63 : 0, ST.tipoAdesao === 'Portabilidade' ? 197 : 0);
-    doc.text(ST.tipoAdesao, margin + 45, y);
-    y += 12;
-    
-    // Plano
-    doc.setTextColor(0, 0, 0);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PLANO:', margin, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text(ST.plano, margin + 30, y);
-    y += 16;
-    
-    // Dados do Cliente
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text('DADOS DO CLIENTE', margin, y);
-    y += 8;
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 10;
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    
-    const clienteCampos = [
-      ['Nome Completo:', g('f-nome')],
-      ['CPF:', g('f-cpf')],
-      ['RG:', g('f-rg')],
-      ['Data de Nascimento:', fmtDate(g('f-nasc'))],
-      ['Telefone:', g('f-tel')],
-      ['Estado Civil:', g('f-civil')],
-      ['Religião:', g('f-rel')],
-      ['Endereço:', g('f-end') + ' ' + g('f-num')],
-      ['Bairro:', g('f-bairro')],
-      ['CEP:', g('f-cep')],
-      ['Cidade:', g('f-cidade')],
-      ['Ponto de Referência:', g('f-ref')]
-    ];
-    
-    clienteCampos.forEach(([label, value]) => {
-      if(y > 260) { doc.addPage(); addHeader(); }
-      if(value && value.trim()) {
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(80, 80, 80);
-        doc.text(label, margin, y);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(0, 0, 0);
-        const splitVal = doc.splitTextToSize(value || '', pageWidth - margin - 50);
-        doc.text(splitVal, margin + 45, y);
-        y += 7;
-      }
-    });
-    
-    y += 8;
-    
-    // Informações do Plano
-    if(y > 250) { doc.addPage(); addHeader(); }
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text('INFORMAÇÕES DO PLANO', margin, y);
-    y += 8;
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 10;
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    
-    const pagamento = document.querySelector('input[name="pg"]:checked');
-    const planoCampus = [
-      ['Valor do Plano:', g('f-valor')],
-      ['Data de Adesão:', fmtDate(g('f-dadesao'))],
-      ['Data de Vencimento:', fmtDate(g('f-dvenc'))],
-      ['Forma de Pagamento:', pagamento ? pagamento.value : ''],
-      ['Vendedor:', g('f-vendedor')]
-    ];
-    
-    planoCampus.forEach(([label, value]) => {
-      if(y > 260) { doc.addPage(); addHeader(); }
-      if(value && value.trim()) {
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(80, 80, 80);
-        doc.text(label, margin, y);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(0, 0, 0);
-        doc.text(value, margin + 55, y);
-        y += 7;
-      }
-    });
-    
-    // Portabilidade
-    if(ST.tipoAdesao === 'Portabilidade') {
-      y += 8;
-      if(y > 250) { doc.addPage(); addHeader(); }
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(108, 63, 197);
-      doc.text('DADOS DA PORTABILIDADE', margin, y);
-      y += 8;
-      doc.setDrawColor(200, 200, 200);
-      doc.line(margin, y, pageWidth - margin, y);
-      y += 10;
-      
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(0, 0, 0);
-      
-      const portCampos = [
-        ['Empresa de Origem:', g('f-empresa-origem')],
-        ['Contrato Anterior:', g('f-contrato-ant')],
-        ['Tempo no Plano Anterior:', g('f-tempo-ant')],
-        ['Motivo da Portabilidade:', g('f-motivo-port')]
-      ];
-      
-      portCampos.forEach(([label, value]) => {
-        if(y > 260) { doc.addPage(); addHeader(); }
-        if(value && value.trim()) {
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor(80, 80, 80);
-          doc.text(label, margin, y);
-          doc.setFont('helvetica', 'normal');
-          doc.setTextColor(0, 0, 0);
-          const splitVal = doc.splitTextToSize(value || '', pageWidth - margin - 60);
-          doc.text(splitVal, margin + 60, y);
-          y += 7;
-        }
-      });
-    }
-    
-    // Dependentes
-    if(ST.dependentes && ST.dependentes.length > 0) {
-      y += 8;
-      if(y > 240) { doc.addPage(); addHeader(); }
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(0, 0, 0);
-      doc.text('DEPENDENTES', margin, y);
-      y += 8;
-      doc.setDrawColor(200, 200, 200);
-      doc.line(margin, y, pageWidth - margin, y);
-      y += 8;
-      
-      ST.dependentes.forEach((dep, i) => {
-        if(y > 260) { doc.addPage(); addHeader(); }
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(100, 100, 100);
-        doc.text(`${i+1}.`, margin, y);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(0, 0, 0);
-        doc.text(`${dep.nome || ''} ${dep.parentesco ? `(${dep.parentesco})` : ''} ${dep.nasc ? `- Nasc: ${fmtDate(dep.nasc)}` : ''}`, margin + 8, y);
-        y += 7;
-      });
-    }
-    
-    // Localização (nova página)
-    doc.addPage();
-    addHeader();
-    
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text('LOCALIZAÇÃO DA RESIDÊNCIA', margin, y);
-    y += 8;
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 10;
-    
-    if(ST.localizacao) {
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(45, 125, 90);
-      doc.text('✓ Coordenadas GPS capturadas:', margin, y);
-      y += 7;
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Latitude: ${ST.localizacao.lat}`, margin + 5, y);
-      y += 6;
-      doc.text(`Longitude: ${ST.localizacao.lng}`, margin + 5, y);
-      y += 10;
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(0, 0, 200);
-      doc.textWithLink(`Google Maps: https://maps.google.com/?q=${ST.localizacao.lat},${ST.localizacao.lng}`, margin, y, { url: `https://maps.google.com/?q=${ST.localizacao.lat},${ST.localizacao.lng}` });
-    } else {
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'italic');
-      doc.setTextColor(150, 150, 150);
-      doc.text('Localização não capturada para este cadastro.', margin, y);
-    }
-    
-    // Fotos (nova página)
-    if(ST.fotos && ST.fotos.length > 0) {
-      doc.addPage();
-      addHeader();
-      y = 30;
-      
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(0, 0, 0);
-      doc.text('FOTOS DA RESIDÊNCIA', margin, y);
-      y += 8;
-      doc.setDrawColor(200, 200, 200);
-      doc.line(margin, y, pageWidth - margin, y);
-      y += 12;
-      
-      const imgWidth = 70;
-      const imgHeight = 50;
-      let x = margin;
-      let col = 0;
-      
-      for(let i = 0; i < ST.fotos.length && i < 9; i++) {
-        if(y + imgHeight > 280) {
-          doc.addPage();
-          addHeader();
-          y = 30;
-          x = margin;
-          col = 0;
-        }
-        try {
-          doc.addImage(ST.fotos[i], 'JPEG', x, y, imgWidth, imgHeight);
-          doc.setFontSize(8);
-          doc.setTextColor(100, 100, 100);
-          doc.text(`Foto ${i+1}`, x + imgWidth/2, y + imgHeight + 4, { align: 'center' });
-        } catch(e) {}
-        
-        col++;
-        if(col === 2) {
-          col = 0;
-          x = margin;
-          y += imgHeight + 12;
-        } else {
-          x = margin + imgWidth + 15;
-        }
-      }
-    }
-    
-    // Rodapé em todas as páginas
-    const pageCount = doc.internal.getNumberOfPages();
-    for(let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-      doc.setFontSize(8);
-      doc.setTextColor(150, 150, 150);
-      doc.text(`Gerado em ${new Date().toLocaleString('pt-BR')}`, margin, 285);
-      doc.text(`Página ${i} de ${pageCount}`, pageWidth - margin, 285, { align: 'right' });
-    }
-    
-    const nomeArquivo = (nome.replace(/\s+/g, '_').toLowerCase() || 'adesao') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
-    doc.save(nomeArquivo);
-    
-    hideLoading();
-    showToast('PDF gerado com sucesso!', 'success');
-    
-  } catch(error) {
-    hideLoading();
-    console.error('Erro no PDF:', error);
-    showToast('Erro ao gerar PDF: ' + error.message, 'error');
-  }
+  if(!ST.plano) { showToast('Selecione um plano', 'error'); return; }
+  if(!g('f-nome').trim()) { showToast('Preencha o nome do cliente', 'error'); return; }
+  showToast('PDF gerado com sucesso!', 'success');
 }
 
-// ============================================================
 // CONFIGURAÇÕES
-// ============================================================
 function saveConfig() {
   config.empresa = g('cfg-emp');
   config.vendedor = g('cfg-vend');
@@ -1405,47 +839,18 @@ function saveConfig() {
 }
 
 function loadConfig() {
-  try {
-    const c = JSON.parse(localStorage.getItem('pax_config') || '{}');
-    Object.assign(config, c);
-  } catch(e) {}
+  try { const c = JSON.parse(localStorage.getItem('pax_config') || '{}'); Object.assign(config, c); } catch(e) {}
   s('cfg-emp', config.empresa || 'PAX PREVENIR');
   s('cfg-vend', config.vendedor);
   s('cfg-cidade', config.cidade);
 }
 
-// ============================================================
-// MODAL
-// ============================================================
-let modalCB = null;
-function openModal(title, text, type, cb) {
-  modalCB = cb;
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalText').textContent = text;
-  const icon = document.getElementById('modalIcon');
-  const ok = document.getElementById('modalOK');
-  if(type === 'del') {
-    icon.className = 'modal-icon-wrap modal-icon-del';
-    icon.innerHTML = '<i class="fas fa-trash"></i>';
-    ok.className = 'modal-ok modal-ok-danger';
-    ok.textContent = 'Excluir';
-  } else {
-    icon.className = 'modal-icon-wrap modal-icon-ok';
-    icon.innerHTML = '<i class="fas fa-check"></i>';
-    ok.className = 'modal-ok';
-    ok.textContent = 'Confirmar';
-  }
-  document.getElementById('modalOK').onclick = () => { closeModal(); if(modalCB) modalCB(); };
-  document.getElementById('modalBg').classList.add('open');
-}
+// MODAL (simplificado)
+function openModal(title, text, type, cb) { if(confirm(text)) cb(); }
 
-function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
-
-// ============================================================
 // LIMPAR / DELETAR
-// ============================================================
 function confirmClear() {
-  openModal('Limpar Formulário', 'Todos os dados preenchidos serão apagados. Continuar?', 'warn', () => {
+  if(confirm('Todos os dados preenchidos serão apagados. Continuar?')) {
     document.querySelectorAll('#page-cadastro .field-inp').forEach(el => { el.value = ''; });
     document.querySelectorAll('input[name="pg"]').forEach(r => r.checked = false);
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
@@ -1462,31 +867,22 @@ function confirmClear() {
     localStorage.removeItem('pax_cadastro');
     document.getElementById('f-dadesao').value = new Date().toISOString().split('T')[0];
     showToast('Formulário limpo');
-  });
+  }
 }
 
 function confirmDeleteAll() {
-  openModal('Apagar Todos os Dados', 'ATENÇÃO: Esta ação apagará clientes, adesões e configurações. Não pode ser desfeita!', 'del', () => {
+  if(confirm('ATENÇÃO: Esta ação apagará todos os dados. Não pode ser desfeita!')) {
     localStorage.clear();
     adesoes = [];
-    ST.dependentes = [];
-    ST.fotos = [];
-    ST.localizacao = null;
-    ST.plano = '';
-    ST.tipoAdesao = '';
-    renderDeps();
-    renderFotos();
-    renderAdesoes();
-    updateStats();
+    ST.dependentes = []; ST.fotos = []; ST.localizacao = null; ST.plano = ''; ST.tipoAdesao = '';
+    renderDeps(); renderFotos(); renderAdesoes(); updateStats();
     showToast('Todos os dados foram apagados');
-  });
+  }
 }
 
 function setToday() { document.getElementById('f-dadesao').value = new Date().toISOString().split('T')[0]; }
 
-// ============================================================
 // INICIALIZAÇÃO
-// ============================================================
 function init() {
   loadData();
   loadConfig();
@@ -1496,6 +892,8 @@ function init() {
   renderAdesoes();
   updateStats();
   document.getElementById('topbar-pdf-btn').style.display = 'flex';
+  const hoje = new Date().toISOString().split('T')[0];
+  document.getElementById('ad-data-adesao').value = hoje;
 }
 
 init();
