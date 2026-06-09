@@ -823,11 +823,323 @@ function salvarAdesao() {
 
 function updateVendor() { document.getElementById('sidebarVendor').textContent = document.getElementById('f-vendedor').value || 'Vendedor'; }
 
-// PDF (simplificado mas funcional)
+// ============================================================
+// PDF - FUNÇÃO COMPLETA E FUNCIONAL
+// ============================================================
 async function gerarPDF() {
-  if(!ST.plano) { showToast('Selecione um plano', 'error'); return; }
-  if(!g('f-nome').trim()) { showToast('Preencha o nome do cliente', 'error'); return; }
-  showToast('PDF gerado com sucesso!', 'success');
+  const nome = g('f-nome').trim();
+  
+  if(!ST.tipoAdesao) {
+    showToast('Selecione o tipo de adesão', 'error');
+    return;
+  }
+  if(!ST.plano) {
+    showToast('Selecione um plano', 'error');
+    return;
+  }
+  if(!nome) {
+    showToast('Preencha o nome do cliente', 'error');
+    return;
+  }
+  
+  showLoading('Gerando PDF...');
+  
+  try {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 20;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    
+    function addHeader() {
+      y = 20;
+      doc.setFontSize(20);
+      doc.setTextColor(0, 0, 0);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PAX PREVENIR', pageWidth/2, y, { align: 'center' });
+      y += 8;
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Sistema de Planos Funerários', pageWidth/2, y, { align: 'center' });
+      y += 12;
+      doc.setDrawColor(200, 200, 200);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 10;
+    }
+    
+    addHeader();
+    
+    // Tipo de Adesão
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'bold');
+    doc.text('TIPO DE ADESÃO:', margin, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(ST.tipoAdesao === 'Portabilidade' ? 108 : 0, ST.tipoAdesao === 'Portabilidade' ? 63 : 0, ST.tipoAdesao === 'Portabilidade' ? 197 : 0);
+    doc.text(ST.tipoAdesao, margin + 45, y);
+    y += 12;
+    
+    // Plano
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PLANO:', margin, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text(ST.plano, margin + 35, y);
+    y += 16;
+    
+    // Dados do Cliente
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('DADOS DO CLIENTE', margin, y);
+    y += 8;
+    doc.setDrawColor(200, 200, 200);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    
+    const clienteCampos = [
+      ['Nome Completo:', g('f-nome')],
+      ['CPF:', g('f-cpf')],
+      ['RG:', g('f-rg')],
+      ['Data de Nascimento:', fmtDate(g('f-nasc'))],
+      ['Telefone:', g('f-tel')],
+      ['Estado Civil:', g('f-civil')],
+      ['Religião:', g('f-rel')],
+      ['Endereço:', g('f-end') + ' ' + g('f-num')],
+      ['Bairro:', g('f-bairro')],
+      ['CEP:', g('f-cep')],
+      ['Cidade:', g('f-cidade')],
+      ['Ponto de Referência:', g('f-ref')]
+    ];
+    
+    clienteCampos.forEach(([label, value]) => {
+      if(y > 260) { doc.addPage(); addHeader(); }
+      if(value && value.trim()) {
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(80, 80, 80);
+        doc.text(label, margin, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        const splitVal = doc.splitTextToSize(value || '', pageWidth - margin - 50);
+        doc.text(splitVal, margin + 45, y);
+        y += 7;
+      }
+    });
+    
+    y += 8;
+    
+    // Informações do Plano
+    if(y > 250) { doc.addPage(); addHeader(); }
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('INFORMAÇÕES DO PLANO', margin, y);
+    y += 8;
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    
+    const pagamento = document.querySelector('input[name="pg"]:checked');
+    const planoCampus = [
+      ['Valor do Plano:', g('f-valor')],
+      ['Data de Adesão:', fmtDate(g('f-dadesao'))],
+      ['Data de Vencimento:', fmtDate(g('f-dvenc'))],
+      ['Forma de Pagamento:', pagamento ? pagamento.value : ''],
+      ['Vendedor:', g('f-vendedor')]
+    ];
+    
+    planoCampus.forEach(([label, value]) => {
+      if(y > 260) { doc.addPage(); addHeader(); }
+      if(value && value.trim()) {
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(80, 80, 80);
+        doc.text(label, margin, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.text(value, margin + 55, y);
+        y += 7;
+      }
+    });
+    
+    // Portabilidade
+    if(ST.tipoAdesao === 'Portabilidade') {
+      y += 8;
+      if(y > 250) { doc.addPage(); addHeader(); }
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(108, 63, 197);
+      doc.text('DADOS DA PORTABILIDADE', margin, y);
+      y += 8;
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 10;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(0, 0, 0);
+      
+      const portCampos = [
+        ['Empresa de Origem:', g('f-empresa-origem')],
+        ['Contrato Anterior:', g('f-contrato-ant')],
+        ['Tempo no Plano Anterior:', g('f-tempo-ant')],
+        ['Motivo da Portabilidade:', g('f-motivo-port')]
+      ];
+      
+      portCampos.forEach(([label, value]) => {
+        if(y > 260) { doc.addPage(); addHeader(); }
+        if(value && value.trim()) {
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(80, 80, 80);
+          doc.text(label, margin, y);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(0, 0, 0);
+          const splitVal = doc.splitTextToSize(value || '', pageWidth - margin - 60);
+          doc.text(splitVal, margin + 60, y);
+          y += 7;
+        }
+      });
+    }
+    
+    // Dependentes
+    if(ST.dependentes && ST.dependentes.length > 0) {
+      y += 8;
+      if(y > 240) { doc.addPage(); addHeader(); }
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('DEPENDENTES', margin, y);
+      y += 8;
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 8;
+      
+      ST.dependentes.forEach((dep, i) => {
+        if(y > 260) { doc.addPage(); addHeader(); }
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(100, 100, 100);
+        doc.text(`${i+1}.`, margin, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.text(`${dep.nome || ''} ${dep.parentesco ? `(${dep.parentesco})` : ''} ${dep.nasc ? `- Nasc: ${fmtDate(dep.nasc)}` : ''}`, margin + 8, y);
+        y += 7;
+      });
+    }
+    
+    // Localização
+    doc.addPage();
+    addHeader();
+    
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('LOCALIZAÇÃO DA RESIDÊNCIA', margin, y);
+    y += 8;
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
+    
+    if(ST.localizacao) {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(45, 125, 90);
+      doc.text('✓ Coordenadas GPS capturadas:', margin, y);
+      y += 7;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Latitude: ${ST.localizacao.lat}`, margin + 5, y);
+      y += 6;
+      doc.text(`Longitude: ${ST.localizacao.lng}`, margin + 5, y);
+    } else {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'italic');
+      doc.setTextColor(150, 150, 150);
+      doc.text('Localização não capturada para este cadastro.', margin, y);
+    }
+    
+    // Fotos
+    if(ST.fotos && ST.fotos.length > 0) {
+      doc.addPage();
+      addHeader();
+      y = 30;
+      
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('FOTOS DA RESIDÊNCIA', margin, y);
+      y += 8;
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 12;
+      
+      const imgWidth = 70;
+      const imgHeight = 50;
+      let x = margin;
+      let col = 0;
+      
+      for(let i = 0; i < ST.fotos.length && i < 9; i++) {
+        if(y + imgHeight > 280) {
+          doc.addPage();
+          addHeader();
+          y = 30;
+          x = margin;
+          col = 0;
+        }
+        try {
+          doc.addImage(ST.fotos[i], 'JPEG', x, y, imgWidth, imgHeight);
+          doc.setFontSize(8);
+          doc.setTextColor(100, 100, 100);
+          doc.text(`Foto ${i+1}`, x + imgWidth/2, y + imgHeight + 4, { align: 'center' });
+        } catch(e) { console.log('Erro ao adicionar imagem:', e); }
+        
+        col++;
+        if(col === 2) {
+          col = 0;
+          x = margin;
+          y += imgHeight + 12;
+        } else {
+          x = margin + imgWidth + 15;
+        }
+      }
+    }
+    
+    // Rodapé
+    const pageCount = doc.internal.getNumberOfPages();
+    for(let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text(`Gerado em ${new Date().toLocaleString('pt-BR')}`, margin, 285);
+      doc.text(`Página ${i} de ${pageCount}`, pageWidth - margin, 285, { align: 'right' });
+    }
+    
+    const nomeArquivo = (nome.replace(/\s+/g, '_').toLowerCase() || 'adesao') + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+    doc.save(nomeArquivo);
+    
+    hideLoading();
+    showToast('PDF gerado com sucesso!', 'success');
+    
+  } catch(error) {
+    hideLoading();
+    console.error('Erro no PDF:', error);
+    showToast('Erro ao gerar PDF: ' + error.message, 'error');
+  }
+}
+
+function showLoading(txt = 'Aguarde...') {
+  const el = document.getElementById('loadingScreen');
+  const txtEl = document.getElementById('loadingTxt');
+  if(txtEl) txtEl.textContent = txt;
+  if(el) el.classList.add('show');
+}
+
+function hideLoading() {
+  const el = document.getElementById('loadingScreen');
+  if(el) el.classList.remove('show');
 }
 
 // CONFIGURAÇÕES
