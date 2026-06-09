@@ -1010,15 +1010,42 @@ function renderAdesoes() {
   const baix = adesoes.filter(a => a.status === 'baixada' && f(a));
   
   function ri(ad, showBaixa) {
-    return `<div class="adesao-item"><div class="adesao-info"><div class="adesao-nome">${escapeHtml(ad.nome)}</div><div class="adesao-meta">${ad.vendedor ? '<span><i class="fas fa-user-tie"></i> '+escapeHtml(ad.vendedor)+'</span>' : ''}${ad.venc ? '<span><i class="fas fa-calendar"></i> '+fmtDate(ad.venc)+'</span>' : ''}${getStatusBadge(ad)}</div></div><div class="adesao-valor">${ad.valor || ''}</div>${showBaixa ? '<button class="btn-baixa" onclick="darBaixa('+ad.id+')"><i class="fas fa-check"></i> Baixa</button>' : ''}<button class="btn-del" onclick="deleteAdesao('+ad.id+')"><i class="fas fa-trash"></i></button></div>`;
+    return `<div class="adesao-item">
+      <div class="adesao-info">
+        <div class="adesao-nome">${escapeHtml(ad.nome)}</div>
+        <div class="adesao-meta">
+          ${ad.vendedor ? '<span><i class="fas fa-user-tie"></i> '+escapeHtml(ad.vendedor)+'</span>' : ''}
+          ${ad.dataAdesao ? '<span><i class="fas fa-calendar-alt"></i> Adesão: '+fmtDate(ad.dataAdesao)+'</span>' : ''}
+          ${ad.venc ? '<span><i class="fas fa-calendar"></i> Vence: '+fmtDate(ad.venc)+'</span>' : ''}
+          ${getStatusBadge(ad)}
+        </div>
+      </div>
+      <div class="adesao-valor">${ad.valor || ''}</div>
+      <div style="display:flex; gap:5px;">
+        <button class="btn-editar" onclick="editarAdesao(${ad.id})"><i class="fas fa-edit"></i> Editar</button>
+        ${showBaixa ? '<button class="btn-baixa" onclick="darBaixa('+ad.id+')"><i class="fas fa-check"></i> Baixa</button>' : ''}
+        <button class="btn-del" onclick="deleteAdesao(${ad.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
   }
   const empty = (msg) => `<div class="empty-state"><i class="fas fa-inbox"></i>${msg}</div>`;
-  document.getElementById('list-pagas').innerHTML = pagas.length ? pagas.map(a => ri(a, false)).join('') : empty('Nenhuma adesão paga na hora');
-  document.getElementById('list-pend').innerHTML = pend.length ? pend.map(a => ri(a, true)).join('') : empty('Nenhuma adesão pendente');
-  document.getElementById('list-baix').innerHTML = baix.length ? baix.map(a => ri(a, false)).join('') : empty('Nenhuma baixa registrada');
-  document.getElementById('cnt-pagas').textContent = pagas.length;
-  document.getElementById('cnt-pend').textContent = pend.length;
-  document.getElementById('cnt-baix').textContent = baix.length;
+  
+  // CORREÇÃO: Usar os IDs corretos que existem no HTML
+  const listPagas = document.getElementById('list-pagas');
+  const listPend = document.getElementById('list-pend');
+  const listBaix = document.getElementById('list-baix');
+  
+  if(listPagas) listPagas.innerHTML = pagas.length ? pagas.map(a => ri(a, false)).join('') : empty('Nenhuma adesão paga na hora');
+  if(listPend) listPend.innerHTML = pend.length ? pend.map(a => ri(a, true)).join('') : empty('Nenhuma adesão pendente');
+  if(listBaix) listBaix.innerHTML = baix.length ? baix.map(a => ri(a, false)).join('') : empty('Nenhuma baixa registrada');
+  
+  // Atualizar contadores se existirem
+  const cntPagas = document.getElementById('cnt-pagas');
+  const cntPend = document.getElementById('cnt-pend');
+  const cntBaix = document.getElementById('cnt-baix');
+  if(cntPagas) cntPagas.textContent = pagas.length;
+  if(cntPend) cntPend.textContent = pend.length;
+  if(cntBaix) cntBaix.textContent = baix.length;
 }
 
 function filterAdesoes() { renderAdesoes(); }
